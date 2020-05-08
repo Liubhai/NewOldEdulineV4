@@ -772,10 +772,7 @@
         return;
     }
     NSMutableString *phoneString = [[NSMutableString alloc] initWithFormat:@"tel:%@",phoneStr];
-    UIWebView *callWebView = [[UIWebView alloc] init];
-    [callWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:phoneString]]];
-    [self.view addSubview:callWebView];
-    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneString]];
 }
 
 - (void)sendMessage {

@@ -10,12 +10,13 @@
 #import "SYG.h"
 #import "rootViewController.h"
 #import "AppDelegate.h"
+#import "YKTWebView.h"
 
 
 
-@interface LibaryPlayViewController ()<UIWebViewDelegate>
+@interface LibaryPlayViewController ()<WKNavigationDelegate>
 
-@property (strong ,nonatomic)UIWebView *webView;
+@property (strong ,nonatomic)YKTWebView *webView;
 
 
 @end
@@ -89,7 +90,7 @@
 
 - (void)addWebView {
     
-    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth,MainScreenHeight - 64)];
+    _webView = [[YKTWebView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth,MainScreenHeight - 64)];
     if (iPhone4SOriPhone4) {
         _webView.frame = CGRectMake(0, 64, MainScreenWidth,MainScreenHeight - 64);
     } else if (iPhone5o5Co5S) {
@@ -104,9 +105,7 @@
     
     
     [_webView setUserInteractionEnabled:YES];//是否支持交互
-    _webView.delegate=self;
     [_webView setOpaque:YES];//opaque是不透明的意思
-    [_webView setScalesPageToFit:YES];//自适应
     
     NSLog(@"----%@",_urlStr);
     NSURL *url = nil;
@@ -116,15 +115,14 @@
     
 }
 
--(void)webViewDidFinishLoad:(UIWebView *)webView {
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [TKProgressHUD hideAllHUDsForView:self.view animated:YES];
     [TKProgressHUD showError:@"加载成功" toView:self.view];
 }
 
--(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
     [TKProgressHUD hideAllHUDsForView:self.view animated:YES];
     [TKProgressHUD showError:@"加载失败" toView:self.view];
 }
-
 
 @end

@@ -11,17 +11,18 @@
 #import "SYG.h"
 #import "rootViewController.h"
 #import "BigWindCar.h"
+#import "YKTWebView.h"
 
 
 
-@interface AboutUsViewController ()<UIWebViewDelegate>
+@interface AboutUsViewController ()
 
 @property (strong ,nonatomic)UIScrollView *scrollView;
 @property (strong ,nonatomic)UIView       *oneView;
 @property (strong ,nonatomic)UIView       *twoView;
 @property (strong ,nonatomic)UIView       *thereView;
 
-@property (strong ,nonatomic)UIWebView    *webView;
+@property (strong ,nonatomic)YKTWebView    *webView;
 
 @end
 
@@ -216,15 +217,13 @@
 
 #pragma mark --- webView
 - (void)addWebView {
-    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, NavigationBarHeight, MainScreenWidth,MainScreenHeight - 64)];
+    _webView = [[YKTWebView alloc] initWithFrame:CGRectMake(0, NavigationBarHeight, MainScreenWidth,MainScreenHeight - 64)];
     _webView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_webView];
     
     
     [_webView setUserInteractionEnabled:YES];//是否支持交互
-    _webView.delegate=self;
     [_webView setOpaque:YES];//opaque是不透明的意思
-    [_webView setScalesPageToFit:YES];//自适应
     
     NSURL *url = nil;
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",EncryptUrl,YunKeTang_Basic_Basic_showAbout];

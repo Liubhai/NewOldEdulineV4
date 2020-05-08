@@ -10,10 +10,11 @@
 #import "ZLPhoto.h"
 #import "SYG.h"
 #import "BigWindCar.h"
+#import "YKTWebView.h"
 
 #define upAndDownHeight 75.0
 
-@interface ZhiboDetailIntroVC ()<UIWebViewDelegate,UIScrollViewDelegate,ZLPhotoPickerBrowserViewControllerDelegate,ZLPhotoPickerBrowserViewControllerDataSource> {
+@interface ZhiboDetailIntroVC ()<UIScrollViewDelegate,ZLPhotoPickerBrowserViewControllerDelegate,ZLPhotoPickerBrowserViewControllerDataSource, WKNavigationDelegate> {
     BOOL isShowImageTouch;
     NSString *_imageBigUrl;
     NSString *_imageSmallUrl;
@@ -46,7 +47,7 @@
 
 /** 课程表述简介 */
 @property (strong ,nonatomic) UIView *ClassIntroBackView;
-@property (strong ,nonatomic) UIWebView *ClassIntroWeb;
+@property (strong ,nonatomic) YKTWebView *ClassIntroWeb;
 // 提取标签里面纯文字(如果web高度大于某个值,那么收起来的时候就显示纯文字,展开就显示完整版web)
 @property (strong, nonatomic) UILabel *classContentLabel;
 /** 讲师版块儿 */
@@ -55,7 +56,7 @@
 @property (strong, nonatomic) UILabel *teacherNameLabel;
 @property (strong, nonatomic) UILabel *teacherOtherLabel;
 @property (strong, nonatomic) UIImageView *teacherHeaderImage;
-@property (strong ,nonatomic) UIWebView *TeacherIntroWeb;
+@property (strong ,nonatomic) YKTWebView *TeacherIntroWeb;
 // 提取标签里面纯文字(如果web高度大于某个值,那么收起来的时候就显示纯文字,展开就显示完整版web)
 @property (strong, nonatomic) UILabel *teacherContentLabel;
 /** 机构版块儿 */
@@ -110,8 +111,7 @@
 }
 
 - (void)makeClassInfoWebView {
-    _ClassIntroWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 1)];
-    _ClassIntroWeb.delegate = self;
+    _ClassIntroWeb = [[YKTWebView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 1)];
     _ClassIntroWeb.scrollView.scrollEnabled = NO;
     _ClassIntroWeb.scrollView.showsVerticalScrollIndicator = NO;
     _ClassIntroWeb.scrollView.showsHorizontalScrollIndicator = NO;
@@ -122,8 +122,7 @@
     _ClassIntroBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 1)];
     _ClassIntroBackView.backgroundColor = [UIColor whiteColor];
     [_mainScroll addSubview:_ClassIntroBackView];
-    _ClassIntroWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 1)];
-    _ClassIntroWeb.delegate = self;
+    _ClassIntroWeb = [[YKTWebView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 1)];
     _ClassIntroWeb.scrollView.scrollEnabled = NO;
     _ClassIntroWeb.scrollView.showsVerticalScrollIndicator = NO;
     _ClassIntroWeb.scrollView.showsHorizontalScrollIndicator = NO;
@@ -183,8 +182,7 @@
     _teacherOtherLabel.text = @"0课程    好评度0";
     [_teacherIntroBackView addSubview:_teacherOtherLabel];
     
-    _TeacherIntroWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, _teacherHeaderImage.bottom + 10 * HigtEachUnit, MainScreenWidth, 1)];
-    _TeacherIntroWeb.delegate = self;
+    _TeacherIntroWeb = [[YKTWebView alloc] initWithFrame:CGRectMake(0, _teacherHeaderImage.bottom + 10 * HigtEachUnit, MainScreenWidth, 1)];
     _TeacherIntroWeb.scrollView.scrollEnabled = NO;
     _TeacherIntroWeb.scrollView.showsVerticalScrollIndicator = NO;
     _TeacherIntroWeb.scrollView.showsHorizontalScrollIndicator = NO;
@@ -311,7 +309,7 @@
     singleTap.cancelsTouchesInView = NO;
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
+-(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     if (webView == _ClassIntroWeb) {
         _webImageUrlStrArray = nil;
         
@@ -338,71 +336,78 @@
         };\
         return imgScr;\
         };";
-        
-        
-        [webView stringByEvaluatingJavaScriptFromString:jsGetImages];//注入js方法
-        [webView stringByEvaluatingJavaScriptFromString:jsGetOriginalImages];//注入js方法
-        NSString *height = [webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight;"];
-        _classWebHight = [height floatValue] + 20;
-        [_ClassIntroWeb setHeight:[height floatValue] + 20];
-        _mainScroll.contentSize = CGSizeMake(MainScreenWidth, _ClassIntroWeb.bottom > _tabelHeight ? _ClassIntroWeb.bottom : (_tabelHeight + 10));
-        
-        NSString *urlResurlt = [webView stringByEvaluatingJavaScriptFromString:@"getImages()"];
-        _webImageUrlStrArray = [NSMutableArray arrayWithArray:[urlResurlt componentsSeparatedByString:@"+"]];
-        if (_webImageUrlStrArray.count >= 2) {
-            [_webImageUrlStrArray removeLastObject];
-        }
-        NSString *getOriginalImageStr = [webView stringByEvaluatingJavaScriptFromString:@"getOriginalImages()"];
-        NSArray * originalArray = [NSMutableArray arrayWithArray:[getOriginalImageStr componentsSeparatedByString:@"+"]];
-        self.originalImageArray = [[NSMutableArray alloc]initWithArray:originalArray];
-        if (self.originalImageArray.count >= 2) {
-            [self.originalImageArray removeLastObject];
-        }
-        
-        NSMutableArray* delateArray = [[NSMutableArray alloc]init];
-        NSMutableArray* tempArray = [[NSMutableArray alloc]initWithArray:_webImageUrlStrArray];
-        
-        // TS系统中的 新版本（16.10月以后）动态表情头
-        NSString* headerUrl =[NSString stringWithFormat:@"%@resources/theme/stv1/_static/js/um/dialogs/emotion",EncryptHeaderUrl];
-        //  旧版本（16.10月之前）动态表情头
-        //  需要过滤掉这部分表情图片
-        NSString *oldeHeaderUrl = [NSString stringWithFormat:@"%@addons",EncryptHeaderUrl];
-        
-        for (NSString* tempUrl in _webImageUrlStrArray) {
-            if ([tempUrl hasPrefix:headerUrl] || [tempUrl hasPrefix:oldeHeaderUrl]) {
-                [delateArray addObject:tempUrl];
-            }
-        }
-        
-        for (NSString* temp in _webImageUrlStrArray) {
-            for (NSString* delate in delateArray) {
-                if ([delate isEqualToString:temp]) {
-                    [tempArray removeObject:temp];
-                    break;
+        [webView evaluateJavaScript:jsGetImages completionHandler:^(id info, NSError * _Nullable error) {
+            
+        }];
+        [webView evaluateJavaScript:jsGetOriginalImages completionHandler:^(id info, NSError * _Nullable error) {
+            
+        }];
+
+        [webView evaluateJavaScript:@"document.body.offsetHeight;" completionHandler:^(NSString *height, NSError * _Nullable error) {
+            _classWebHight = [height floatValue] + 20;
+            [_ClassIntroWeb setHeight:[height floatValue] + 20];
+            _mainScroll.contentSize = CGSizeMake(MainScreenWidth, _ClassIntroWeb.bottom > _tabelHeight ? _ClassIntroWeb.bottom : (_tabelHeight + 10));
+            
+            [webView evaluateJavaScript:@"getImages()" completionHandler:^(NSString *urlResurlt, NSError * _Nullable error) {
+                _webImageUrlStrArray = [NSMutableArray arrayWithArray:[urlResurlt componentsSeparatedByString:@"+"]];
+                if (_webImageUrlStrArray.count >= 2) {
+                    [_webImageUrlStrArray removeLastObject];
                 }
-            }
-        }
-        _webImageUrlStrArray = tempArray;
-        
-        // 过滤原图中的表情
-        NSMutableArray* delateOriginalArray = [[NSMutableArray alloc]init];
-        NSMutableArray* tempOriginalArray = [[NSMutableArray alloc]initWithArray:self.originalImageArray];
-        
-        for (NSString* tempUrl in self.originalImageArray) {
-            if ([tempUrl hasPrefix:headerUrl] || [tempUrl hasPrefix:oldeHeaderUrl]) {
-                [delateOriginalArray addObject:tempUrl];
-            }
-        }
-        
-        for (NSString* temp in self.originalImageArray) {
-            for (NSString* delate in delateOriginalArray) {
-                if ([delate isEqualToString:temp]) {
-                    [tempOriginalArray removeObject:temp];
-                    break;
-                }
-            }
-        }
-        self.originalImageArray = tempOriginalArray;
+                
+                [webView evaluateJavaScript:@"getOriginalImages()" completionHandler:^(NSString *getOriginalImageStr, NSError * _Nullable error) {
+                    NSArray * originalArray = [NSMutableArray arrayWithArray:[getOriginalImageStr componentsSeparatedByString:@"+"]];
+                    self.originalImageArray = [[NSMutableArray alloc]initWithArray:originalArray];
+                    if (self.originalImageArray.count >= 2) {
+                        [self.originalImageArray removeLastObject];
+                    }
+                    
+                    NSMutableArray* delateArray = [[NSMutableArray alloc]init];
+                    NSMutableArray* tempArray = [[NSMutableArray alloc]initWithArray:_webImageUrlStrArray];
+                    
+                    // TS系统中的 新版本（16.10月以后）动态表情头
+                    NSString* headerUrl =[NSString stringWithFormat:@"%@resources/theme/stv1/_static/js/um/dialogs/emotion",EncryptHeaderUrl];
+                    //  旧版本（16.10月之前）动态表情头
+                    //  需要过滤掉这部分表情图片
+                    NSString *oldeHeaderUrl = [NSString stringWithFormat:@"%@addons",EncryptHeaderUrl];
+                    
+                    for (NSString* tempUrl in _webImageUrlStrArray) {
+                        if ([tempUrl hasPrefix:headerUrl] || [tempUrl hasPrefix:oldeHeaderUrl]) {
+                            [delateArray addObject:tempUrl];
+                        }
+                    }
+                    
+                    for (NSString* temp in _webImageUrlStrArray) {
+                        for (NSString* delate in delateArray) {
+                            if ([delate isEqualToString:temp]) {
+                                [tempArray removeObject:temp];
+                                break;
+                            }
+                        }
+                    }
+                    _webImageUrlStrArray = tempArray;
+                    
+                    // 过滤原图中的表情
+                    NSMutableArray* delateOriginalArray = [[NSMutableArray alloc]init];
+                    NSMutableArray* tempOriginalArray = [[NSMutableArray alloc]initWithArray:self.originalImageArray];
+                    
+                    for (NSString* tempUrl in self.originalImageArray) {
+                        if ([tempUrl hasPrefix:headerUrl] || [tempUrl hasPrefix:oldeHeaderUrl]) {
+                            [delateOriginalArray addObject:tempUrl];
+                        }
+                    }
+                    
+                    for (NSString* temp in self.originalImageArray) {
+                        for (NSString* delate in delateOriginalArray) {
+                            if ([delate isEqualToString:temp]) {
+                                [tempOriginalArray removeObject:temp];
+                                break;
+                            }
+                        }
+                    }
+                    self.originalImageArray = tempOriginalArray;
+                }];
+            }];
+        }];
     }
 }
 
@@ -636,23 +641,22 @@
     }
 }
 
--(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
-{
-    NSURL *requestURL = [ request URL  ];
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    NSURL *requestURL = navigationAction.request.URL;
     if ( ( [ [ requestURL scheme ] isEqualToString: @"http" ] || [ [ requestURL scheme ] isEqualToString: @"https" ] || [ [ requestURL scheme ] isEqualToString: @"mailto" ])
-        && ( navigationType == UIWebViewNavigationTypeLinkClicked ) ) {
+        && ( navigationAction.navigationType == UIWebViewNavigationTypeLinkClicked ) ) {
         //打开网址
         if (isShowImageTouch) {
             isShowImageTouch = NO;
-            return NO;
+            decisionHandler(WKNavigationActionPolicyCancel);
         }
         /**
-         BrowserViewController *browS = [[BrowserViewController alloc]initWithUrl:requestURL];
-         [self.navigationController presentViewController:browS animated:YES completion:NULL];
-         */
-        return NO;
+        BrowserViewController *browS = [[BrowserViewController alloc]initWithUrl:requestURL];
+        [self.navigationController presentViewController:browS animated:YES completion:NULL];
+        */
+        decisionHandler(WKNavigationActionPolicyCancel);
     }
-    return YES;
+    decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
@@ -666,75 +670,79 @@
         isClassImageTap = NO;
         CGPoint pt = [sender locationInView:_TeacherIntroWeb];
         NSString *imgStr = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).src", pt.x, pt.y];
-        NSString *urlToSave = [_TeacherIntroWeb stringByEvaluatingJavaScriptFromString:imgStr];
-        NSString *orignalStr = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).getAttribute('_src')", pt.x, pt.y];
-        NSString *orignalUrl = [_TeacherIntroWeb stringByEvaluatingJavaScriptFromString:orignalStr];
-        if (urlToSave.length > 0&&[urlToSave rangeOfString:@"/expression/"].location==NSNotFound&&[urlToSave rangeOfString:@"/emotion/"].location==NSNotFound) {
-            _imageBigUrl = orignalUrl;
-            _imageSmallUrl = urlToSave;
-            isShowImageTouch = YES;
-            ZLPhotoPickerBrowserViewController *pickerBrowser = [[ZLPhotoPickerBrowserViewController alloc] init];
-            pickerBrowser.delegate = self;
-            pickerBrowser.dataSource = self;
-            // 是否可以删除照片
-            pickerBrowser.editing = NO;
-            // 当前分页的值
-            // pickerBrowser.currentPage = indexPath.row;
-            // 传入组
-            // pickerBrowser.currentIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            
-            
-            int row = 0;
-            
-            for (int i = 0; i < teacherImageUrlStrIArray.count; i ++) {
-                if ([_imageSmallUrl isEqualToString:teacherImageUrlStrIArray[i]]) {
-                    row = i;
-                    break;
+        [_TeacherIntroWeb evaluateJavaScript:imgStr completionHandler:^(NSString *urlToSave, NSError * _Nullable error) {
+            NSString *orignalStr = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).getAttribute('_src')", pt.x, pt.y];
+            [_TeacherIntroWeb evaluateJavaScript:orignalStr completionHandler:^(NSString *orignalUrl, NSError * _Nullable error) {
+                if (urlToSave.length > 0&&[urlToSave rangeOfString:@"/expression/"].location==NSNotFound&&[urlToSave rangeOfString:@"/emotion/"].location==NSNotFound) {
+                    _imageBigUrl = orignalUrl;
+                    _imageSmallUrl = urlToSave;
+                    isShowImageTouch = YES;
+                    ZLPhotoPickerBrowserViewController *pickerBrowser = [[ZLPhotoPickerBrowserViewController alloc] init];
+                    pickerBrowser.delegate = self;
+                    pickerBrowser.dataSource = self;
+                    // 是否可以删除照片
+                    pickerBrowser.editing = NO;
+                    // 当前分页的值
+                    // pickerBrowser.currentPage = indexPath.row;
+                    // 传入组
+                    // pickerBrowser.currentIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                    
+                    
+                    int row = 0;
+                    
+                    for (int i = 0; i < teacherImageUrlStrIArray.count; i ++) {
+                        if ([_imageSmallUrl isEqualToString:teacherImageUrlStrIArray[i]]) {
+                            row = i;
+                            break;
+                        }
+                    }
+                    pickerBrowser.currentIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
+                    
+                    // 展示控制器
+                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                    [pickerBrowser showPickerVc:window.rootViewController];
                 }
-            }
-            pickerBrowser.currentIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
-            
-            // 展示控制器
-            UIWindow *window = [UIApplication sharedApplication].keyWindow;
-            [pickerBrowser showPickerVc:window.rootViewController];
-        }
+            }];
+        }];
     } else if (sender.view == _ClassIntroWeb) {
         isClassImageTap = YES;
         CGPoint pt = [sender locationInView:_ClassIntroWeb];
         NSString *imgStr = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).src", pt.x, pt.y];
-        NSString *urlToSave = [_ClassIntroWeb stringByEvaluatingJavaScriptFromString:imgStr];
-        NSString *orignalStr = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).getAttribute('_src')", pt.x, pt.y];
-        NSString *orignalUrl = [_ClassIntroWeb stringByEvaluatingJavaScriptFromString:orignalStr];
-        if (urlToSave.length > 0&&[urlToSave rangeOfString:@"/expression/"].location==NSNotFound&&[urlToSave rangeOfString:@"/emotion/"].location==NSNotFound) {
-            _imageBigUrl = orignalUrl;
-            _imageSmallUrl = urlToSave;
-            isShowImageTouch = YES;
-            ZLPhotoPickerBrowserViewController *pickerBrowser = [[ZLPhotoPickerBrowserViewController alloc] init];
-            pickerBrowser.delegate = self;
-            pickerBrowser.dataSource = self;
-            // 是否可以删除照片
-            pickerBrowser.editing = NO;
-            // 当前分页的值
-            // pickerBrowser.currentPage = indexPath.row;
-            // 传入组
-            // pickerBrowser.currentIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            
-            
-            int row = 0;
-            
-            for (int i = 0; i < _webImageUrlStrArray.count; i ++) {
-                if ([_imageSmallUrl isEqualToString:_webImageUrlStrArray[i]]) {
-                    row = i;
-                    break;
+        [_ClassIntroWeb evaluateJavaScript:imgStr completionHandler:^(NSString *urlToSave, NSError * _Nullable error) {
+            NSString *orignalStr = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).getAttribute('_src')", pt.x, pt.y];
+            [_ClassIntroWeb evaluateJavaScript:orignalStr completionHandler:^(NSString *orignalUrl, NSError * _Nullable error) {
+                if (urlToSave.length > 0&&[urlToSave rangeOfString:@"/expression/"].location==NSNotFound&&[urlToSave rangeOfString:@"/emotion/"].location==NSNotFound) {
+                    _imageBigUrl = orignalUrl;
+                    _imageSmallUrl = urlToSave;
+                    isShowImageTouch = YES;
+                    ZLPhotoPickerBrowserViewController *pickerBrowser = [[ZLPhotoPickerBrowserViewController alloc] init];
+                    pickerBrowser.delegate = self;
+                    pickerBrowser.dataSource = self;
+                    // 是否可以删除照片
+                    pickerBrowser.editing = NO;
+                    // 当前分页的值
+                    // pickerBrowser.currentPage = indexPath.row;
+                    // 传入组
+                    // pickerBrowser.currentIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                    
+                    
+                    int row = 0;
+                    
+                    for (int i = 0; i < _webImageUrlStrArray.count; i ++) {
+                        if ([_imageSmallUrl isEqualToString:_webImageUrlStrArray[i]]) {
+                            row = i;
+                            break;
+                        }
+                    }
+                    pickerBrowser.currentIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
+                    
+                    
+                    // 展示控制器
+                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                    [pickerBrowser showPickerVc:window.rootViewController];
                 }
-            }
-            pickerBrowser.currentIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
-            
-            
-            // 展示控制器
-            UIWindow *window = [UIApplication sharedApplication].keyWindow;
-            [pickerBrowser showPickerVc:window.rootViewController];
-        }
+            }];
+        }];
     }
 }
 

@@ -28,7 +28,7 @@
 
 
 
-@interface OfflineDetailViewController ()<UIWebViewDelegate,UMSocialUIDelegate,UIScrollViewDelegate> {
+@interface OfflineDetailViewController ()<UMSocialUIDelegate,UIScrollViewDelegate> {
     NSString  *shareUrl;
     UIImageView *shareImageView;
 }

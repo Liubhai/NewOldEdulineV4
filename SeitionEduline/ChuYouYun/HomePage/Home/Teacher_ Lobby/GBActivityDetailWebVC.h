@@ -8,10 +8,11 @@
 
 #import "BaseViewController.h"
 #import "TeacherMainViewController.h"
+#import "YKTWebView.h"
 
-@interface GBActivityDetailWebVC : BaseViewController<UIWebViewDelegate,UIScrollViewDelegate>
+@interface GBActivityDetailWebVC : BaseViewController<UIScrollViewDelegate,  WKNavigationDelegate>
 
-@property (strong, nonatomic) UIWebView *webview;
+@property (strong, nonatomic) YKTWebView *webview;
 @property (strong, nonatomic) NSDictionary *infoDict;
 @property (strong, nonatomic) NSString *type;//详情页底部是否有控件，处理高度
 @property (assign, nonatomic) CGFloat tabelHeight;

@@ -58,9 +58,10 @@
 
 #import "Good_MyBalanceViewController.h"
 #import "BaseClass.h"
+#import "YKTWebView.h"
 
 @import MediaPlayer;
-@interface Good_ClassMainViewController ()<UIScrollViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDelegate,UIScrollViewDelegate,UIWebViewDelegate,UIGestureRecognizerDelegate,UMSocialUIDelegate,AliyunVodPlayerViewDelegate,BCEDocumentReaderDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface Good_ClassMainViewController ()<UIScrollViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDelegate,UIScrollViewDelegate,UIGestureRecognizerDelegate,UMSocialUIDelegate,AliyunVodPlayerViewDelegate,BCEDocumentReaderDelegate, UITableViewDelegate, UITableViewDataSource> {
     CGRect   playerFrame;
     WMPlayer *wmPlayer;
     BOOL     isShouleVedio;//是否应该缓存视频
@@ -107,7 +108,7 @@
 @property (strong ,nonatomic)UIWindow *appWindow;
 @property (strong ,nonatomic)UIImageView *shareImageView;
 
-@property (strong ,nonatomic)UIWebView *webView;
+@property (strong ,nonatomic)YKTWebView *webView;
 @property (strong ,nonatomic)UITextView *textView;
 @property (strong ,nonatomic)AVAudioPlayer *musicPlayer;
 
@@ -238,9 +239,9 @@
 //    return _wmPlayer;
 //}
 
--(UIWebView *)webView {//文档视图
+-(YKTWebView *)webView {//文档视图
     if (!_webView) {
-        _webView = [[UIWebView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 30 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit,210 * WideEachUnit)];
+        _webView = [[YKTWebView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 30 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit,210 * WideEachUnit)];
     }
     return _webView;
 }
@@ -1799,7 +1800,7 @@
 - (void)addWebView {//文档
     isVideoExit = NO;
     [_webView removeFromSuperview];
-    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth,MainScreenHeight / 2)];
+    _webView = [[YKTWebView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth,MainScreenHeight / 2)];
     //    if (iPhone4SOriPhone4) {
     //        _webView.frame = CGRectMake(0, 64, self.view.frame.size.width, (self.view.frame.size.width)*3/5);
     //    } else if (iPhone5o5Co5S) {
@@ -1817,9 +1818,7 @@
     
     
     [_webView setUserInteractionEnabled:YES];//是否支持交互
-    _webView.delegate = self;
     [_webView setOpaque:YES];//opaque是不透明的意思
-    [_webView setScalesPageToFit:YES];//自适应
     
     NSURL *url = nil;
     url = [NSURL URLWithString:_videoUrl];
@@ -2188,19 +2187,6 @@
     } else {
         _imageView.frame = _videoView.frame;
     }
-}
-
-
-#pragma mark --- UIWebViewDelegate
-
--(void)webViewDidFinishLoad:(UIWebView *)webView {
-    //    [TKProgressHUD hideAllHUDsForView:self.view animated:YES];
-    //    [TKProgressHUD showError:@"加载成功" toView:self.view];
-}
-
--(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    //    [TKProgressHUD hideAllHUDsForView:self.view animated:YES];
-    //    [TKProgressHUD showError:@"加载失败" toView:self.view];
 }
 
 #pragma mark ---Marquee

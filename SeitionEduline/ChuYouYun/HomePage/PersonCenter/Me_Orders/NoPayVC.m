@@ -25,7 +25,7 @@
 #import "ClassDetailViewController.h"
 
 
-@interface NoPayVC ()<UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate,UIAlertViewDelegate>
+@interface NoPayVC ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 
 @property (strong, nonatomic)UITableView *tableView;
 @property (strong ,nonatomic)NSMutableArray *dataArray;

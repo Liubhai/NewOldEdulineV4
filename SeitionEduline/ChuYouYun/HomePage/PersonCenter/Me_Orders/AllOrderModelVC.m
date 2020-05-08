@@ -27,7 +27,7 @@
 #import "ClassDetailViewController.h"
 
 
-@interface AllOrderModelVC ()<UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate,UIAlertViewDelegate>
+@interface AllOrderModelVC ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 
 @property (strong, nonatomic)UITableView *tableView;
 @property (strong ,nonatomic)NSMutableArray *dataArray;

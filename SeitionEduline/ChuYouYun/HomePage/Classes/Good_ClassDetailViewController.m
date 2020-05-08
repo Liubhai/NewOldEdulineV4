@@ -11,8 +11,9 @@
 #import "BigWindCar.h"
 #import "TeacherMainViewController.h"
 #import "InstitutionMainViewController.h"
+#import "YKTWebView.h"
 
-@interface Good_ClassDetailViewController ()<UIWebViewDelegate,UIScrollViewDelegate> {
+@interface Good_ClassDetailViewController ()<UIScrollViewDelegate, WKNavigationDelegate> {
     BOOL isUnwindClass;
     BOOL isUnwindTeacher;
     BOOL isHaveImage;
@@ -22,14 +23,14 @@
 @property (strong ,nonatomic)UIView         *classDetailView;
 @property (strong ,nonatomic)UIView         *teacherView;
 @property (strong ,nonatomic)UIView         *classIntroView;
-@property (strong ,nonatomic)UIWebView      *classWebView;
+@property (strong ,nonatomic)YKTWebView      *classWebView;
 @property (strong ,nonatomic)UILabel        *className;
 @property (strong ,nonatomic)UILabel        *personNumber;
 @property (strong ,nonatomic)UIButton       *unwindClassButton;
 @property (strong ,nonatomic)UILabel        *price;
 @property (strong ,nonatomic)UILabel        *teacherName;
 @property (strong ,nonatomic)UIImageView    *teacherImage;
-@property (strong ,nonatomic)UIWebView      *teacherWebView;
+@property (strong ,nonatomic)YKTWebView      *teacherWebView;
 @property (strong ,nonatomic)UIButton       *unwindTeacherButton;
 @property (strong ,nonatomic)UILabel        *classAndFans;
 @property (strong ,nonatomic)UILabel        *teacherInfo;
@@ -183,9 +184,8 @@
     _teacherInfo.textColor = [UIColor colorWithHexString:@"#333"];
     [introduceView addSubview:_teacherInfo];
     
-    _teacherWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0 * WideEachUnit, 0 * WideEachUnit, MainScreenWidth - 0 * WideEachUnit, 30 * WideEachUnit)];
+    _teacherWebView = [[YKTWebView alloc] initWithFrame:CGRectMake(0 * WideEachUnit, 0 * WideEachUnit, MainScreenWidth - 0 * WideEachUnit, 30 * WideEachUnit)];
     _teacherWebView.backgroundColor = [UIColor whiteColor];
-    _teacherWebView.delegate = self;
     _teacherWebView.scrollView.scrollEnabled = NO;
     [introduceView addSubview:_teacherWebView];
     _teacherWebView.hidden = YES;
@@ -315,9 +315,8 @@
     
     
     //添加webView
-    _classWebView = [[UIWebView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 10 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit, 50 * WideEachUnit)];
+    _classWebView = [[YKTWebView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 10 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit, 50 * WideEachUnit)];
     _classWebView.backgroundColor = [UIColor whiteColor];
-    _classWebView.delegate = self;
     _classWebView.scrollView.scrollEnabled = NO;
     [_classIntroView addSubview:_classWebView];
     _classWebView.hidden = YES;
@@ -539,7 +538,7 @@
 
 #pragma mark --- webViewDelegate
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView  {
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     if (webView == _classWebView) {
         CGRect frame = _classWebView.frame;
         frame.size.width = MainScreenWidth - 20 * WideEachUnit;

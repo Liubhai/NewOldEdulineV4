@@ -22,6 +22,7 @@
 #import "LibaryPlayViewController.h"
 
 #import "TKProgressHUD+Add.h"
+#import "YKTWebView.h"
 
 
 @interface MyDownLoadViewController ()<UITableViewDelegate,UITableViewDataSource,ZFDownloadDelegate>
@@ -40,7 +41,7 @@
 @property (atomic, strong) NSMutableArray *downloadObjectArr;
 @property (atomic, strong) NSMutableArray *rowArray;
 
-@property (strong ,nonatomic)UIWebView *webView;
+@property (strong ,nonatomic)YKTWebView *webView;
 
 
 @end
@@ -98,7 +99,7 @@
 
 - (void)addWebViewWithString:(NSString *)documentName {
     
-    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0,MainScreenHeight * 2, MainScreenWidth, 1)];
+    _webView = [[YKTWebView alloc] initWithFrame:CGRectMake(0,MainScreenHeight * 2, MainScreenWidth, 1)];
     [self.view addSubview:_webView];
     
 //    NSString *path = [[NSBundle mainBundle] pathForResource:documentName ofType:nil];

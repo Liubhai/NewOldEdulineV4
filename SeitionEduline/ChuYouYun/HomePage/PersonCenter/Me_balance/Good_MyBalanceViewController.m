@@ -19,9 +19,10 @@
 #import "Good_IntegralParticularsViewController.h"
 #import "BuyAgreementViewController.h"
 #import "STRIAPManager.h"
+#import "YKTWebView.h"
 
 
-@interface Good_MyBalanceViewController ()<UITextFieldDelegate,UIWebViewDelegate,UIScrollViewDelegate>{
+@interface Good_MyBalanceViewController ()<UITextFieldDelegate,UIScrollViewDelegate>{
     UIButton *moneySeleButton;//记录充值的button
     BOOL      isGiveMoney;
     NSInteger isSeleMoneyButtonNumber;
@@ -33,7 +34,7 @@
 @property (strong ,nonatomic)UIView   *rechargeView;
 @property (strong ,nonatomic)UIView   *agreeView;
 @property (strong ,nonatomic)UIView   *downView;
-@property (strong ,nonatomic)UIWebView *webView;
+@property (strong ,nonatomic)YKTWebView *webView;
 
 @property (strong ,nonatomic)UILabel  *balanceLabel;
 @property (strong ,nonatomic)UITextField *textField;

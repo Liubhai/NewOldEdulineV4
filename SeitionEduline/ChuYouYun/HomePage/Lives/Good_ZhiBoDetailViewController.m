@@ -11,8 +11,9 @@
 #import "BigWindCar.h"
 #import "TeacherMainViewController.h"
 #import "InstitutionMainViewController.h"
+#import "YKTWebView.h"
 
-@interface Good_ZhiBoDetailViewController ()<UIWebViewDelegate,UIScrollViewDelegate>{
+@interface Good_ZhiBoDetailViewController ()<UIScrollViewDelegate, WKNavigationDelegate>{
     BOOL isUnwindClass;
     BOOL isUnwindTeacher;
     BOOL isHaveImage;
@@ -22,12 +23,12 @@
 @property (strong ,nonatomic)UIView         *classDetailView;
 @property (strong ,nonatomic)UIView         *teacherView;
 @property (strong ,nonatomic)UIView         *classIntroView;
-@property (strong ,nonatomic)UIWebView      *classWebView;
+@property (strong ,nonatomic)YKTWebView      *classWebView;
 @property (strong ,nonatomic)UILabel        *className;
 @property (strong ,nonatomic)UILabel        *personNumber;
 @property (strong ,nonatomic)UILabel        *price;
 @property (strong ,nonatomic)UILabel        *teacherName;
-@property (strong ,nonatomic)UIWebView      *teacherWebView;
+@property (strong ,nonatomic)YKTWebView      *teacherWebView;
 @property (strong ,nonatomic)UIImageView    *teacherImage;
 @property (strong ,nonatomic)UILabel        *classAndFans;
 @property (strong ,nonatomic)UILabel        *teacherInfo;
@@ -197,9 +198,8 @@
     [introduceView addSubview:_teacherInfo];
     
     //添加网络视图
-    _teacherWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0 * WideEachUnit, 0 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit, 30 * WideEachUnit)];
+    _teacherWebView = [[YKTWebView alloc] initWithFrame:CGRectMake(0 * WideEachUnit, 0 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit, 30 * WideEachUnit)];
     _teacherWebView.backgroundColor = [UIColor whiteColor];
-    _teacherWebView.delegate = self;
     _teacherWebView.scrollView.scrollEnabled = NO;
     [introduceView addSubview:_teacherWebView];
     _teacherWebView.hidden = YES;
@@ -328,9 +328,8 @@
     _classContent = classContent;
     
     //添加webView
-    _classWebView = [[UIWebView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 0 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit, 50 * WideEachUnit)];
+    _classWebView = [[YKTWebView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 0 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit, 50 * WideEachUnit)];
     _classWebView.backgroundColor = [UIColor whiteColor];
-    _classWebView.delegate = self;
     _classWebView.scrollView.scrollEnabled = NO;
     [_classIntroView addSubview:_classWebView];
     _classWebView.hidden = YES;
@@ -553,7 +552,7 @@
     [_classWebView loadHTMLString:str baseURL:nil];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView  {
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     
 //    CGRect frame = _classWebView.frame;
 //    frame.size.width = MainScreenWidth - 20 * WideEachUnit;

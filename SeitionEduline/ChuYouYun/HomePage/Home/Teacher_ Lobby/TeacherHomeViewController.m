@@ -17,9 +17,10 @@
 #import "ZhiyiHTTPRequest.h"
 #import "Passport.h"
 #import "ZhiBoMainViewController.h"
+#import "YKTWebView.h"
+#import <WebKit/WebKit.h>
 
-
-@interface TeacherHomeViewController ()<UIWebViewDelegate> {
+@interface TeacherHomeViewController ()<WKNavigationDelegate> {
     BOOL isHaveImage;
 }
 
@@ -29,7 +30,7 @@
 @property (strong ,nonatomic)UIView       *photoView;
 @property (strong ,nonatomic)UIView       *articeView;
 @property (strong ,nonatomic)UIView       *detailView;
-@property (strong ,nonatomic)UIWebView    *webView;
+@property (strong ,nonatomic)YKTWebView    *webView;
 @property (strong ,nonatomic)UILabel      *addressLabel;
 @property (strong ,nonatomic)UILabel      *teachType;//授课方式
 
@@ -202,8 +203,8 @@
     NSString *replaceStr = [NSString stringWithFormat:@"<img src=\"%@/data/upload",EncryptHeaderUrl];
     NSString *textStr = [allStr stringByReplacingOccurrencesOfString:@"<img src=\"/data/upload" withString:replaceStr];
     
-    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(10, 10, MainScreenWidth - 20, 30)];
-    _webView.delegate = self;
+    _webView = [[YKTWebView alloc] initWithFrame:CGRectMake(10, 10, MainScreenWidth - 20, 30)];
+    _webView.navigationDelegate = self;
     _webView.scrollView.scrollEnabled = NO;
     if (iPhoneX) {
         _webView.frame = CGRectMake(0, 88, MainScreenWidth, MainScreenHeight - 88);
@@ -230,8 +231,7 @@
 
 #pragma mark --- SrcollViewDelegate
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView  {
-    
+- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation {
     CGRect frame = self.webView.frame;
     frame.size.width = MainScreenWidth - 20 * WideEachUnit;
     frame.size.height = 1 * WideEachUnit;
@@ -248,7 +248,6 @@
     //这里要传个通知到 主界面去
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TeacherHomeScrollHight" object:higtStr];
 }
-
 
 
 #pragma mark ---网络请求

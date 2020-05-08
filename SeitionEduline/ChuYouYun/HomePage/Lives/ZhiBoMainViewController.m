@@ -41,7 +41,7 @@
 
 
 
-@interface ZhiBoMainViewController ()<UIScrollViewDelegate,UMSocialUIDelegate,UIWebViewDelegate,UITableViewDelegate,UITableViewDataSource> {
+@interface ZhiBoMainViewController ()<UIScrollViewDelegate,UMSocialUIDelegate,UITableViewDelegate,UITableViewDataSource> {
     UIImageView  *shareImageView;
     NSString     *shareUrl;
     CGFloat sectionHeight;

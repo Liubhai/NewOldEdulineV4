@@ -173,18 +173,6 @@
 -(void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error{
     
 }
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    if ([error.domain isEqualToString:@"NSURLErrorDomain"] && error.code == NSURLErrorCancelled) {
-        NSLog(@"Canceled request: %@", webView.request.URL);
-        return;
-    }
-    else if ([error.domain isEqualToString:@"WebKitErrorDomain"] && (error.code == 102 || error.code == 204)) {
-        NSLog(@"ignore: %@", error);
-        return;
-    }
-
-    NSLog(@"%@", [error localizedDescription]);
-}
 /*
 #pragma mark - Navigation
 

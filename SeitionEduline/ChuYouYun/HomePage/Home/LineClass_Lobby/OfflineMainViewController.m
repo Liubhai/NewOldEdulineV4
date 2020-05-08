@@ -22,7 +22,7 @@
 #import "DLViewController.h"
 
 
-@interface OfflineMainViewController ()<UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate>{
+@interface OfflineMainViewController ()<UITableViewDelegate,UITableViewDataSource>{
     NSInteger Num;
     BOOL isClass;
     BOOL isSchool;
