@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 #import <WebKit/WebKit.h>
 
-@interface WebViewController : BaseViewController<UIWebViewDelegate>
+@interface WebViewController : BaseViewController
 
 @property (strong, nonatomic) WKWebView *webView;
 @property (strong, nonatomic) NSString *urlString;
