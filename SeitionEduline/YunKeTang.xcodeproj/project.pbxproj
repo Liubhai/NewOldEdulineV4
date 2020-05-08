@@ -3759,6 +3759,7 @@
 		F1FF8DAB1C5B0DB9003BF253 /* iconfont-shouji@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FF8DA11C5B0DB9003BF253 /* iconfont-shouji@2x.png */; };
 		F1FF8DAD1C5B0DB9003BF253 /* webo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FF8DA31C5B0DB9003BF253 /* webo@2x.png */; };
 		F1FF8DAE1C5B0DB9003BF253 /* weixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FF8DA41C5B0DB9003BF253 /* weixin@2x.png */; };
+		F684117124659A9800AFE389 /* YKTWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = F684117024659A9800AFE389 /* YKTWebView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -8751,6 +8752,8 @@
 		F1FF8DA11C5B0DB9003BF253 /* iconfont-shouji@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconfont-shouji@2x.png"; sourceTree = "<group>"; };
 		F1FF8DA31C5B0DB9003BF253 /* webo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "webo@2x.png"; sourceTree = "<group>"; };
 		F1FF8DA41C5B0DB9003BF253 /* weixin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin@2x.png"; sourceTree = "<group>"; };
+		F684116F24659A9800AFE389 /* YKTWebView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YKTWebView.h; sourceTree = "<group>"; };
+		F684117024659A9800AFE389 /* YKTWebView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YKTWebView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -23895,6 +23898,8 @@
 		F1C739FF1D9265DB009B409F /* BasieView */ = {
 			isa = PBXGroup;
 			children = (
+				F684116F24659A9800AFE389 /* YKTWebView.h */,
+				F684117024659A9800AFE389 /* YKTWebView.m */,
 				7803143222ADE48F0007EBBC /* LBHTableView.h */,
 				7803143122ADE48E0007EBBC /* LBHTableView.m */,
 				F1C73A001D9265EB009B409F /* BaseViewController.h */,
@@ -24030,8 +24035,8 @@
 				TargetAttributes = {
 					50566DFB1A6F44A400F093DE = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 2VGCGZZ87Y;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 5QQ23A4NX6;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -27033,6 +27038,7 @@
 				780F89FE230F85F500B67CEF /* TKCTChatView.m in Sources */,
 				780F8A2F230F85F500B67CEF /* TKOneViewController+Media.m in Sources */,
 				78F109A622B770AA00288DEB /* HTTPDataResponse.m in Sources */,
+				F684117124659A9800AFE389 /* YKTWebView.m in Sources */,
 				78F109C622B770AA00288DEB /* ZBLM3u8Analysiser.m in Sources */,
 				78F109B822B770AA00288DEB /* DAVResponse.m in Sources */,
 				50BACB0D1A709E7200E2B8A4 /* AFURLResponseSerialization.m in Sources */,
@@ -27970,8 +27976,8 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2VGCGZZ87Y;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 5QQ23A4NX6;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -28059,7 +28065,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.saixin.eduline;
 				PRODUCT_NAME = Eduline;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Dev*";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7s armv7 arm64";
@@ -28074,10 +28080,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 5QQ23A4NX6;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -28165,7 +28171,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.saixin.eduline;
 				PRODUCT_NAME = Eduline;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Dev*";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7s armv7 arm64";
