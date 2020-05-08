@@ -10,12 +10,12 @@
 #import "SYG.h"
 #import "rootViewController.h"
 #import "AppDelegate.h"
+#import <WebKit/WebKit.h>
 
 
+@interface AdViewController ()
 
-@interface AdViewController ()<UIWebViewDelegate>
-
-@property (strong ,nonatomic)UIWebView *webView;
+@property (strong ,nonatomic)WKWebView *webView;
 
 
 @end
@@ -82,12 +82,7 @@
 }
 
 - (void)addWebView {
-    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64)];
-    [_webView setUserInteractionEnabled:YES];//是否支持交互
-    _webView.delegate=self;
-    [_webView setOpaque:YES];//opaque是不透明的意思
-    [_webView setScalesPageToFit:YES];//自适应
-    
+    _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64)];
     NSURL *url = [NSURL URLWithString:_adStr];
     [_webView loadRequest:[NSURLRequest requestWithURL:url]];
     [self.view addSubview:_webView];

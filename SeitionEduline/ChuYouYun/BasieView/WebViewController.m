@@ -41,11 +41,8 @@
     [super viewDidLoad];
     _titleLabel.text = _titleString;
     _titleImage.backgroundColor = BasidColor;
-    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT)];
+    _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT)];
     [_webView setUserInteractionEnabled:YES];//是否支持交互
-    _webView.delegate = self;
-    [_webView setOpaque:YES];//opaque是不透明的意思
-    [_webView setScalesPageToFit:YES];//自适应
     _webView.scrollView.scrollEnabled = NO;
     
     NSURL *url = [NSURL URLWithString:_urlString];
