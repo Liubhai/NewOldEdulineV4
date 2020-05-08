@@ -17,10 +17,11 @@
 #import "TKProgressHUD+Add.h"
 #import "MyHttpRequest.h"
 #import "ZhiyiHTTPRequest.h"
+#import "YKTWebView.h"
 
-@interface BuyAgreementViewController ()<UIWebViewDelegate>
+@interface BuyAgreementViewController ()
 
-@property (strong ,nonatomic)UIWebView     *webView;
+@property (strong ,nonatomic)YKTWebView     *webView;
 @property (strong ,nonatomic)NSString      *H5Str;
 
 @end
@@ -48,6 +49,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+
     [self interFace];
     _titleImage.backgroundColor = BasidColor;
     _titleLabel.text = @"解锁协议";
@@ -83,16 +86,13 @@
 #pragma mark --- 添加网络试图
 - (void)addWebView {
     
-    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT)];
+    _webView = [[YKTWebView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT)];
     _webView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_webView];
     
     
     [_webView setUserInteractionEnabled:YES];//是否支持交互
-    _webView.delegate = self;
     [_webView setOpaque:YES];//opaque是不透明的意思
-    [_webView setScalesPageToFit:YES];//自适应
-    
     [_webView loadHTMLString:_H5Str baseURL:nil];
 }
 
