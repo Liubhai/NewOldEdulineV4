@@ -22,9 +22,6 @@
 #import "ManageAddressViewController.h"
 #import "ShopOrderDetailVC.h"
 
-
-
-
 @interface ShopDetailMainViewController ()<UIScrollViewDelegate> {
     BOOL      isHaveDefault;
     NSString  *_adress_id;
@@ -34,7 +31,6 @@
 @property (strong ,nonatomic)UIView       *WZView;
 @property (strong ,nonatomic)UIView       *informationView;
 @property (strong ,nonatomic)UIView       *allWindowView;
-@property (strong ,nonatomic)UIWebView    *webView;
 
 @property (strong ,nonatomic)UIButton   *aliSeleButton;
 @property (strong ,nonatomic)UIButton   *wxSeleButton;

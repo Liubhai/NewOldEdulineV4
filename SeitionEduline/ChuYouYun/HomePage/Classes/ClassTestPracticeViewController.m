@@ -19,9 +19,9 @@
 #import "TestChooseTableViewCell.h"
 #import "TestGapTableViewCell.h"
 #import "TestSubjectivityTableViewCell.h"
+#import "YKTWebView.h"
 
-
-@interface ClassTestPracticeViewController ()<UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate,UITextViewDelegate> {
+@interface ClassTestPracticeViewController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate, WKNavigationDelegate> {
     NSInteger refreshNumber;//刷新的次数
     CGFloat   webViewHight;//表格头部视图的webView的高度的记录
     NSInteger subjectNumber;//考试的题目 （在该类型中的序列号）
@@ -54,7 +54,7 @@
 
 //表格头部的webView
 @property (strong ,nonatomic)UIView           *chooseHeaderView;
-@property (strong ,nonatomic)UIWebView        *chooseHeaderWebView;
+@property (strong ,nonatomic)YKTWebView        *chooseHeaderWebView;
 @property (strong ,nonatomic)UIButton         *chooseHeaderWebViewButton;
 @property (strong ,nonatomic)UILabel          *currentNumberLabel;
 
@@ -146,9 +146,9 @@
     return _currentNumberLabel;
 }
 
--(UIWebView *)chooseHeaderWebView {
+-(YKTWebView *)chooseHeaderWebView {
     if (!_chooseHeaderWebView) {
-        _chooseHeaderWebView = [[UIWebView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 30 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit,30 * WideEachUnit)];
+        _chooseHeaderWebView = [[YKTWebView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 30 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit,30 * WideEachUnit)];
     }
     return _chooseHeaderWebView;
 }
@@ -619,7 +619,6 @@
         self.chooseHeaderWebViewButton.frame = CGRectMake(0, 0, MainScreenWidth - 20 * WideEachUnit, webViewHight);
     }
     self.chooseHeaderWebView.backgroundColor = [UIColor whiteColor];
-    self.chooseHeaderWebView.delegate = self;
     [headerView addSubview:self.chooseHeaderWebView];
     
 //    if (_currentArray.count == 0) {
@@ -824,15 +823,8 @@
 }
 
 #pragma mark --- UIWebViewDelegate
-- (void)webViewDidFinishLoad:(UIWebView *)webView  {
-    //    CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.scrollHeight"] floatValue];
-    //    CGFloat height = [[self.chooseHeaderWebView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
-    //    NSLog(@"----%lf",height);
-    //
-    //    CGSize webSize = [self.chooseHeaderWebView sizeThatFits:CGSizeZero];
-    //    NSLog(@"---%lf",webSize.height);
-    //    webViewHight = webSize.height;
-    
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     CGRect frame = self.chooseHeaderWebView.frame;
     frame.size.width = MainScreenWidth - 20 * WideEachUnit;
     frame.size.height = 1 * WideEachUnit;
@@ -843,17 +835,14 @@
     webView.frame = frame;
     webViewHight = frame.size.height;
     
-    
-    
-    //    self.chooseHeaderWebView.frame = CGRectMake(10 * WideEachUnit, 30 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit, 30 * WideEachUnit);
     if (refreshNumber == 0) {
         [_chooseTableView reloadData];
         refreshNumber = 1;
     } else {
         refreshNumber = 0;
     }
-    
 }
+
 
 #pragma mark --- 事件处理
 

@@ -26,10 +26,11 @@
 //图文混排
 #import "TYAttributedLabel.h"
 #import "RegexKitLite.h"
+#import "YKTWebView.h"
 
 
 
-@interface ZXDTViewController ()<UIWebViewDelegate,UMSocialUIDelegate,TYAttributedLabelDelegate>{
+@interface ZXDTViewController ()<UMSocialUIDelegate,TYAttributedLabelDelegate>{
     UIImageView  *shareImageView;
 }
 
@@ -139,7 +140,7 @@
     NSString *replaceStr = [NSString stringWithFormat:@"<img src=\"%@/data/upload",EncryptHeaderUrl];
     NSString *textStr = [allStr stringByReplacingOccurrencesOfString:@"<img src=\"/data/upload" withString:replaceStr];
     
-    UIWebView* webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64)];
+    YKTWebView* webView = [[YKTWebView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64)];
     if (iPhoneX) {
         webView.frame = CGRectMake(0, 88, MainScreenWidth, MainScreenHeight - 88);
     }

@@ -10,13 +10,14 @@
 #import "SYG.h"
 #import "BigWindCar.h"
 #import "YunKeTang_Api_Tool.h"
+#import "YKTWebView.h"
 
-@interface Good_ClassServiceViewController ()<UIWebViewDelegate>
+@interface Good_ClassServiceViewController ()
 
 @property (strong ,nonatomic)NSDictionary  *dataSoruce;
 @property (strong ,nonatomic)NSString      *ID;
 @property (strong ,nonatomic)NSString      *urlStr;
-@property (strong ,nonatomic)UIWebView     *webView;
+@property (strong ,nonatomic)YKTWebView     *webView;
 
 @end
 
@@ -43,14 +44,12 @@
 }
 
 - (void)addWebView {
-    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - 50 * WideEachUnit - 210 * WideEachUnit - 150 * WideEachUnit)];
+    _webView = [[YKTWebView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - 50 * WideEachUnit - 210 * WideEachUnit - 150 * WideEachUnit)];
     _webView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_webView];
     
     [_webView setUserInteractionEnabled:YES];//是否支持交互
-    _webView.delegate = self;
     [_webView setOpaque:YES];//opaque是不透明的意思
-    [_webView setScalesPageToFit:YES];//自适应
     
     NSURL *url = nil;
     url = [NSURL URLWithString:_urlStr];

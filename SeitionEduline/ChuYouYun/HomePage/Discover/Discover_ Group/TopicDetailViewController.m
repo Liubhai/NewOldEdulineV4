@@ -15,9 +15,10 @@
 #import "Passport.h"
 #import "ZhiyiHTTPRequest.h"
 #import "MyHttpRequest.h"
+#import "YKTWebView.h"
 
 
-@interface TopicDetailViewController ()<UIWebViewDelegate>
+@interface TopicDetailViewController ()
 
 {
     BOOL isSecet;
@@ -45,7 +46,7 @@
 
 @property (strong ,nonatomic)UIView *buyView;
 
-@property (strong ,nonatomic)UIWebView *webView;//网络试图
+@property (strong ,nonatomic)YKTWebView *webView;//网络试图
 
 @end
 
@@ -125,11 +126,9 @@
 
 #pragma mark --- 网络试图
 - (void)addWebView {
-    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64)];
+    _webView = [[YKTWebView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64)];
     [_webView setUserInteractionEnabled:YES];//是否支持交互
-    _webView.delegate=self;
     [_webView setOpaque:YES];//opaque是不透明的意思
-    [_webView setScalesPageToFit:YES];//自适应
     
     //http://www.igenwoxue.com/index.php?app=group&mod=Index&act=detail&id=75
     NSString *oneStr = @"app=group&mod=Index&act=detail&id=";
@@ -142,13 +141,7 @@
     [_webView loadRequest:[NSURLRequest requestWithURL:url]];
     [self.view addSubview:_webView];
 //    [self.webView setMediaPlaybackRequiresUserAction:NO];
-    _webView.mediaPlaybackRequiresUserAction = NO;
-//    _webview.allowsInlineMediaPlayback = YES;
 }
-
-//-(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-//    return YES;
-//}
 
 
 

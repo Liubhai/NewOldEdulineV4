@@ -414,7 +414,6 @@
 		50BACB561A709E7300E2B8A4 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BACAC01A709E7200E2B8A4 /* UIImageView+AFNetworking.m */; };
 		50BACB571A709E7300E2B8A4 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BACAC31A709E7200E2B8A4 /* UIProgressView+AFNetworking.m */; };
 		50BACB581A709E7300E2B8A4 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BACAC51A709E7200E2B8A4 /* UIRefreshControl+AFNetworking.m */; };
-		50BACB591A709E7300E2B8A4 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BACAC71A709E7200E2B8A4 /* UIWebView+AFNetworking.m */; };
 		50DAE3AD1AB03290005B4B15 /* blumCatalogList.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DAE3AC1AB03290005B4B15 /* blumCatalogList.m */; };
 		7587B0D31B0DDD9600E39062 /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7587B0D21B0DDD9600E39062 /* MZTimerLabel.m */; };
 		780061BB22D0782C006B7E8C /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 780061BA22D0782B006B7E8C /* libWeiboSDK.a */; };
@@ -4327,8 +4326,6 @@
 		50BACAC31A709E7200E2B8A4 /* UIProgressView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIProgressView+AFNetworking.m"; sourceTree = "<group>"; };
 		50BACAC41A709E7200E2B8A4 /* UIRefreshControl+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIRefreshControl+AFNetworking.h"; sourceTree = "<group>"; };
 		50BACAC51A709E7200E2B8A4 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
-		50BACAC61A709E7200E2B8A4 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
-		50BACAC71A709E7200E2B8A4 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		50BACAED1A709E7200E2B8A4 /* ZYDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYDefines.h; sourceTree = "<group>"; };
 		50DAE3AB1AB03290005B4B15 /* blumCatalogList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blumCatalogList.h; sourceTree = "<group>"; };
 		50DAE3AC1AB03290005B4B15 /* blumCatalogList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = blumCatalogList.m; sourceTree = "<group>"; };
@@ -10386,8 +10383,6 @@
 				50BACAC31A709E7200E2B8A4 /* UIProgressView+AFNetworking.m */,
 				50BACAC41A709E7200E2B8A4 /* UIRefreshControl+AFNetworking.h */,
 				50BACAC51A709E7200E2B8A4 /* UIRefreshControl+AFNetworking.m */,
-				50BACAC61A709E7200E2B8A4 /* UIWebView+AFNetworking.h */,
-				50BACAC71A709E7200E2B8A4 /* UIWebView+AFNetworking.m */,
 			);
 			path = "UIKit+AFNetworking";
 			sourceTree = "<group>";
@@ -26900,7 +26895,6 @@
 				09E091DE1F1C877D00C10221 /* JXSegment.m in Sources */,
 				7803142D22ADE4480007EBBC /* ZLPhotoPickerCollectionViewCell.m in Sources */,
 				815EFBB921AE644E0026D35F /* ZXZXTableViewCell.m in Sources */,
-				50BACB591A709E7300E2B8A4 /* UIWebView+AFNetworking.m in Sources */,
 				815EFDA321AE89350026D35F /* NoRefundVC.m in Sources */,
 				78F109A322B770AA00288DEB /* DDFileLogger.m in Sources */,
 				F15D83621CB65BA200759D10 /* BuyBlum.m in Sources */,

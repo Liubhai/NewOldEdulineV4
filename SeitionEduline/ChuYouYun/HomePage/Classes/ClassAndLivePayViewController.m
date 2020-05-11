@@ -19,7 +19,7 @@
 #import "EntityCardViewController.h"
 #import "BuyAgreementViewController.h"
 
-@interface ClassAndLivePayViewController ()<UIWebViewDelegate> {
+@interface ClassAndLivePayViewController () {
     BOOL isArgree;
     BOOL isGoOut;
 }
