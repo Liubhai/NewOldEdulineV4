@@ -115,6 +115,7 @@
     _ClassIntroWeb.scrollView.scrollEnabled = NO;
     _ClassIntroWeb.scrollView.showsVerticalScrollIndicator = NO;
     _ClassIntroWeb.scrollView.showsHorizontalScrollIndicator = NO;
+    _ClassIntroWeb.navigationDelegate = self;
     [_mainScroll addSubview:_ClassIntroWeb];
 }
 

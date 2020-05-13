@@ -147,6 +147,7 @@
 -(YKTWebView *)chooseHeaderWebView {
     if (!_chooseHeaderWebView) {
         _chooseHeaderWebView = [[YKTWebView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 30 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit,30 * WideEachUnit)];
+        _chooseHeaderWebView.navigationDelegate = self;
     }
     return _chooseHeaderWebView;
 }

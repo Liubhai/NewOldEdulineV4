@@ -239,12 +239,12 @@
 //    return _wmPlayer;
 //}
 
--(YKTWebView *)webView {//文档视图
-    if (!_webView) {
-        _webView = [[YKTWebView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 30 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit,210 * WideEachUnit)];
-    }
-    return _webView;
-}
+//-(YKTWebView *)webView {//文档视图
+//    if (!_webView) {
+//        _webView = [[YKTWebView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 30 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit,210 * WideEachUnit)];
+//    }
+//    return _webView;
+//}
 
 -(UITextView *)textView {//文本视图
     if (!_textView) {
