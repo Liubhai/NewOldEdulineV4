@@ -28081,7 +28081,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.saixin.eduline;
 				PRODUCT_NAME = Eduline;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "Dev*";
+				PROVISIONING_PROFILE_SPECIFIER = tongyongDis;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7s armv7 arm64";

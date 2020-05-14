@@ -26,9 +26,7 @@
 @implementation MyTeacherManageCompleteViewController
 
 -(instancetype)initWithID:(NSDictionary *)dict{
-    if (!self) {
-        self = [super init];
-    }
+    self = [super init];
     _dict = dict;
     return self;
 }

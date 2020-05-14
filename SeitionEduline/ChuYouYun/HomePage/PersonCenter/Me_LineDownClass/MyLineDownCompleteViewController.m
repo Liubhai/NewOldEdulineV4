@@ -24,10 +24,7 @@
 @implementation MyLineDownCompleteViewController
 
 -(instancetype)initWithID:(NSDictionary *)dict{
-    if (!self) {
-        self = [super init];
-        _dict = dict;
-    }
+    self = [super init];
     _dict = dict;
     return self;
 }
