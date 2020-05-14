@@ -10,7 +10,6 @@
 //#define MainScreenWidth [UIScreen mainScreen].bounds.size.width
 
 #import "ZCViewController.h"
-#import "UMSocial.h"
 #import "MyHttpRequest.h"
 #import "ZhiyiHTTPRequest.h"
 #import "TKProgressHUD+Add.h"
@@ -27,7 +26,8 @@
 #import "SYG.h"
 #import "BigWindCar.h"
 #import "Good_PersonFaceRegisterViewController.h"
-
+#import <UMCommon/UMCommon.h>
+#import <UMShare/UMShare.h>
 
 
 @interface ZCViewController ()

@@ -11,7 +11,9 @@
 #import "SYG.h"
 #import "rootViewController.h"
 #import "BigWindCar.h"
-#import "UMSocial.h"
+#import <UMCommon/UMCommon.h>
+#import <UMShare/UMShare.h>
+
 #import "Good_ThirdBoundTableViewCell.h"
 
 
@@ -170,46 +172,49 @@
 }
 
 - (void)Tencent {
-    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQQ];
-    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
-        if (response.responseCode == UMSResponseCodeSuccess) {
-            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
-            _uid = snsAccount.usid;
-            if ([_typeStr integerValue] == 0) {
-                [self NetWorkUserBindWithType:@"qzone"];
-            } else if ([_typeStr integerValue] == 1) {
-                [self NetWorkUserBindDelWithType:@"qzone"];
-            }
-        }});
+    /// ST Todo 分享
+//    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQQ];
+//    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+//        if (response.responseCode == UMSResponseCodeSuccess) {
+//            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
+//            _uid = snsAccount.usid;
+//            if ([_typeStr integerValue] == 0) {
+//                [self NetWorkUserBindWithType:@"qzone"];
+//            } else if ([_typeStr integerValue] == 1) {
+//                [self NetWorkUserBindDelWithType:@"qzone"];
+//            }
+//        }});
 }
 
 - (void)WeChat {
-    
-    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
-    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
-        if (response.responseCode == UMSResponseCodeSuccess) {
-            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
-            _uid = snsAccount.unionId;
-            if ([_typeStr integerValue] == 0) {
-                 [self NetWorkUserBindWithType:@"weixin"];
-            } else if ([_typeStr integerValue] == 1) {
-                [self NetWorkUserBindDelWithType:@"weixin"];
-            }
-        }});
+    /// ST Todo 分享
+
+//    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
+//    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+//        if (response.responseCode == UMSResponseCodeSuccess) {
+//            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
+//            _uid = snsAccount.unionId;
+//            if ([_typeStr integerValue] == 0) {
+//                 [self NetWorkUserBindWithType:@"weixin"];
+//            } else if ([_typeStr integerValue] == 1) {
+//                [self NetWorkUserBindDelWithType:@"weixin"];
+//            }
+//        }});
 }
 
 - (void)Sina {
-    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina];
-    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
-        if (response.responseCode == UMSResponseCodeSuccess) {
-            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
-            _uid = snsAccount.accessToken;
-            if ([_typeStr integerValue] == 0) {
-                 [self NetWorkUserBindWithType:@"sina"];
-            } else if ([_typeStr integerValue] == 1) {
-                 [self NetWorkUserBindDelWithType:@"sina"];
-            }
-        }});
+    /// ST Todo 分享
+//    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina];
+//    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+//        if (response.responseCode == UMSResponseCodeSuccess) {
+//            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
+//            _uid = snsAccount.accessToken;
+//            if ([_typeStr integerValue] == 0) {
+//                 [self NetWorkUserBindWithType:@"sina"];
+//            } else if ([_typeStr integerValue] == 1) {
+//                 [self NetWorkUserBindDelWithType:@"sina"];
+//            }
+//        }});
 }
 
 //获取绑定状态

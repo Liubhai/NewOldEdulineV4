@@ -16,7 +16,8 @@
 #import "Good_IntegralParticularsViewController.h"
 #import "Good_AddBankViewController.h"
 #import "BuyAgreementViewController.h"
-#import "UMSocial.h"
+#import <UMCommon/UMCommon.h>
+#import <UMShare/UMShare.h>
 
 @interface Good_CommissionViewController ()<UITextFieldDelegate,UIScrollViewDelegate>  {
     NSInteger bankSeleNumber;//银行卡选中的位置

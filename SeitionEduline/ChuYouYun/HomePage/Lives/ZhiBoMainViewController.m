@@ -16,10 +16,8 @@
 #import "MyHttpRequest.h"
 #import "ZhiyiHTTPRequest.h"
 
-#import "UMSocial.h"
-#import "UMSocialWechatHandler.h"
-#import "UMSocialSinaSSOHandler.h"
-#import "UMSocialQQHandler.h"
+#import <UMCommon/UMCommon.h>
+#import <UMShare/UMShare.h>
 
 
 #import "DLViewController.h"
@@ -41,7 +39,7 @@
 
 
 
-@interface ZhiBoMainViewController ()<UIScrollViewDelegate,UMSocialUIDelegate,UITableViewDelegate,UITableViewDataSource> {
+@interface ZhiBoMainViewController ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource> {
     UIImageView  *shareImageView;
     NSString     *shareUrl;
     CGFloat sectionHeight;
@@ -779,14 +777,15 @@
                     myActivityInfo = [NSDictionary dictionaryWithDictionary:[_activityInfo objectForKey:@"user_asb"]];
                 }
                 if (SWNOTEmptyDictionary(myActivityInfo)) {
-                    [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:[myActivityInfo objectForKey:@"share_url"]];
-                    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:[myActivityInfo objectForKey:@"share_url"]];
-                    [UMSocialSnsService presentSnsIconSheetView:self
-                                                         appKey:@"574e8829e0f55a12f8001790"
-                                                      shareText:_zhiBoTitle
-                                                     shareImage:shareImageView.image
-                                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
-                                                       delegate:self];
+                    /// ST Todo 分享
+//                    [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:[myActivityInfo objectForKey:@"share_url"]];
+//                    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:[myActivityInfo objectForKey:@"share_url"]];
+//                    [UMSocialSnsService presentSnsIconSheetView:self
+//                                                         appKey:@"574e8829e0f55a12f8001790"
+//                                                      shareText:_zhiBoTitle
+//                                                     shareImage:shareImageView.image
+//                                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
+//                                                       delegate:self];
                 }
             }
         }
@@ -794,15 +793,17 @@
 }
 
 - (void)LiveShare {
-    [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:_shareLiveUrl];
-    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:_shareLiveUrl];
-    //    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:SinaAppId secret:SinaAppSecret RedirectURL:_shareLiveUrl];
-    [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:@"574e8829e0f55a12f8001790"
-                                      shareText:_zhiBoTitle
-                                     shareImage:shareImageView.image
-                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
-                                       delegate:self];
+    /// ST Todo 分享
+
+//    [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:_shareLiveUrl];
+//    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:_shareLiveUrl];
+//    //    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:SinaAppId secret:SinaAppSecret RedirectURL:_shareLiveUrl];
+//    [UMSocialSnsService presentSnsIconSheetView:self
+//                                         appKey:@"574e8829e0f55a12f8001790"
+//                                      shareText:_zhiBoTitle
+//                                     shareImage:shareImageView.image
+//                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
+//                                       delegate:self];
     
 }
 
@@ -1975,15 +1976,16 @@
         [self.navigationController pushViewController:vc animated:YES];
     } else {
         // 继续邀请
+        /// ST Todo 分享
         NSString *bargain_info_share_url = [NSString stringWithFormat:@"%@",[[[_activityInfo objectForKey:@"bargain_info"] objectForKey:@"mine"] objectForKey:@"share_url"]];
-        [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:bargain_info_share_url];
-        [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:bargain_info_share_url];
-        [UMSocialSnsService presentSnsIconSheetView:self
-                                             appKey:@"574e8829e0f55a12f8001790"
-                                          shareText:[NSString stringWithFormat:@"%@",_zhiBoTitle]
-                                         shareImage:shareImageView.image
-                                    shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
-                                           delegate:self];
+//        [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:bargain_info_share_url];
+//        [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:bargain_info_share_url];
+//        [UMSocialSnsService presentSnsIconSheetView:self
+//                                             appKey:@"574e8829e0f55a12f8001790"
+//                                          shareText:[NSString stringWithFormat:@"%@",_zhiBoTitle]
+//                                         shareImage:shareImageView.image
+//                                    shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
+//                                           delegate:self];
     }
 }
 

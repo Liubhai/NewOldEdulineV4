@@ -18,10 +18,8 @@
 #import "UIImageView+WebCache.h"
 
 
-#import "UMSocial.h"
-#import "UMSocialQQHandler.h"
-#import "UMSocialSinaSSOHandler.h"
-#import "UMSocialWechatHandler.h"
+#import <UMCommon/UMCommon.h>
+#import <UMShare/UMShare.h>
 
 //图文混排
 #import "TYAttributedLabel.h"
@@ -30,7 +28,7 @@
 
 
 
-@interface ZXDTViewController ()<UMSocialUIDelegate,TYAttributedLabelDelegate>{
+@interface ZXDTViewController ()<TYAttributedLabelDelegate>{
     UIImageView  *shareImageView;
 }
 
@@ -182,17 +180,17 @@
 #pragma mark --- 分享
 - (void)NewsShare {
     _shareVideoUrl = [NSString stringWithFormat:@"%@/news/%@.html",EncryptHeaderUrl,_ID];
-    
-    [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:_shareVideoUrl];
-    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:_shareVideoUrl];
-//    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:SinaAppId secret:SinaAppSecret RedirectURL:_shareVideoUrl];
-    //    UMShareToSina
-    [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:@"574e8829e0f55a12f8001790"
-                                      shareText:_titleStr
-                                     shareImage:_shareImageView.image
-                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
-                                       delegate:self];
+    /// ST Todo 分享
+//    [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:_shareVideoUrl];
+//    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:_shareVideoUrl];
+////    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:SinaAppId secret:SinaAppSecret RedirectURL:_shareVideoUrl];
+//    //    UMShareToSina
+//    [UMSocialSnsService presentSnsIconSheetView:self
+//                                         appKey:@"574e8829e0f55a12f8001790"
+//                                      shareText:_titleStr
+//                                     shareImage:_shareImageView.image
+//                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
+//                                       delegate:self];
 }
 
 

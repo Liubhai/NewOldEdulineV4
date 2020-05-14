@@ -37,10 +37,8 @@
 #import "TestCurrentViewController.h"
 
 
-#import "UMSocial.h"
-#import "UMSocialQQHandler.h"
-#import "UMSocialSinaSSOHandler.h"
-#import "UMSocialWechatHandler.h"
+#import <UMCommon/UMCommon.h>
+#import <UMShare/UMShare.h>
 
 
 #import <AliyunPlayerSDK/AliVcMediaPlayer.h>
@@ -61,7 +59,7 @@
 #import "YKTWebView.h"
 
 @import MediaPlayer;
-@interface Good_ClassMainViewController ()<UIScrollViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDelegate,UIScrollViewDelegate,UIGestureRecognizerDelegate,UMSocialUIDelegate,AliyunVodPlayerViewDelegate,BCEDocumentReaderDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface Good_ClassMainViewController ()<UIScrollViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDelegate,UIScrollViewDelegate,UIGestureRecognizerDelegate,AliyunVodPlayerViewDelegate,BCEDocumentReaderDelegate, UITableViewDelegate, UITableViewDataSource> {
     CGRect   playerFrame;
     WMPlayer *wmPlayer;
     BOOL     isShouleVedio;//是否应该缓存视频
@@ -1005,16 +1003,17 @@
                 if ([[_activityInfo objectForKey:@"user_asb"] isKindOfClass:[NSDictionary class]]) {
                     myActivityInfo = [NSDictionary dictionaryWithDictionary:[_activityInfo objectForKey:@"user_asb"]];
                 }
-                if (SWNOTEmptyDictionary(myActivityInfo)) {
-                    [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:[myActivityInfo objectForKey:@"share_url"]];
-                    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:[myActivityInfo objectForKey:@"share_url"]];
-                    [UMSocialSnsService presentSnsIconSheetView:self
-                                                         appKey:@"574e8829e0f55a12f8001790"
-                                                      shareText:[NSString stringWithFormat:@"%@",_videoTitle]
-                                                     shareImage:_shareImageView.image
-                                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
-                                                       delegate:self];
-                }
+                /// ST Todo 分享
+//                if (SWNOTEmptyDictionary(myActivityInfo)) {
+//                    [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:[myActivityInfo objectForKey:@"share_url"]];
+//                    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:[myActivityInfo objectForKey:@"share_url"]];
+//                    [UMSocialSnsService presentSnsIconSheetView:self
+//                                                         appKey:@"574e8829e0f55a12f8001790"
+//                                                      shareText:[NSString stringWithFormat:@"%@",_videoTitle]
+//                                                     shareImage:_shareImageView.image
+//                                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
+//                                                       delegate:self];
+//                }
             }
         }
     }
@@ -1022,17 +1021,19 @@
 
 #pragma mark --- 分享相关
 - (void)VideoShare {
+    /// ST Todo 分享
+
     NSLog(@"%@  %@",_videoTitle,_shareVideoUrl);
-    [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:_shareVideoUrl];
-    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:_shareVideoUrl];
-//    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:SinaAppId secret:SinaAppSecret RedirectURL:_shareVideoUrl];
-//    UMShareToSina
-    [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:@"574e8829e0f55a12f8001790"
-                                      shareText:[NSString stringWithFormat:@"%@",_videoTitle]
-                                     shareImage:_shareImageView.image
-                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
-                                       delegate:self];
+//    [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:_shareVideoUrl];
+//    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:_shareVideoUrl];
+////    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:SinaAppId secret:SinaAppSecret RedirectURL:_shareVideoUrl];
+////    UMShareToSina
+//    [UMSocialSnsService presentSnsIconSheetView:self
+//                                         appKey:@"574e8829e0f55a12f8001790"
+//                                      shareText:[NSString stringWithFormat:@"%@",_videoTitle]
+//                                     shareImage:_shareImageView.image
+//                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
+//                                       delegate:self];
 }
 
 #pragma mark --- bolck
@@ -4140,15 +4141,16 @@
         [self.navigationController pushViewController:vc animated:YES];
     } else {
         // 继续邀请
-        NSString *bargain_info_share_url = [NSString stringWithFormat:@"%@",[[[_activityInfo objectForKey:@"bargain_info"] objectForKey:@"mine"] objectForKey:@"share_url"]];
-        [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:bargain_info_share_url];
-        [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:bargain_info_share_url];
-        [UMSocialSnsService presentSnsIconSheetView:self
-                                             appKey:@"574e8829e0f55a12f8001790"
-                                          shareText:[NSString stringWithFormat:@"%@",_videoTitle]
-                                         shareImage:_shareImageView.image
-                                    shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
-                                           delegate:self];
+        /// ST Todo 分享
+//        NSString *bargain_info_share_url = [NSString stringWithFormat:@"%@",[[[_activityInfo objectForKey:@"bargain_info"] objectForKey:@"mine"] objectForKey:@"share_url"]];
+//        [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:bargain_info_share_url];
+//        [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:bargain_info_share_url];
+//        [UMSocialSnsService presentSnsIconSheetView:self
+//                                             appKey:@"574e8829e0f55a12f8001790"
+//                                          shareText:[NSString stringWithFormat:@"%@",_videoTitle]
+//                                         shareImage:_shareImageView.image
+//                                    shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
+//                                           delegate:self];
     }
 }
 
