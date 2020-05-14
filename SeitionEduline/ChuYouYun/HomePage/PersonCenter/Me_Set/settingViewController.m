@@ -30,6 +30,7 @@
 #import "AboutUsViewController.h"
 #import "BoundViewController.h"
 #import "InstitutionsChooseVC.h"
+#import <UShareUI/UShareUI.h>
 
 
 @interface settingViewController ()

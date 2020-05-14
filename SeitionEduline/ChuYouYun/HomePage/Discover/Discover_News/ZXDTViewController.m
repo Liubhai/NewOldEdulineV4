@@ -25,6 +25,7 @@
 #import "TYAttributedLabel.h"
 #import "RegexKitLite.h"
 #import "YKTWebView.h"
+#import <UShareUI/UShareUI.h>
 
 
 
@@ -180,17 +181,36 @@
 #pragma mark --- 分享
 - (void)NewsShare {
     _shareVideoUrl = [NSString stringWithFormat:@"%@/news/%@.html",EncryptHeaderUrl,_ID];
-    /// ST Todo 分享
-//    [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:_shareVideoUrl];
-//    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:_shareVideoUrl];
-////    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:SinaAppId secret:SinaAppSecret RedirectURL:_shareVideoUrl];
-//    //    UMShareToSina
-//    [UMSocialSnsService presentSnsIconSheetView:self
-//                                         appKey:@"574e8829e0f55a12f8001790"
-//                                      shareText:_titleStr
-//                                     shareImage:_shareImageView.image
-//                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
-//                                       delegate:self];
+    NSMutableArray *array = [NSMutableArray array];
+
+    if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
+        [array addObject:@(UMSocialPlatformType_QQ)];
+    }
+    if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_Sina]) {
+        [array addObject:@(UMSocialPlatformType_Sina)];
+    }
+    if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
+        [array addObject:@(UMSocialPlatformType_WechatSession)];
+        [array addObject:@(UMSocialPlatformType_WechatTimeLine)];
+    }
+    //显示分享面板
+    [UMSocialUIManager setPreDefinePlatforms:array];
+    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+        //创建分享消息对象
+        UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+        //创建网页内容对象
+        NSString *shareTitle = _titleStr;
+        NSString *shareContent = shareTitle;
+        UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle: shareTitle descr:shareContent thumImage:_shareImageView.image];
+        //设置网页地址
+        shareObject.webpageUrl = _shareVideoUrl;
+        //分享消息对象设置分享内容对象
+        messageObject.shareObject = shareObject;
+
+        [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id result, NSError *error) {
+            
+        }];
+    }];
 }
 
 

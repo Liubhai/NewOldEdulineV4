@@ -224,24 +224,12 @@
 //    [self netWorkConfigGetAppVersion];
     [self getCurrentVersion];
     [self getCurrentAPPName];
-    /// ST Todo 分享
-//    [UMSocialData setAppKey:@"574e8829e0f55a12f8001790"];
-//
-//    //QQ
-//    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:@"http://www.umeng.com/social"];
-//
-//    //微博
-//    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:SinaAppId secret:SinaAppSecret RedirectURL:@"http://sns.eduline.com/sina2/callback"];
-////    https://api.weibo.com/oauth2/default.html
-////    http://sns.eduline.com/sina2/callback
-//
-//    //微信
-//     [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:@"https://api.weixin.qq.com/cgi-bin/menu/create?access_token="];
-////    $url="https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$access_token;将$url作为<pre name="code" class="html">createMenu($url,$data)的参数就ok.
-//
-//
-//    //注册APPID
-//    [WXApi registerApp:WXAppId withDescription:@"Eduline"];
+
+    [UMConfigure initWithAppkey:@"574e8829e0f55a12f8001790" channel:@"App Store"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:QQAppId  appSecret:QQAppSecret redirectURL:@"http://www.umeng.com/social"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:SinaAppId appSecret:SinaAppSecret redirectURL:@"http://sns.eduline.com/sina2/callback"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:WXAppId appSecret:WXAppSecret redirectURL:@"https://api.weixin.qq.com/cgi-bin/menu/create?access_token="];
+    [WXApi registerApp:WXAppId universalLink:@"applinks:b7n7.t4m.cn"];
 //    //隐藏未安装客户端的平台
 //    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ, UMShareToQzone, UMShareToWechatSession, UMShareToWechatTimeline]];
     
@@ -371,17 +359,13 @@
 
 //使用第三方登录需要重写下面两个方法
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    /// ST Todo 分享
-    return YES;
-//    BOOL result = [UMSocialSnsService handleOpenURL:url];
-//    return result;
+    BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
+    return result;
  }
 
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
-//    return  [UMSocialSnsService handleOpenURL:url];
-    /// ST Todo 分享
-    return YES;
+    return [[UMSocialManager defaultManager] handleOpenURL:url];
 }
 
 
@@ -409,6 +393,7 @@
 {
     /// ST Todo 分享
 //    [UMSocialSnsService  applicationDidBecomeActive];
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

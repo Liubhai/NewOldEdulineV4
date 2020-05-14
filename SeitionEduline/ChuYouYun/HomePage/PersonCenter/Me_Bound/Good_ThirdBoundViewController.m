@@ -172,49 +172,39 @@
 }
 
 - (void)Tencent {
-    /// ST Todo 分享
-//    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQQ];
-//    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
-//        if (response.responseCode == UMSResponseCodeSuccess) {
-//            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
-//            _uid = snsAccount.usid;
-//            if ([_typeStr integerValue] == 0) {
-//                [self NetWorkUserBindWithType:@"qzone"];
-//            } else if ([_typeStr integerValue] == 1) {
-//                [self NetWorkUserBindDelWithType:@"qzone"];
-//            }
-//        }});
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_QQ currentViewController:nil completion:^(id result, NSError *error) {
+        UMSocialUserInfoResponse *resp = result;
+        _uid = resp.usid;
+        if ([_typeStr integerValue] == 0) {
+            [self NetWorkUserBindWithType:@"qzone"];
+        } else if ([_typeStr integerValue] == 1) {
+            [self NetWorkUserBindDelWithType:@"qzone"];
+        }
+    }];
 }
 
 - (void)WeChat {
-    /// ST Todo 分享
-
-//    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
-//    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
-//        if (response.responseCode == UMSResponseCodeSuccess) {
-//            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
-//            _uid = snsAccount.unionId;
-//            if ([_typeStr integerValue] == 0) {
-//                 [self NetWorkUserBindWithType:@"weixin"];
-//            } else if ([_typeStr integerValue] == 1) {
-//                [self NetWorkUserBindDelWithType:@"weixin"];
-//            }
-//        }});
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_WechatSession currentViewController:nil completion:^(id result, NSError *error) {
+        UMSocialUserInfoResponse *resp = result;
+        _uid = resp.unionId;
+        if ([_typeStr integerValue] == 0) {
+             [self NetWorkUserBindWithType:@"weixin"];
+        } else if ([_typeStr integerValue] == 1) {
+            [self NetWorkUserBindDelWithType:@"weixin"];
+        }
+    }];
 }
 
 - (void)Sina {
-    /// ST Todo 分享
-//    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina];
-//    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
-//        if (response.responseCode == UMSResponseCodeSuccess) {
-//            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
-//            _uid = snsAccount.accessToken;
-//            if ([_typeStr integerValue] == 0) {
-//                 [self NetWorkUserBindWithType:@"sina"];
-//            } else if ([_typeStr integerValue] == 1) {
-//                 [self NetWorkUserBindDelWithType:@"sina"];
-//            }
-//        }});
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_Sina currentViewController:nil completion:^(id result, NSError *error) {
+        UMSocialUserInfoResponse *resp = result;
+        _uid = resp.accessToken;
+        if ([_typeStr integerValue] == 0) {
+             [self NetWorkUserBindWithType:@"sina"];
+        } else if ([_typeStr integerValue] == 1) {
+             [self NetWorkUserBindDelWithType:@"sina"];
+        }
+    }];
 }
 
 //获取绑定状态

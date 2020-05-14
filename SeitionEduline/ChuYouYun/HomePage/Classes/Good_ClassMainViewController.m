@@ -39,6 +39,7 @@
 
 #import <UMCommon/UMCommon.h>
 #import <UMShare/UMShare.h>
+#import <UShareUI/UShareUI.h>
 
 
 #import <AliyunPlayerSDK/AliVcMediaPlayer.h>
@@ -1003,17 +1004,36 @@
                 if ([[_activityInfo objectForKey:@"user_asb"] isKindOfClass:[NSDictionary class]]) {
                     myActivityInfo = [NSDictionary dictionaryWithDictionary:[_activityInfo objectForKey:@"user_asb"]];
                 }
-                /// ST Todo 分享
-//                if (SWNOTEmptyDictionary(myActivityInfo)) {
-//                    [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:[myActivityInfo objectForKey:@"share_url"]];
-//                    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:[myActivityInfo objectForKey:@"share_url"]];
-//                    [UMSocialSnsService presentSnsIconSheetView:self
-//                                                         appKey:@"574e8829e0f55a12f8001790"
-//                                                      shareText:[NSString stringWithFormat:@"%@",_videoTitle]
-//                                                     shareImage:_shareImageView.image
-//                                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
-//                                                       delegate:self];
-//                }
+                NSMutableArray *array = [NSMutableArray array];
+
+                if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
+                    [array addObject:@(UMSocialPlatformType_QQ)];
+                }
+                if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_Sina]) {
+                    [array addObject:@(UMSocialPlatformType_Sina)];
+                }
+                if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
+                    [array addObject:@(UMSocialPlatformType_WechatSession)];
+                    [array addObject:@(UMSocialPlatformType_WechatTimeLine)];
+                }
+                //显示分享面板
+                [UMSocialUIManager setPreDefinePlatforms:array];
+                [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+                    //创建分享消息对象
+                    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+                    //创建网页内容对象
+                    NSString *shareTitle = _videoTitle;
+                    NSString *shareContent = shareTitle;
+                    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle: shareTitle descr:shareContent thumImage:_shareImageView.image];
+                    //设置网页地址
+                    shareObject.webpageUrl = [myActivityInfo objectForKey:@"share_url"];
+                    //分享消息对象设置分享内容对象
+                    messageObject.shareObject = shareObject;
+
+                    [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id result, NSError *error) {
+                        
+                    }];
+                }];
             }
         }
     }
@@ -1021,19 +1041,36 @@
 
 #pragma mark --- 分享相关
 - (void)VideoShare {
-    /// ST Todo 分享
+    NSMutableArray *array = [NSMutableArray array];
 
-    NSLog(@"%@  %@",_videoTitle,_shareVideoUrl);
-//    [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:_shareVideoUrl];
-//    [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:_shareVideoUrl];
-////    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:SinaAppId secret:SinaAppSecret RedirectURL:_shareVideoUrl];
-////    UMShareToSina
-//    [UMSocialSnsService presentSnsIconSheetView:self
-//                                         appKey:@"574e8829e0f55a12f8001790"
-//                                      shareText:[NSString stringWithFormat:@"%@",_videoTitle]
-//                                     shareImage:_shareImageView.image
-//                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
-//                                       delegate:self];
+    if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
+        [array addObject:@(UMSocialPlatformType_QQ)];
+    }
+    if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_Sina]) {
+        [array addObject:@(UMSocialPlatformType_Sina)];
+    }
+    if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
+        [array addObject:@(UMSocialPlatformType_WechatSession)];
+        [array addObject:@(UMSocialPlatformType_WechatTimeLine)];
+    }
+    //显示分享面板
+    [UMSocialUIManager setPreDefinePlatforms:array];
+    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+        //创建分享消息对象
+        UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+        //创建网页内容对象
+        NSString *shareTitle = _videoTitle;
+        NSString *shareContent = shareTitle;
+        UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle: shareTitle descr:shareContent thumImage:_shareImageView.image];
+        //设置网页地址
+        shareObject.webpageUrl = _shareVideoUrl;
+        //分享消息对象设置分享内容对象
+        messageObject.shareObject = shareObject;
+
+        [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id result, NSError *error) {
+            
+        }];
+    }];
 }
 
 #pragma mark --- bolck
@@ -4141,16 +4178,37 @@
         [self.navigationController pushViewController:vc animated:YES];
     } else {
         // 继续邀请
-        /// ST Todo 分享
-//        NSString *bargain_info_share_url = [NSString stringWithFormat:@"%@",[[[_activityInfo objectForKey:@"bargain_info"] objectForKey:@"mine"] objectForKey:@"share_url"]];
-//        [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:bargain_info_share_url];
-//        [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:bargain_info_share_url];
-//        [UMSocialSnsService presentSnsIconSheetView:self
-//                                             appKey:@"574e8829e0f55a12f8001790"
-//                                          shareText:[NSString stringWithFormat:@"%@",_videoTitle]
-//                                         shareImage:_shareImageView.image
-//                                    shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
-//                                           delegate:self];
+        NSString *bargain_info_share_url = [NSString stringWithFormat:@"%@",[[[_activityInfo objectForKey:@"bargain_info"] objectForKey:@"mine"] objectForKey:@"share_url"]];
+        NSMutableArray *array = [NSMutableArray array];
+
+        if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
+            [array addObject:@(UMSocialPlatformType_QQ)];
+        }
+        if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_Sina]) {
+            [array addObject:@(UMSocialPlatformType_Sina)];
+        }
+        if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
+            [array addObject:@(UMSocialPlatformType_WechatSession)];
+            [array addObject:@(UMSocialPlatformType_WechatTimeLine)];
+        }
+        //显示分享面板
+        [UMSocialUIManager setPreDefinePlatforms:array];
+        [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+            //创建分享消息对象
+            UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+            //创建网页内容对象
+            NSString *shareTitle = _videoTitle;
+            NSString *shareContent = shareTitle;
+            UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle: shareTitle descr:shareContent thumImage:_shareImageView.image];
+            //设置网页地址
+            shareObject.webpageUrl = bargain_info_share_url;
+            //分享消息对象设置分享内容对象
+            messageObject.shareObject = shareObject;
+
+            [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id result, NSError *error) {
+                
+            }];
+        }];
     }
 }
 

@@ -567,122 +567,72 @@
 }
 
 - (void)Sina {
-    /// ST Todo 分享
-    
-//    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina];
-////    [UMSocialControllerService defaultControllerService].socialUIDelegate = self;
-//    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
-//        //          获取微博用户名、uid、token等
-//
-//        NSLog(@"-----%@",response);
-//        if (response.responseCode == UMSResponseCodeSuccess) {
-//
-//            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
-//
-//            NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
-//
-//            _UID = snsAccount.usid;
-//            _appToken = snsAccount.accessToken;
-//
-//            [self loginWithSNSAccount:snsAccount loginType:@"sina"];
-//        }});
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_Sina currentViewController:nil completion:^(id result, NSError *error) {
+        UMSocialUserInfoResponse *resp = result;
+        [self loginWithSNSAccount:resp loginType:@"sina"];
+    }];
 }
 
 
 - (void)Tencent {
-    /// ST Todo 分享
-
-//    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToQQ];
-//    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
-//
-//        //          获取微博用户名、uid、token等
-//
-//
-//        NSLog(@"%@",response);
-//
-//        if (response.responseCode == UMSResponseCodeSuccess) {
-//
-//            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
-//
-//            NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
-//            _UID = snsAccount.openId;
-//            _appToken = snsAccount.unionId;
-//
-//            [self loginWithSNSAccount:snsAccount loginType:@"qzone"];
-//        }});
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_QQ currentViewController:nil completion:^(id result, NSError *error) {
+        UMSocialUserInfoResponse *resp = result;
+        [self loginWithSNSAccount:resp loginType:@"qzone"];
+    }];
 }
 
 - (void)WeChat {
-    /// ST Todo 分享
-
-//    UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
-//
-//    snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
-//
-//        //          获取微博用户名、uid、token等
-//
-//        NSLog(@"----%@",response);
-//        if (response.responseCode == UMSResponseCodeSuccess) {
-//
-//            UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
-//
-//            NSLog(@"username is %@, uid is %@, token is %@ url is %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL);
-//
-//            _UID = snsAccount.openId;
-//            _appToken = snsAccount.unionId;
-//
-//            [self loginWithSNSAccount:snsAccount loginType:@"weixin"];
-//        }});
-    
-    
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_WechatSession currentViewController:nil completion:^(id result, NSError *error) {
+        UMSocialUserInfoResponse *resp = result;
+        [self loginWithSNSAccount:resp loginType:@"weixin"];
+    }];
 }
 
-/// ST Todo 分享
-//- (void)loginWithSNSAccount:(UMSocialAccountEntity *)snsAccount loginType:(NSString *)type
-//{
-//    NSString *endUrlStr = YunKeTang_passport_loginSync;
-//    NSString *allUrlStr = [YunKeTang_Api_Tool YunKeTang_GetFullUrl:endUrlStr];
-//
-//    NSMutableDictionary *mutabDict = [NSMutableDictionary dictionaryWithCapacity:0];
-//    if ([type isEqualToString:@"sina"]) {
-//        [mutabDict setValue:snsAccount.accessToken forKey:@"app_token"];
-//    } else if ([type isEqualToString:@"qzone"]){
-//        [mutabDict setValue:snsAccount.usid forKey:@"app_token"];
-//    } else {
-//        [mutabDict setValue:snsAccount.unionId forKey:@"app_token"];
-//    }
-//    [mutabDict setValue:type forKey:@"app_login_type"];
-//    [[NSUserDefaults standardUserDefaults]setObject:type forKey:@"loginType"];
-//
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:allUrlStr]];
-//    [request setHTTPMethod:NetWay];
-//    NSString *encryptStr = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetEncryptStr:mutabDict];
-//    [request setValue:encryptStr forHTTPHeaderField:HeaderKey];
-//
-//    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-//        NSLog(@"%@", responseObject);
-//        _loginType = type;
-//        _loginSyncDataSource = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr_Before:responseObject];
-//        if ([[_loginSyncDataSource stringValueForKey:@"code"] integerValue] == 0) {//未绑定
-//            [self type_regis];
-//            return ;
-//        } else if ([[_loginSyncDataSource stringValueForKey:@"code"] integerValue] == 1) {
-//            _loginSyncDataSource = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject];
-//        }
-//
-//        [[NSUserDefaults standardUserDefaults]setObject:[_loginSyncDataSource stringValueForKey:@"oauth_token"] forKey:@"oauthToken"];
-//        [[NSUserDefaults standardUserDefaults]setObject:[_loginSyncDataSource stringValueForKey:@"oauth_token_secret"] forKey:@"oauthTokenSecret"];
-////        [[NSUserDefaults standardUserDefaults]setObject:[_loginSyncDataSource stringValueForKey:@"uid"] forKey:@"User_id"];
-//        [[NSUserDefaults standardUserDefaults]setObject:[_loginSyncDataSource stringValueForKey:@"userface"] forKey:@"userface"];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"getPayMethodConfig" object:nil];
-//        rootViewController *blum = [[rootViewController alloc]init];
-//        self.view.window.rootViewController = blum;
-//
-//    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-//    }];
-//    [op start];
-//}
+- (void)loginWithSNSAccount:(UMSocialUserInfoResponse *)resp loginType:(NSString *)type
+{
+    NSString *endUrlStr = YunKeTang_passport_loginSync;
+    NSString *allUrlStr = [YunKeTang_Api_Tool YunKeTang_GetFullUrl:endUrlStr];
+
+    NSMutableDictionary *mutabDict = [NSMutableDictionary dictionaryWithCapacity:0];
+    if ([type isEqualToString:@"sina"]) {
+        [mutabDict setValue:resp.accessToken forKey:@"app_token"];
+    } else if ([type isEqualToString:@"qzone"]){
+        [mutabDict setValue:resp.usid forKey:@"app_token"];
+    } else {
+        [mutabDict setValue:resp.unionId forKey:@"app_token"];
+    }
+    [mutabDict setValue:type forKey:@"app_login_type"];
+    [[NSUserDefaults standardUserDefaults]setObject:type forKey:@"loginType"];
+
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:allUrlStr]];
+    [request setHTTPMethod:NetWay];
+    NSString *encryptStr = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetEncryptStr:mutabDict];
+    [request setValue:encryptStr forHTTPHeaderField:HeaderKey];
+
+    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        NSLog(@"%@", responseObject);
+        _loginType = type;
+        _loginSyncDataSource = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr_Before:responseObject];
+        if ([[_loginSyncDataSource stringValueForKey:@"code"] integerValue] == 0) {//未绑定
+            [self type_regis];
+            return ;
+        } else if ([[_loginSyncDataSource stringValueForKey:@"code"] integerValue] == 1) {
+            _loginSyncDataSource = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject];
+        }
+
+        [[NSUserDefaults standardUserDefaults]setObject:[_loginSyncDataSource stringValueForKey:@"oauth_token"] forKey:@"oauthToken"];
+        [[NSUserDefaults standardUserDefaults]setObject:[_loginSyncDataSource stringValueForKey:@"oauth_token_secret"] forKey:@"oauthTokenSecret"];
+//        [[NSUserDefaults standardUserDefaults]setObject:[_loginSyncDataSource stringValueForKey:@"uid"] forKey:@"User_id"];
+        [[NSUserDefaults standardUserDefaults]setObject:[_loginSyncDataSource stringValueForKey:@"userface"] forKey:@"userface"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"getPayMethodConfig" object:nil];
+        rootViewController *blum = [[rootViewController alloc]init];
+        self.view.window.rootViewController = blum;
+
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+    }];
+    [op start];
+}
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
