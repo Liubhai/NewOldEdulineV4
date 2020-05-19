@@ -46,8 +46,6 @@ static bool hasAddObersver = NO;
             // 监听购买结果
             [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
         }
-        
-//        [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
     }
     return self;
 }
@@ -80,25 +78,42 @@ static bool hasAddObersver = NO;
         case SIAPPurchSuccess:
             NSLog(@"购买成功");
             if (receipt_data_str == nil) {
-
+                if (self.controlLoadingBlock) {
+                    self.controlLoadingBlock(NO, @"未能获取到支付凭据");
+                }
             } else {
                 [self netWorkApplePayResults:receipt_data_str];
             }
             break;
         case SIAPPurchFailed:
             NSLog(@"购买失败");
+            if (self.controlLoadingBlock) {
+                self.controlLoadingBlock(NO, @"购买失败");
+            }
             break;
         case SIAPPurchCancle:
             NSLog(@"用户取消购买");
+            if (self.controlLoadingBlock) {
+                self.controlLoadingBlock(NO, @"用户取消购买");
+            }
             break;
         case SIAPPurchVerFailed:
             NSLog(@"订单校验失败");
+            if (self.controlLoadingBlock) {
+                self.controlLoadingBlock(NO, @"订单校验失败");
+            }
             break;
         case SIAPPurchVerSuccess:
             NSLog(@"订单校验成功");
+            if (self.controlLoadingBlock) {
+                self.controlLoadingBlock(YES, @"订单校验成功");
+            }
             break;
         case SIAPPurchNotArrow:
             NSLog(@"不允许程序内付费");
+            if (self.controlLoadingBlock) {
+                self.controlLoadingBlock(NO, @"不允许程序内付费");
+            }
             break;
         default:
             break;
@@ -113,15 +128,7 @@ static bool hasAddObersver = NO;
 #pragma mark - 🍐delegate
 // 交易结束
 - (void)completeTransaction:(SKPaymentTransaction *)transaction{
-    // Your application should implement these two methods.
-    NSString * productIdentifier = transaction.payment.productIdentifier;
-//    NSString * receipt = [transaction.transactionReceipt base64EncodedString];
-    if ([productIdentifier length] > 0) {
-        // 向自己的服务器验证购买凭证
-        
-    }
-    
-    [self verifyPurchaseWithPaymentTransaction:transaction isTestServer:NO];
+    [self verifyPurchaseWithPaymentTransaction:transaction];
 }
 
 // 交易失败
@@ -135,23 +142,17 @@ static bool hasAddObersver = NO;
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 }
 
-- (void)verifyPurchaseWithPaymentTransaction:(SKPaymentTransaction *)transaction isTestServer:(BOOL)flag{
+- (void)verifyPurchaseWithPaymentTransaction:(SKPaymentTransaction *)transaction {
     //交易验证
     NSURL *recepitURL = [[NSBundle mainBundle] appStoreReceiptURL];
     NSData *receipt = [NSData dataWithContentsOfURL:recepitURL];
-    
-    
-//    NSLog(@"----%@",[YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:receipt]);
-
-    
     
     if(!receipt){
         // 交易凭证为空验证失败
         [self handleActionWithType:SIAPPurchVerFailed data:nil];
         return;
     }
-    // 购买成功将交易凭证发送给服务端进行再次校验
-    [self handleActionWithType:SIAPPurchSuccess data:receipt];
+   
     
     NSError *error;
     NSDictionary *requestContents = @{
@@ -163,57 +164,14 @@ static bool hasAddObersver = NO;
     
     receipt_data_str = [requestContents stringValueForKey:@"receipt-data"];
     
-    
-    
     if (!requestData) { // 交易凭证为空验证失败
         [self handleActionWithType:SIAPPurchVerFailed data:nil];
         return;
     }
-    
-    //In the test environment, use https://sandbox.itunes.apple.com/verifyReceipt
-    //In the real environment, use https://buy.itunes.apple.com/verifyReceipt
-    
-    NSString *serverString = @"https://buy.itunes.apple.com/verifyReceipt";
-    if (flag) {
-        serverString = @"https://sandbox.itunes.apple.com/verifyReceipt";
-    }
-    NSURL *storeURL = [NSURL URLWithString:serverString];
-    NSMutableURLRequest *storeRequest = [NSMutableURLRequest requestWithURL:storeURL];
-    [storeRequest setHTTPMethod:@"POST"];
-    [storeRequest setHTTPBody:requestData];
-    
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    [NSURLConnection sendAsynchronousRequest:storeRequest queue:queue
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                               if (connectionError) {
-                                   // 无法连接服务器,购买校验失败
-                                   [self handleActionWithType:SIAPPurchVerFailed data:nil];
-                               } else {
-                                   NSError *error;
-                                   NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-                                   if (!jsonResponse) {
-                                       // 苹果服务器校验数据返回为空校验失败
-                                       [self handleActionWithType:SIAPPurchVerFailed data:nil];
-                                   }
-                                   
-                                   // 先验证正式服务器,如果正式服务器返回21007再去苹果测试服务器验证,沙盒测试环境苹果用的是测试服务器
-                                   NSString *status = [NSString stringWithFormat:@"%@",jsonResponse[@"status"]];
-                                   if (status && [status isEqualToString:@"21007"]) {
-                                       [self verifyPurchaseWithPaymentTransaction:transaction isTestServer:YES];
-                                   }else if(status && [status isEqualToString:@"0"]){
-                                       [self handleActionWithType:SIAPPurchVerSuccess data:nil];
-                                   }
-#if DEBUG
-                                   NSLog(@"----验证结果 %@",jsonResponse);
-                                   
-#endif
-                               }
-                           }];
-    
-    
+    // 购买成功将交易凭证发送给服务端进行再次校验
+    [self handleActionWithType:SIAPPurchSuccess data:receipt];
     // 验证成功与否都注销交易,否则会出现虚假凭证信息一直验证不通过,每次进程序都得输入苹果账号
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-
 }
 
 
@@ -227,10 +185,10 @@ static bool hasAddObersver = NO;
         return;
     }
     
-    SKProduct *p = nil;
+    SKProduct *selectedProduct = nil;
     for(SKProduct *pro in product){
         if([pro.productIdentifier isEqualToString:_purchID]){
-            p = pro;
+            selectedProduct = pro;
             break;
         }
     }
@@ -238,16 +196,17 @@ static bool hasAddObersver = NO;
 #if DEBUG
     NSLog(@"productID:%@", response.invalidProductIdentifiers);
     NSLog(@"产品付费数量:%lu",(unsigned long)[product count]);
-    NSLog(@"%@",[p description]);
-    NSLog(@"%@",[p localizedTitle]);
-    NSLog(@"%@",[p localizedDescription]);
-    NSLog(@"%@",[p price]);
-    NSLog(@"%@",[p productIdentifier]);
+    NSLog(@"%@",[selectedProduct description]);
+    NSLog(@"%@",[selectedProduct localizedTitle]);
+    NSLog(@"%@",[selectedProduct localizedDescription]);
+    NSLog(@"%@",[selectedProduct price]);
+    NSLog(@"%@",[selectedProduct productIdentifier]);
     NSLog(@"发送购买请求");
-    priceStr = [NSString stringWithFormat:@"%@",[p price]];
+    priceStr = [NSString stringWithFormat:@"%@",[selectedProduct price]];
 #endif
     
-    SKPayment *payment = [SKPayment paymentWithProduct:p];
+    SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:selectedProduct];
+    payment.quantity = 1;
     [[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 
@@ -256,6 +215,9 @@ static bool hasAddObersver = NO;
 #if DEBUG
     NSLog(@"------------------错误-----------------:%@", error);
 #endif
+    if (self.controlLoadingBlock) {
+        self.controlLoadingBlock(NO, error.description);
+    }
 }
 
 - (void)requestDidFinish:(SKRequest *)request{
@@ -268,13 +230,13 @@ static bool hasAddObersver = NO;
 #pragma mark - SKPaymentTransactionObserver
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray<SKPaymentTransaction *> *)transactions{
     
-    if ([SKPaymentQueue canMakePayments]) {
-
-    } else {
-        
+    if (![SKPaymentQueue canMakePayments]) {
+        if (self.controlLoadingBlock) {
+            self.controlLoadingBlock(NO, @"不可进行苹果内购");
+        }
+        return;
     }
 
-    
     for (SKPaymentTransaction *tran in transactions) {
         switch (tran.transactionState) {
             case SKPaymentTransactionStatePurchased:
@@ -292,9 +254,22 @@ static bool hasAddObersver = NO;
 #endif
                 // 消耗型不支持恢复购买
                 [[SKPaymentQueue defaultQueue] finishTransaction:tran];
+                if (self.controlLoadingBlock) {
+                   self.controlLoadingBlock(NO, @"已经购买过商品");
+                }
                 break;
             case SKPaymentTransactionStateFailed:
                 [self failedTransaction:tran];
+
+                if (tran.error.code == 0) {
+                    if (self.controlLoadingBlock) {
+                        self.controlLoadingBlock(NO, tran.error.userInfo[@"NSLocalizedDescription"]);
+                    }
+                } else {
+                    if (self.controlLoadingBlock) {
+                       self.controlLoadingBlock(NO, @"支付已取消");
+                    }
+                }
                 break;
             default:
                 break;
@@ -306,18 +281,18 @@ static bool hasAddObersver = NO;
 
 #pragma mark  ----
 
-- (void)netWorkApplePayResults:(NSString *)str {//
-    
+- (void)netWorkApplePayResults:(NSString *)str {
+    if (str == nil || str.length == 0) {
+        if (self.controlLoadingBlock) {
+            self.controlLoadingBlock(NO, @"支付凭证为空");
+        }
+        return;
+    }
     NSString *endUrlStr = YunKeTang_User_user_verifyIPhoneScore;
     NSString *allUrlStr = [YunKeTang_Api_Tool YunKeTang_GetFullUrl:endUrlStr];
     
     NSMutableDictionary *mutabDict = [NSMutableDictionary dictionaryWithCapacity:0];
-//    [mutabDict setObject:priceStr forKey:@"score"];
-    if (str == nil) {
-        ;
-    } else {
-        [mutabDict setObject:str forKey:@"receipt_data"];
-    }
+    [mutabDict setObject:str forKey:@"receipt_data"];
     
     NSString *oath_token_Str = nil;
     if (UserOathToken) {
@@ -332,11 +307,23 @@ static bool hasAddObersver = NO;
     
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadBalanceData" object:nil];
         NSDictionary *dict = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject];
-        
+        NSInteger errorCode = [dict[@"error_code"] integerValue];
+        if (!errorCode) {
+            if (self.controlLoadingBlock) {
+                self.controlLoadingBlock(YES, @"支付成功");
+            }
+        } else {
+            if (self.controlLoadingBlock) {
+                self.controlLoadingBlock(NO, @"支付失败");
+            }
+        }
         NSLog(@"%@",dict);
-        
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        if (self.controlLoadingBlock) {
+            self.controlLoadingBlock(NO, @"支付凭证验证失败");
+        }
     }];
     [op start];
 }

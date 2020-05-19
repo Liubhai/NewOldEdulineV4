@@ -20,8 +20,10 @@ typedef enum {
 
 typedef void (^IAPCompletionHandle)(SIAPPurchType type,NSData *data);
 
+
 @interface STRIAPManager : NSObject
 
+@property(nonatomic, copy) void(^controlLoadingBlock)(BOOL, NSString*);
 
 + (instancetype)shareSIAPManager;
 //开始内购
