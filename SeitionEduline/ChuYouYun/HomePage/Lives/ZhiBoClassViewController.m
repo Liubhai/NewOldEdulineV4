@@ -49,8 +49,6 @@
 //#import "CCHHPlayViewController.h"
 //#import "CCHHPlayBackViewController.h"
 
-#import "PlayForPCVC.h"
-#import "PlayBackVC.h"
 #import "InformationShowView.h"
 #import "Masonry.h"
 
@@ -632,9 +630,9 @@
     NSString *strRoomId = [_CCDict stringValueForKey:@"roomid"];
     NSString *strViewName = _HDnickName;
     NSString *strToken = [_CCDict stringValueForKey:@"join_pwd"];
-    
-    PlayForPCVC *playVc = [[PlayForPCVC alloc] initWithRoomId:strRoomId WithUserId:strUserId WithViewerName:strViewName WithToken:strToken];
-    [self presentViewController:playVc animated:YES completion:nil];
+    // ST todo 弹出直播详情页
+//    PlayForPCVC *playVc = [[PlayForPCVC alloc] initWithRoomId:strRoomId WithUserId:strUserId WithViewerName:strViewName WithToken:strToken];
+//    [self presentViewController:playVc animated:YES completion:nil];
 }
 
 -(void)loginFailed:(NSError *)error reason:(NSString *)reason {
@@ -683,9 +681,10 @@
     NSString *liveID = [_CCDict stringValueForKey:@"livePlayback"];
     NSString *name = _HDnickName;
     NSString *token = [_CCDict stringValueForKey:@"join_pwd"];
-    
-    PlayBackVC *playBackVC = [[PlayBackVC alloc] initWithRoomId:roomID WithUserId:userID WithViewerName:name WithToken:token withLiveID:liveID];
-    [self presentViewController:playBackVC animated:YES completion:nil];
+    // ST todo 弹出直播详情页
+
+//    PlayBackVC *playBackVC = [[PlayBackVC alloc] initWithRoomId:roomID WithUserId:userID WithViewerName:name WithToken:token withLiveID:liveID];
+//    [self presentViewController:playBackVC animated:YES completion:nil];
 }
 
 
