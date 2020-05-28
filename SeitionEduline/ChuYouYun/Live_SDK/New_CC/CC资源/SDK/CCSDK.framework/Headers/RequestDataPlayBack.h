@@ -13,7 +13,7 @@
 #import "IJKMediaFramework/IJKFFMoviePlayerController.h"
 #import <WebKit/WebKit.h>
 
-#define SDKVersion @"3.4.0"
+#define SDKVersion @"3.8.0"
 @protocol RequestDataPlayBackDelegate <NSObject>
 @optional
 /**
@@ -61,8 +61,7 @@
 -(void)loginFailed:(NSError *)error reason:(NSString *)reason;
 /**
  *	@brief  获取房间信息，主要是要获取直播间模版来类型，根据直播间模版类型来确定界面布局
- *	房间简介：dic[@"desc"];
- *	房间名称：dic[@"name"];
+ *	房间信息
  *	房间模版类型：[dic[@"templateType"] integerValue];
  *	模版类型为1: 聊天互动： 无 直播文档： 无 直播问答： 无
  *	模版类型为2: 聊天互动： 有 直播文档： 无 直播问答： 有
@@ -103,6 +102,24 @@
  *      2 非动画文档加载完成
  */
 - (void)docLoadCompleteWithIndex:(NSInteger)index;
+/**
+ *    @brief    接收到随堂测
+ *    rseultDic    随堂测内容
+ */
+-(void)receivePracticeWithDic:(NSDictionary *) resultDic;
+/**
+ *    @brief    视频状态
+ *    rseult    playing/paused/loading
+ */
+-(void)videoStateChangeWithString:(NSString *) result;
+/**
+ *    @brief    跑马灯信息,需要开启跑马灯功能且iOS 9.0以上
+*/
+-(void)receivedMarqueeInfo:(NSDictionary *)dic;
+/**
+ *接收到播放线路   例:int值 2 代表两条 changeLineWithNum传0或1
+ */
+-(void)numberOfReceivedLines:(NSInteger)linesCount;
 
 @end
 
@@ -215,5 +232,24 @@
  *	@brief  设置后台是否可播放
  */
 - (void)setpauseInBackGround:(BOOL)pauseInBackGround;
+
+/**
+ *  @brief  改变文档背景颜色
+ 
+ @param hexColor 字符串,传颜色的HEXColor 如:#000000
+ */
+- (void)changeDocWebColor:(NSString *)hexColor;
+/**
+ *  @brief 获取随堂测信息
+ */
+-(void)getPracticeInformation;
+/**
+ *  @brief 切换线路
+ * index 传入numberOfReceivedLines的返回值 如:返回2 则传0或1
+ * results:
+    success 0 切换成功 -1切换品失败 -2 切换频繁
+    currentIndex 当前播放线路
+ */
+- (void)changeLineWithNum:(NSInteger)index completion:(void (^)(NSDictionary * results))completion;
 
 @end
