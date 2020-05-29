@@ -91,8 +91,9 @@
         if (@available(iOS 11.0, *)) {
             _publicTableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
-        _publicTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
-        [_publicTableView.mj_header beginRefreshing];
+        // st todo
+//        _publicTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+//        [_publicTableView.mj_header beginRefreshing];
     }
     return _publicTableView;
 }
@@ -102,7 +103,8 @@
  */
 -(void)loadNewData{
     if (self.input == NO) {
-        [self.publicTableView.mj_header endRefreshing];
+        // st todo
+//        [self.publicTableView.mj_header endRefreshing];
         return;
     }
     
@@ -125,9 +127,11 @@
         [self.publicTableView reloadData];
     }else{
 //        NSLog(@"没有更多数据了");
-        [self.publicTableView.mj_header endRefreshing];
+        // st todo
+//        [self.publicTableView.mj_header endRefreshing];
     }
-    [self.publicTableView.mj_header endRefreshing];
+    // st todo
+//    [self.publicTableView.mj_header endRefreshing];
 }
 //公聊数组
 -(NSMutableArray *)publicChatArray {
@@ -370,7 +374,8 @@
         return;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.publicTableView.mj_header beginRefreshing];
+        // st todo
+//        [self.publicTableView.mj_header beginRefreshing];
         [self.publicTableView reloadData];
         [self.publicTableView setContentOffset:CGPointMake(0, self.publicTableView.contentSize.height -self.publicTableView.bounds.size.height) animated:YES];
         //防止越界

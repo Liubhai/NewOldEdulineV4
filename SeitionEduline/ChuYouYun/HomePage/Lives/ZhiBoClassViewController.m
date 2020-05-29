@@ -54,9 +54,7 @@
 
 
 #import <QuartzCore/QuartzCore.h>
-#import "QRCodeReaderViewController.h"
-#import "QRCodeReader.h"
-#import "QRCodeReaderDelegate.h"
+
 
 // 微吼直播
 //#import "VHallApi.h"
@@ -83,7 +81,7 @@
 
 
 
-@interface ZhiBoClassViewController ()<UITableViewDataSource,UITableViewDelegate,QRCodeReaderDelegate,RequestDataDelegate,RequestDataPlayBackDelegate,UIScrollViewDelegate,VodDownLoadDelegate>
+@interface ZhiBoClassViewController ()<UITableViewDataSource,UITableViewDelegate,RequestDataDelegate,RequestDataPlayBackDelegate,UIScrollViewDelegate,VodDownLoadDelegate>
 {
     BOOL islivePlay;
     NSInteger _indexPathRow;

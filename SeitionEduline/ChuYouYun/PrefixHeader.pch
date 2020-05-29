@@ -19,5 +19,9 @@
 #import "CCAlertView.h"
 #import "NSString+CCSwitchTime.h"
 #import "UIView+GetVC.h"
+#import "ObjectExtension.h"
+#import "UIImage+animatedGIF.h"
+#import "UILabel+Extension.h"
+#import "UIButton+Extension.h"
 
 #endif

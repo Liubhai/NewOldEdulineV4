@@ -101,14 +101,23 @@ UIScrollViewDelegate,UITextFieldDelegate,CCPlayerViewDelegate>
 @property (nonatomic,strong)NSDictionary             * jsonDict;//跑马灯数据
 @property (nonatomic,assign)BOOL                     isLivePlay;//直播间是否已开启
 @property (nonatomic,assign)NSInteger                documentDisplayMode; //适应文档 1 适应窗口  2适应屏幕 开启滚动
+// 直播相关参数
+@property (nonatomic,strong)NSString                *userId;
+@property (nonatomic,strong)NSString                *roomId;
+@property (nonatomic,strong)NSString                *viewerName;
+@property (nonatomic,strong)NSString                *token;
 
 @end
 @implementation CCPlayerController
 //初始化
-- (instancetype)initWithRoomName:(NSString *)roomName{
+- (instancetype)initWithRoomName:(NSString *)roomName userId: (NSString*)userId roomId: (NSString*)roomId viewerName: (NSString*)viewerName token: (NSString*)token {
     self = [super init];
     if(self) {
         self.roomName = roomName;
+        self.userId = userId;
+        self.roomId = roomId;
+        self.viewerName = viewerName;
+        self.token = token;
     }
     return self;
 }
@@ -186,10 +195,10 @@ UIScrollViewDelegate,UITextFieldDelegate,CCPlayerViewDelegate>
 - (void)integrationSDK {
     UIView *docView = _isSmallDocView ? self.playerView.smallVideoView : self.contentView.docView;
     PlayParameter *parameter = [[PlayParameter alloc] init];
-    parameter.userId = GetFromUserDefaults(WATCH_USERID);//userId
-    parameter.roomId = GetFromUserDefaults(WATCH_ROOMID);//roomId
-    parameter.viewerName = GetFromUserDefaults(WATCH_USERNAME);//用户名
-    parameter.token = GetFromUserDefaults(WATCH_PASSWORD);//密码
+    parameter.userId = self.userId;//userId
+    parameter.roomId = self.roomId;//roomId
+    parameter.viewerName = self.viewerName;//用户名
+    parameter.token = self.token;//密码
     parameter.playerParent = self.playerView;//视频视图
     parameter.playerFrame = CGRectMake(0,0,self.playerView.frame.size.width, self.playerView.frame.size.height);//视频位置,ps:起始位置为视频视图坐标
     parameter.docParent = docView;//文档小窗

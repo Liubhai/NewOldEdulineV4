@@ -126,8 +126,9 @@
  */
 - (void)setupHeaderRefresh
 {
-    self.questionTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction: @selector(loadMoreHistoryData)];
-    self.questionTableView.mj_header.hidden = YES;
+    // st todo
+//    self.questionTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction: @selector(loadMoreHistoryData)];
+//    self.questionTableView.mj_header.hidden = YES;
 }
 /**
  *    @brief    下拉查看历史数据回调
@@ -145,8 +146,9 @@
  */
 - (void)setupFooterRefresh
 {
-    self.questionTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-    self.questionTableView.mj_footer.hidden = YES;
+    // st todo
+//    self.questionTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+//    self.questionTableView.mj_footer.hidden = YES;
 }
 
 /**
@@ -225,6 +227,8 @@
     });
     
     dispatch_async(dispatch_get_main_queue(), ^{
+        // st todo
+        /*
         [self.questionTableView reloadData];
         if (questionSouceType == QuestionSourceTypeFromLive) {
             
@@ -260,6 +264,7 @@
                 [self.questionTableView.mj_footer endRefreshingWithNoMoreData];
             }
         }
+         */
     });
 }
 

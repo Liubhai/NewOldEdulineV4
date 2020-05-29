@@ -26,8 +26,24 @@
             filePath = "ChuYouYun/HomePage/Lives/ZhiBoClassViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "629"
-            endingLineNumber = "629"
+            startingLineNumber = "627"
+            endingLineNumber = "627"
+            landmarkName = "-loginSucceedPlay"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1466FEE8-3446-46F2-B754-04005644748C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ChuYouYun/HomePage/Lives/ZhiBoClassViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "632"
+            endingLineNumber = "632"
             landmarkName = "-loginSucceedPlay"
             landmarkType = "7">
          </BreakpointContent>

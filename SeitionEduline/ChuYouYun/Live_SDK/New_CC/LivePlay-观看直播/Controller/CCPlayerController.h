@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param roomName 直播间名称
  @return self
  */
-- (instancetype)initWithRoomName:(NSString *)roomName;
+- (instancetype)initWithRoomName:(NSString *)roomName userId: (NSString*)userId roomId: (NSString*)roomId viewerName: (NSString*)viewerName token: (NSString*)token ;
 
 
 @end
