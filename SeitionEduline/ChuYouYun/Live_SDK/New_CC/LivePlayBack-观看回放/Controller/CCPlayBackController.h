@@ -11,6 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CCPlayBackController : UIViewController
+
+- (instancetype)initWithUserId: (NSString*)userId roomId: (NSString*)roomId liveId: (NSString*)liveId recordId: (NSString*)recordId viewerName: (NSString*)viewerName token: (NSString*)token;
+
 @end
 
 NS_ASSUME_NONNULL_END

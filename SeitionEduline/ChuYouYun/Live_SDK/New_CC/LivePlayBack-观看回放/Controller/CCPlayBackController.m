@@ -48,10 +48,29 @@
 @property (nonatomic,strong)NSDictionary                * jsonDict;//跑马灯数据
 @property (nonatomic,assign)NSInteger                   documentDisplayMode; //适应文档 1 适应窗口  2适应屏幕 开启滚动
    
+@property (nonatomic,strong)NSString                * userId;
+@property (nonatomic,strong)NSString                * roomId;
+@property (nonatomic,strong)NSString                * liveId;
+@property (nonatomic,strong)NSString                * recordId;
+@property (nonatomic,strong)NSString                * viewerName;
+@property (nonatomic,strong)NSString                * token;
 
 @end
 
 @implementation CCPlayBackController
+- (instancetype)initWithUserId: (NSString*)userId roomId: (NSString*)roomId liveId: (NSString*)liveId recordId: (NSString*)recordId viewerName: (NSString*)viewerName token: (NSString*)token {
+    self = [super init];
+    if(self) {
+        self.userId = userId;
+        self.roomId = roomId;
+        self.liveId = liveId;
+        self.recordId = recordId;
+        self.viewerName = viewerName;
+        self.token = token;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     //初始化背景颜色，设置状态栏样式
@@ -220,12 +239,12 @@
 - (void)integrationSDK {
     UIView *docView = _isSmallDocView ? _playerView.smallVideoView : _interactionView.docView;
     PlayParameter *parameter = [[PlayParameter alloc] init];
-    parameter.userId = GetFromUserDefaults(PLAYBACK_USERID);//userId
-    parameter.roomId = GetFromUserDefaults(PLAYBACK_ROOMID);//roomId
-    parameter.liveId = GetFromUserDefaults(PLAYBACK_LIVEID);//liveId
-    parameter.recordId = GetFromUserDefaults(PLAYBACK_RECORDID);//回放Id
-    parameter.viewerName = GetFromUserDefaults(PLAYBACK_USERNAME);//用户名
-    parameter.token = GetFromUserDefaults(PLAYBACK_PASSWORD);//密码
+    parameter.userId = self.userId;//userId
+    parameter.roomId = self.roomId;//roomId
+    parameter.liveId = self.liveId;//liveId
+    parameter.recordId = self.recordId;//回放Id
+    parameter.viewerName = self.viewerName;//用户名
+    parameter.token = self.token;//密码
     parameter.docParent = docView;//文档小窗
     parameter.docFrame = CGRectMake(0, 0, docView.frame.size.width, docView.frame.size.height);//文档小窗大小
     parameter.playerParent = self.playerView;//视频视图

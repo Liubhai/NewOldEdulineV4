@@ -55,30 +55,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "CCPlayerController.h"
-
-// 微吼直播
-//#import "VHallApi.h"
-//#import "WatchLiveViewController.h"
-//#import "WatchPlayBackViewController.h"
-
-
-//CC 小班课
-
-//#import "DefinePrefixHeader.pch"
-//#import <CCClassRoom/CCClassRoom.h>
-//#import "UIAlertView+BlocksKit.h"
-//#import "CC_LoadingView.h"
-//#import "Masonry.h"
-//
-//#import "BlocksKit+UIKit.h"
-//#import "CCStreamShowView.h"
-//#import "CCServerListViewController.h"
-//#import "STDPingServices.h"
-//#import "CCPlayViewController.h"
-//#import "CCPushViewController.h"
-
-
-
+#import "CCPlayBackController.h"
 
 
 @interface ZhiBoClassViewController ()<UITableViewDataSource,UITableViewDelegate,RequestDataDelegate,RequestDataPlayBackDelegate,UIScrollViewDelegate,VodDownLoadDelegate>
@@ -679,11 +656,9 @@
     NSString *liveID = [_CCDict stringValueForKey:@"livePlayback"];
     NSString *name = _HDnickName;
     NSString *token = [_CCDict stringValueForKey:@"join_pwd"];
-    // ST todo 弹出直播详情页
-
-//    PlayBackVC *playBackVC = [[PlayBackVC alloc] initWithRoomId:roomID WithUserId:userID WithViewerName:name WithToken:token withLiveID:liveID];
-//    [self presentViewController:playBackVC animated:YES completion:nil];
-
+    CCPlayBackController *vc = [[CCPlayBackController alloc]initWithUserId:userID roomId:roomID liveId:liveID recordId:@"" viewerName:name token:token];
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 
