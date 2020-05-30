@@ -96,7 +96,11 @@
 
 @implementation AppDelegate
 
-
+void uncaughtExceptionHandler(NSException*exception){
+    NSLog(@"CRASH: %@", exception);
+    NSLog(@"Stack Trace: %@",[exception callStackSymbols]);
+    // Internal error reporting
+}
 
 
 - (void)startServer
@@ -213,6 +217,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     [self appLaunchStatusFrameJudge];
     //获取加密的KEY
     [self netInitApp];

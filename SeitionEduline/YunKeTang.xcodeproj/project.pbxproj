@@ -372,6 +372,9 @@
 		09FBE1CA214B582D0032AA2C /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FBE1C9214B582D0032AA2C /* libbz2.tbd */; };
 		09FBE1CE214B58820032AA2C /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FBE1CD214B58820032AA2C /* libxml2.tbd */; };
 		09FECB7F1F43DB7F00046B06 /* home_more（优化）.png in Resources */ = {isa = PBXBuildFile; fileRef = 09FECB7E1F43DB7F00046B06 /* home_more（优化）.png */; };
+		462712722482AF1600D5E1BE /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 462712712482AF1500D5E1BE /* Accelerate.framework */; };
+		462712742482AF2800D5E1BE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 462712732482AF2700D5E1BE /* AudioToolbox.framework */; };
+		462712762482B16100D5E1BE /* CCBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 462712752482B16100D5E1BE /* CCBundle.bundle */; };
 		465DB9832480103F0061EC7C /* CCPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465DB9762480103E0061EC7C /* CCPlayerController.m */; };
 		465DB9852480103F0061EC7C /* CCBarrage.m in Sources */ = {isa = PBXBuildFile; fileRef = 465DB97B2480103E0061EC7C /* CCBarrage.m */; };
 		465DB9862480103F0061EC7C /* CCInteractionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 465DB97F2480103E0061EC7C /* CCInteractionView.m */; };
@@ -3956,6 +3959,9 @@
 		09FBE1C9214B582D0032AA2C /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		09FBE1CD214B58820032AA2C /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		09FECB7E1F43DB7F00046B06 /* home_more（优化）.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_more（优化）.png"; sourceTree = "<group>"; };
+		462712712482AF1500D5E1BE /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		462712732482AF2700D5E1BE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		462712752482B16100D5E1BE /* CCBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CCBundle.bundle; sourceTree = "<group>"; };
 		465DB9762480103E0061EC7C /* CCPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPlayerController.m; sourceTree = "<group>"; };
 		465DB9792480103E0061EC7C /* CCPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlayerController.h; sourceTree = "<group>"; };
 		465DB97B2480103E0061EC7C /* CCBarrage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBarrage.m; sourceTree = "<group>"; };
@@ -8252,6 +8258,7 @@
 				09EB95591F555B0C00F3AE76 /* CoreMedia.framework in Frameworks */,
 				09EB95521F5559BD00F3AE76 /* libbz2.1.0.tbd in Frameworks */,
 				09E5A8A72112DA390023C28F /* libsqlite3.tbd in Frameworks */,
+				462712722482AF1600D5E1BE /* Accelerate.framework in Frameworks */,
 				7832CEFF22DDC45C009921DE /* libssl.a in Frameworks */,
 				09FBE1C8214B56A70032AA2C /* libz.1.1.3.tbd in Frameworks */,
 				81B301E6227EDE69005B1D34 /* BCEDocumentReader.framework in Frameworks */,
@@ -8261,6 +8268,7 @@
 				097DC25821D632850060C974 /* AliThirdparty.framework in Frameworks */,
 				5049757A1ADCEA3200D37701 /* libresolv.dylib in Frameworks */,
 				94D2D6A61A70AEA400CD7C5C /* MobileCoreServices.framework in Frameworks */,
+				462712742482AF2800D5E1BE /* AudioToolbox.framework in Frameworks */,
 				0927F4BA21D6369600BFBD91 /* AliyunPlayerSDK.framework in Frameworks */,
 				465DBA4C248010A80061EC7C /* HDMarqueeTool.framework in Frameworks */,
 				507A03301ADB51D400EB5C77 /* CoreText.framework in Frameworks */,
@@ -8307,6 +8315,8 @@
 		09073B991EE7D38500C5196B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				462712732482AF2700D5E1BE /* AudioToolbox.framework */,
+				462712712482AF1500D5E1BE /* Accelerate.framework */,
 				81EA692E2272E1E300C5EF4B /* WebKit.framework */,
 				09FBE1CD214B58820032AA2C /* libxml2.tbd */,
 				09FBE1C9214B582D0032AA2C /* libbz2.tbd */,
@@ -19774,6 +19784,7 @@
 		8126EC2B21D63A40008C8547 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
+				462712752482B16100D5E1BE /* CCBundle.bundle */,
 				468D7944248002E500B7DB2E /* DWDrmServer.framework */,
 				468D7945248002E600B7DB2E /* IJKMediaFramework.framework */,
 				468D7943248002E500B7DB2E /* WebRTC.framework */,
@@ -23884,6 +23895,7 @@
 				780F8564230F85EF00B67CEF /* tk_video_frame_student_black@3x.png in Resources */,
 				780F880A230F85F200B67CEF /* tk_common_userlist_left_unclickable_black@3x.png in Resources */,
 				780F8973230F85F400B67CEF /* tk_jiantou_default_black@2x.png in Resources */,
+				462712762482B16100D5E1BE /* CCBundle.bundle in Resources */,
 				780F87D4230F85F200B67CEF /* tk_ipad_hd_black@2x.png in Resources */,
 				780F8982230F85F400B67CEF /* tk_login_right_icon_black@2x.png in Resources */,
 				5051459E1AE49F4E00CCCAE6 /* LaunchScreen.xib in Resources */,

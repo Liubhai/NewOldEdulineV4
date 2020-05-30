@@ -54,7 +54,7 @@
 
 
 #import <QuartzCore/QuartzCore.h>
-
+#import "CCPlayerController.h"
 
 // 微吼直播
 //#import "VHallApi.h"
@@ -628,9 +628,9 @@
     NSString *strRoomId = [_CCDict stringValueForKey:@"roomid"];
     NSString *strViewName = _HDnickName;
     NSString *strToken = [_CCDict stringValueForKey:@"join_pwd"];
-    // ST todo 弹出直播详情页
-//    PlayForPCVC *playVc = [[PlayForPCVC alloc] initWithRoomId:strRoomId WithUserId:strUserId WithViewerName:strViewName WithToken:strToken];
-//    [self presentViewController:playVc animated:YES completion:nil];
+    CCPlayerController *vc = [[CCPlayerController alloc]initWithRoomName:strViewName userId:strUserId roomId:strRoomId viewerName:strViewName token:strToken];
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)loginFailed:(NSError *)error reason:(NSString *)reason {
@@ -683,6 +683,7 @@
 
 //    PlayBackVC *playBackVC = [[PlayBackVC alloc] initWithRoomId:roomID WithUserId:userID WithViewerName:name WithToken:token withLiveID:liveID];
 //    [self presentViewController:playBackVC animated:YES completion:nil];
+
 }
 
 
