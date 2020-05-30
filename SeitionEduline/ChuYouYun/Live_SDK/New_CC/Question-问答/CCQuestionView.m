@@ -126,9 +126,8 @@
  */
 - (void)setupHeaderRefresh
 {
-    // st todo
-//    self.questionTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction: @selector(loadMoreHistoryData)];
-//    self.questionTableView.mj_header.hidden = YES;
+    [self.questionTableView addHeaderWithTarget:self action: @selector(loadMoreHistoryData)];
+    self.questionTableView.headerHidden = YES;
 }
 /**
  *    @brief    下拉查看历史数据回调
@@ -146,9 +145,8 @@
  */
 - (void)setupFooterRefresh
 {
-    // st todo
-//    self.questionTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-//    self.questionTableView.mj_footer.hidden = YES;
+    [self.questionTableView addFooterWithTarget:self action:@selector(loadMoreData)];
+    self.questionTableView.footerHidden = YES;
 }
 
 /**
@@ -227,12 +225,10 @@
     });
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        // st todo
-        /*
         [self.questionTableView reloadData];
         if (questionSouceType == QuestionSourceTypeFromLive) {
             
-            [self.questionTableView.mj_header endRefreshing];
+            [self.questionTableView headerEndRefreshing];
             if (self.newKeysArr != nil && [self.newKeysArr count] != 0 ) {
                 NSIndexPath *indexPathLast = [NSIndexPath indexPathForItem:(self.newKeysArr.count-1) inSection:0];
                 [self.questionTableView scrollToRowAtIndexPath:indexPathLast atScrollPosition:UITableViewScrollPositionBottom animated:YES];
@@ -240,11 +236,11 @@
         }else if(questionSouceType == QuestionSourceTypeFromLiveHistory) {
             
             // 包含历史数据显示下拉加载更多
-            if (self.questionTableView.mj_header.hidden == YES) {
-                self.questionTableView.mj_header.hidden = NO;
+            if (self.questionTableView.isHeaderHidden == YES) {
+                self.questionTableView.headerHidden = NO;
             }
             
-            [self.questionTableView.mj_header endRefreshing];
+            [self.questionTableView headerEndRefreshing];
             // 下拉无缝加载
             NSInteger row = _newKeysArr.count - _liveCurrentPage * lowVersionDeviceLoadDataCount;
             if (row > 0 && _liveCurrentPage != 0) {
@@ -253,18 +249,17 @@
             }
             // 加载完所有数据
             if (_isDoneAllData == YES) {
-                self.questionTableView.mj_header.hidden = YES;
+                self.questionTableView.headerHidden = YES;
             }
         }else {
-            self.questionTableView.mj_footer.hidden = self.newKeysArr.count > 0 ? NO : YES;
-            [self.questionTableView.mj_footer endRefreshing];
+            self.questionTableView.footerHidden = self.newKeysArr.count > 0 ? NO : YES;
+            [self.questionTableView footerEndRefreshing];
             if (_isDoneAllData == YES) {
-                [self.questionTableView.mj_footer endRefreshingWithNoMoreData];
+                [self.questionTableView footerEndRefreshing];
             }else if (self.newKeysArr.count > 0 && self.newKeysArr.count < lowVersionDeviceLoadDataCount) {
-                [self.questionTableView.mj_footer endRefreshingWithNoMoreData];
+                [self.questionTableView footerEndRefreshing];
             }
         }
-         */
     });
 }
 
