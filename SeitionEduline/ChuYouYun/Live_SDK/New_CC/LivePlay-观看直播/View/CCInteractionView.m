@@ -906,7 +906,7 @@ static int flagCount = 0; //计数器
 //创建聊天问答等功能选择
 -(UISegmentedControl *)segment {
     if(!_segment) {
-        NSArray *segmentedArray = [[NSArray alloc] initWithObjects:@"聊天",@"问答",@"简介", nil];
+        NSArray *segmentedArray = [[NSArray alloc] initWithObjects:@"聊天",@"问答",@"简介", @"文档",nil];
         _segment = [[UISegmentedControl alloc] initWithItems:segmentedArray];
         //文字设置
         NSMutableDictionary *attDicNormal = [NSMutableDictionary dictionary];

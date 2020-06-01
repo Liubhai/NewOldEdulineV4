@@ -127,7 +127,7 @@ UIScrollViewDelegate,UITextFieldDelegate,CCPlayerViewDelegate>
     self.view.backgroundColor = [UIColor whiteColor];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     /*  设置后台是否暂停 ps:后台支持播放时将会开启锁屏播放器 */
-    _pauseInBackGround = NO;
+    _pauseInBackGround = YES;
     _isLivePlay = NO;
     [self setupUI];//创建UI
     [self integrationSDK];//集成SDK
@@ -174,7 +174,7 @@ UIScrollViewDelegate,UITextFieldDelegate,CCPlayerViewDelegate>
  */
 - (void)setupUI {
     /*   设置文档显示类型    YES:表示文档小窗模式   NO:文档在下模式  */
-    _isSmallDocView = YES;
+    _isSmallDocView = NO;
     //视频视图
     [self.view addSubview:self.playerView];
     [self.playerView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -207,7 +207,7 @@ UIScrollViewDelegate,UITextFieldDelegate,CCPlayerViewDelegate>
     parameter.PPTScalingMode = 4;//ppt展示模式,建议值为4
     parameter.defaultColor = [UIColor whiteColor];//ppt默认底色，不写默认为白色
     parameter.scalingMode = 1;//屏幕适配方式
-    parameter.pauseInBackGround = _pauseInBackGround;//后台是否暂停
+    parameter.pauseInBackGround = YES;//后台是否暂停
     parameter.viewerCustomua = @"viewercustomua";//自定义参数,没有的话这么写就可以
 //    parameter.pptInteractionEnabled = !_isSmallDocView;//是否开启ppt滚动
     parameter.pptInteractionEnabled = YES;
