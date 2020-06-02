@@ -78,7 +78,7 @@
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     /*  设置后台是否暂停 ps:后台支持播放时将会开启锁屏播放器 */
     _pauseInBackGround = NO;
-    _isSmallDocView = YES;
+    _isSmallDocView = NO;
     [self setupUI];//设置UI布局
     [self addObserver];//添加通知
     [self integrationSDK];//集成SDK
