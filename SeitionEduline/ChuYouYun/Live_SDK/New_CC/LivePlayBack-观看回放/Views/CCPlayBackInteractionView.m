@@ -196,11 +196,11 @@
         }
     } else if (_templateType == 5) {
         CGFloat count = _isSmallDocView ? 3 : 4;
-//        CGFloat docWidth = _isSmallDocView ? 0 : self.segment.frame.size.width / count;
+        CGFloat docWidth = _isSmallDocView ? 0 : self.segment.frame.size.width / count;
         [_segment setWidth:self.segment.frame.size.width/count forSegmentAtIndex:0];
         [_segment setWidth:self.segment.frame.size.width/count forSegmentAtIndex:1];
         [_segment setWidth:self.segment.frame.size.width/count forSegmentAtIndex:2];
-//        [_segment setWidth:docWidth forSegmentAtIndex:3];
+        [_segment setWidth:docWidth forSegmentAtIndex:3];
         _segment.selectedSegmentIndex = 0;
         _shadowView.frame = CGRectMake([self.segment widthForSegmentAtIndex:0]/4, shadowViewY, [self.segment widthForSegmentAtIndex:0]/2, 2);
         //聊天互动： 有 直播文档： 有 直播问答： 有
@@ -436,7 +436,7 @@
     CGFloat width0 = [segment widthForSegmentAtIndex:0];
     CGFloat width1 = [segment widthForSegmentAtIndex:1];
     CGFloat width2 = [segment widthForSegmentAtIndex:2];
-    CGFloat width3 = 0;//[segment widthForSegmentAtIndex:3];
+    CGFloat width3 = [segment widthForSegmentAtIndex:3];
     CGFloat shadowViewY = segment.frame.origin.y + segment.frame.size.height - 2;
     switch(index){
         case 0: {
@@ -463,7 +463,7 @@
             break;
         case 3: {
             [UIView animateWithDuration:0.25 animations:^{
-                self.shadowView.frame = CGRectMake(width0 + width1 + width2, shadowViewY, width3, 4);
+                self.shadowView.frame = CGRectMake(width0 + width1 + width2 + width3 / 4, shadowViewY, width3 / 2, 2);
             }];
         }
             [self.scrollView setContentOffset:CGPointMake(self.scrollView.frame.size.width * 3, py)];
@@ -554,7 +554,7 @@
 //创建聊天问答等功能选择
 -(UISegmentedControl *)segment {
     if(!_segment) {
-        NSArray *segmentedArray = [[NSArray alloc] initWithObjects:@"聊天",@"问答",@"简介", nil];
+        NSArray *segmentedArray = [[NSArray alloc] initWithObjects:@"聊天",@"问答",@"简介", @"文档",nil];
         _segment = [[UISegmentedControl alloc] initWithItems:segmentedArray];
         //文字设置
         NSMutableDictionary *attDicNormal = [NSMutableDictionary dictionary];
