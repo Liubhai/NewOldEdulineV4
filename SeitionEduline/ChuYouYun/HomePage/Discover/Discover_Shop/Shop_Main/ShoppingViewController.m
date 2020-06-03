@@ -969,14 +969,6 @@
                             getSearchVc.typeStr = @"1";
                             [self.navigationController pushViewController:getSearchVc animated:YES];
                         } else {
-                            if ([HASEduline isEqualToString:@"0"]) {
-                                if (!UserOathToken) {
-                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"查看详情需要登录,是否前往登录?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去登录", nil];
-                                    alert.tag = 100;
-                                    [alert show];
-                                    return;
-                                }
-                            }
                             ZhiBoMainViewController *zhiBoMainVc = [[ZhiBoMainViewController alloc]initWithMemberId:typeId andImage:nil andTitle:nil andNum:nil andprice:nil];
 //                            zhiBoMainVc.order_switch = _order_switch;
                             [self.navigationController pushViewController:zhiBoMainVc animated:YES];
@@ -987,14 +979,6 @@
                             getSearchVc.typeStr = @"1";
                             [self.navigationController pushViewController:getSearchVc animated:YES];
                         } else {
-                            if ([HASEduline isEqualToString:@"0"]) {
-                                if (!UserOathToken) {
-                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"查看详情需要登录,是否前往登录?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去登录", nil];
-                                    alert.tag = 100;
-                                    [alert show];
-                                    return;
-                                }
-                            }
                             Good_ClassMainViewController *vc = [[Good_ClassMainViewController alloc] init];
                             vc.ID = typeId;
 //                            vc.orderSwitch = _order_switch;
