@@ -19,7 +19,7 @@
 
 @interface TestMainViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 @property (strong ,nonatomic)UIImageView *imageView;
 
 @property (strong ,nonatomic)NSArray     *dataArray;
@@ -121,7 +121,7 @@
 #pragma mark ----- 
 
 - (void)addTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 64, MainScreenWidth - 20 * WideEachUnit, MainScreenHeight - 64) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 64, MainScreenWidth - 20 * WideEachUnit, MainScreenHeight - 64) style:UITableViewStyleGrouped];
     if (iPhoneX) {
         _tableView.frame = CGRectMake(10, 88, MainScreenWidth, MainScreenHeight - 88);
     }

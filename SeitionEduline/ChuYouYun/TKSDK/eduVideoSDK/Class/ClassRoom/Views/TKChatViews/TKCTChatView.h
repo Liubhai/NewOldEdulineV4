@@ -18,7 +18,7 @@
 @property (nonatomic, assign) BOOL chatTimerFlag;
 @property (nonatomic, strong) NSString *lastSendChatTime;
 @property (nonatomic, assign) CGFloat keyboardHeight;
-@property (nonatomic, strong) UITableView *iChatTableView; // 聊天tableView
+@property (nonatomic, strong) STTableView *iChatTableView; // 聊天tableView
 @property (nonatomic, strong) NSArray<TKChatMessageModel *>  *iMessageList;//聊天列表
 @property (nonatomic, strong) TKChatToolView *toolView; // 聊天输入工具条
 @property (nonatomic, strong) TKChatToolView *keyboardView;// 实际 聊天输入工具条

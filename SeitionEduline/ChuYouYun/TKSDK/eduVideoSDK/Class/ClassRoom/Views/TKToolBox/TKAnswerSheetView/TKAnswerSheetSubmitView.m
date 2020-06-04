@@ -18,7 +18,7 @@
 {
     BOOL _modify;
 }
-@property (strong , nonatomic) UICollectionView           *collectionView;
+@property (strong , nonatomic) STUICollectionView           *collectionView;
 @property (strong , nonatomic) UICollectionViewFlowLayout *flowLayout;
 
 @property (strong , nonatomic) UIButton *submitButton;
@@ -251,7 +251,7 @@ static NSString * const reuseID = @"TKAnswerSheetSetupCellID";
 - (UICollectionView *)collectionView
 {
     if (!_collectionView) {
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
+        _collectionView = [[STUICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
         _collectionView.pagingEnabled = NO;
         _collectionView.scrollEnabled = NO;
         _collectionView.dataSource =self;

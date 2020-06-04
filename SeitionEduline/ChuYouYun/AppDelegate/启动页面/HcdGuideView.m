@@ -13,7 +13,7 @@
 
 @interface HcdGuideView()<UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate>
 
-@property (nonatomic, strong) UICollectionView *view;
+@property (nonatomic, strong) STUICollectionView *view;
 @property (nonatomic, strong) NSArray *images;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, assign) UIColor *buttonBgColor;
@@ -49,7 +49,7 @@
         layout.itemSize = kHcdGuideViewBounds.size;
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
-        _view = [[UICollectionView alloc] initWithFrame:kHcdGuideViewBounds collectionViewLayout:layout];
+        _view = [[STUICollectionView alloc] initWithFrame:kHcdGuideViewBounds collectionViewLayout:layout];
         _view.bounces = NO;
         _view.backgroundColor = [UIColor whiteColor];
         _view.showsHorizontalScrollIndicator = NO;

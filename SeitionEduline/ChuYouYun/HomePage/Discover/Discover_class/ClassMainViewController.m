@@ -104,7 +104,7 @@
     cellLayout.itemSize = CGSizeMake((MainScreenWidth - 6) / 2.0, (MainScreenWidth/2.0 - 3 - 20) * 90 / 165.0 + 13 + 7 + 10 + 15 + 13 + 9);
     cellLayout.minimumInteritemSpacing = 6;
     cellLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT + 45, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 45) collectionViewLayout:cellLayout];
+    _collectionView = [[STUICollectionView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT + 45, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 45) collectionViewLayout:cellLayout];
     [_collectionView registerClass:[ClassMainCollectionCell class] forCellWithReuseIdentifier:@"ClassMainCollectionCell"];
     _collectionView.backgroundColor = [UIColor whiteColor];
     _collectionView.delegate = self;

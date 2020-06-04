@@ -24,7 +24,7 @@
 @interface ZLPhotoPickerGroupViewController () <UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic , weak) ZLPhotoPickerAssetsViewController *collectionVc;
 
-@property (nonatomic , weak) UITableView *tableView;
+@property (nonatomic , weak) STTableView *tableView;
 @property (nonatomic , strong) NSArray *groups;
 
 @end
@@ -33,7 +33,7 @@
 
 - (UITableView *)tableView{
     if (!_tableView) {
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        UITableView *tableView = [[STTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         tableView.translatesAutoresizingMaskIntoConstraints = NO;
         tableView.delegate = self;
         [tableView registerClass:[ZLPhotoPickerGroupTableViewCell class] forCellReuseIdentifier:NSStringFromClass([ZLPhotoPickerGroupTableViewCell class])];

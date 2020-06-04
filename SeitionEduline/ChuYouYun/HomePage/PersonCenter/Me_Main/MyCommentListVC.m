@@ -23,7 +23,7 @@
     NSInteger page;
 }
 
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) STTableView *tableView;
 @property (strong, nonatomic) NSMutableArray *dataSource;
 
 @end
@@ -62,7 +62,7 @@
 }
 
 - (void)makeTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 44)];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 44)];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -147,9 +147,7 @@
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         NSDictionary *dict = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr_Before:responseObject];
-        if (_tableView.isHeaderRefreshing) {
-            [_tableView headerEndRefreshing];
-        }
+        [_tableView headerEndRefreshing];
         if ([[dict stringValueForKey:@"code"] integerValue] == 1) {
             [_dataSource removeAllObjects];
             [_dataSource addObjectsFromArray:[YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStrFromData:responseObject]];
@@ -161,9 +159,7 @@
         }
         [_tableView reloadData];
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-        if (_tableView.isHeaderRefreshing) {
-            [_tableView headerEndRefreshing];
-        }
+        [_tableView headerEndRefreshing];
     }];
     [op start];
 }
@@ -192,9 +188,7 @@
     
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        if (_tableView.isFooterRefreshing) {
-            [_tableView footerEndRefreshing];
-        }
+        [_tableView footerEndRefreshing];
         NSDictionary *dict = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr_Before:responseObject];
         NSMutableArray *pass = [NSMutableArray new];
         if ([[dict stringValueForKey:@"code"] integerValue] == 1) {
@@ -208,9 +202,7 @@
         }
         [_tableView reloadData];
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-        if (_tableView.isFooterRefreshing) {
-            [_tableView footerEndRefreshing];
-        }
+        [_tableView footerEndRefreshing];
         page--;
     }];
     [op start];

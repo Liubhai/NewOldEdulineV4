@@ -35,7 +35,7 @@ static CGFloat BOTTOM_HEIGHT = 60;
 @interface ZLCameraViewController () <UIActionSheetDelegate,UICollectionViewDataSource,UICollectionViewDelegate,AVCaptureMetadataOutputObjectsDelegate,ZLCameraImageViewDelegate,ZLCameraViewDelegate,ZLPhotoPickerBrowserViewControllerDataSource,ZLPhotoPickerBrowserViewControllerDelegate>
 
 @property (weak,nonatomic) ZLCameraView *caramView;
-@property (strong, nonatomic) UICollectionView *collectionView;
+@property (strong, nonatomic) STUICollectionView *collectionView;
 @property (strong, nonatomic) UIViewController *currentViewController;
 
 // Datas
@@ -87,7 +87,7 @@ static CGFloat BOTTOM_HEIGHT = 60;
         CGFloat collectionViewH = ZLCameraColletionViewW;
         CGFloat collectionViewY = self.caramView.zl_height - collectionViewH - 10;
         
-        UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, collectionViewY, self.view.zl_width, collectionViewH)
+        UICollectionView *collectionView = [[STUICollectionView alloc] initWithFrame:CGRectMake(0, collectionViewY, self.view.zl_width, collectionViewH)
                                                               collectionViewLayout:layout];
         collectionView.backgroundColor = [UIColor clearColor];
         [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];

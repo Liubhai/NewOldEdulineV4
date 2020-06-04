@@ -149,7 +149,7 @@
 @property (strong ,nonatomic)NSDictionary        *baiDuDocDict;
 
 ///新增内容
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) STTableView *tableView;
 @property(nonatomic, retain) UIScrollView *mainScroll;
 @property (strong, nonatomic) UIView *headerView;
 @property (nonatomic, strong) UIView *buttonBackView;
@@ -2262,9 +2262,7 @@
     __weak Good_ClassMainViewController *wekself = self;
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        if ([wekself.tableView isHeaderRefreshing]) {
-            [wekself.tableView headerEndRefreshing];
-        }
+        [wekself.tableView headerEndRefreshing];
         wekself.videoDataSource = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr_Before:responseObject];
         if ([[wekself.videoDataSource stringValueForKey:@"code"] integerValue] == 1) {
             if ([[wekself.videoDataSource dictionaryValueForKey:@"data"] isKindOfClass:[NSDictionary class]]) {

@@ -24,7 +24,7 @@
 
 @interface HomeInstitutionViewController ()<UITableViewDataSource,UITableViewDelegate>
 
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 @property (strong ,nonatomic)NSMutableArray *dataArray;
 @property (assign ,nonatomic)NSInteger Num;
 
@@ -135,7 +135,7 @@
 
 - (void)addTableView {
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64 + 33) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64 + 33) style:UITableViewStyleGrouped];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.rowHeight = 105;

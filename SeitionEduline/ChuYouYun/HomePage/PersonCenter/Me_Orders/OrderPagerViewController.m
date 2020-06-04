@@ -26,7 +26,7 @@
     BOOL isSele;
 }
 
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 @property (strong ,nonatomic)UILabel *titleText;
 @property (strong ,nonatomic)UIScrollView *controllerSrcollView;
 @property (strong ,nonatomic)UIView       *allWindowView;

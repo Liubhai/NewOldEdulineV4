@@ -14,7 +14,7 @@
 @interface ClassCommentListVC : BaseViewController<UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 
 @property (strong, nonatomic) ClassDetailViewController *vc;
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) STTableView *tableView;
 @property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UIButton *addCommentButton;
 @property (assign, nonatomic) BOOL cellTabelCanScroll;

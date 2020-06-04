@@ -17,7 +17,7 @@
 
 @interface MyShareViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 @property (strong ,nonatomic)NSArray     *dataArray;
 
 @end
@@ -91,7 +91,7 @@
 }
 
 - (void)addTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT) style:UITableViewStyleGrouped];
     _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _tableView.rowHeight = 70 * WideEachUnit;
     _tableView.delegate = self;

@@ -32,7 +32,7 @@
     int tempNumber;
 }
 
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 @property (strong ,nonatomic)NSArray *lookArray;
 @property (strong ,nonatomic)NSMutableArray *dataArray;
 @property (strong ,nonatomic)UIScrollView *headScrollow;
@@ -136,7 +136,7 @@
 }
 - (void)addTableView {
 //    _headScrollow.current_y_h+15*MainScreenWidth/375 - 10
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - _headScrollow.current_y_h-15) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - _headScrollow.current_y_h-15) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.rowHeight = 90 *horizontalrate;

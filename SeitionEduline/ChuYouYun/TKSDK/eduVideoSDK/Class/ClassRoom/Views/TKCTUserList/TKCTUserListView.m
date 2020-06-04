@@ -109,7 +109,7 @@
     [self addSubview:_userHeaderView];
     
     // tableView
-    _iFileTableView = [[UITableView alloc]initWithFrame:CGRectMake(0,
+    _iFileTableView = [[STTableView alloc]initWithFrame:CGRectMake(0,
                                                                    _userHeaderView.bottomY,
                                                                    CGRectGetWidth(frame),
                                                                    CGRectGetHeight(frame)- CGRectGetMaxY(_userHeaderView.frame) - _bottomHeight)

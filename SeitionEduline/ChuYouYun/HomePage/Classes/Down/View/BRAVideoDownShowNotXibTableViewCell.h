@@ -24,7 +24,7 @@
 @property (nonatomic,copy) void(^br_selectedBlock)(BRAVideoDownShowNotXibTableViewCell *cell);
 
 @property (assign, nonatomic) id<BRAVideoDownShowNotXibTableViewCellDelegate> delegate;
-@property (strong, nonatomic) UITableView *cellTableView;
+@property (strong, nonatomic) STTableView *cellTableView;
 @property (assign, nonatomic) BOOL isClassNew;
 @property (strong, nonatomic) NSMutableArray *dataSource;
 @property (strong, nonatomic) UIView *cellTableViewSpace;

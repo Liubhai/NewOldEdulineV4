@@ -67,7 +67,7 @@
     layout.minimumLineSpacing = margin;
     CGFloat top = margin + 44;
     if (iOS7Later) top += 20;
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(margin, top, self.view.width - 2 * margin, self.view.height - 50 - top-MACRO_UI_SAFEAREA) collectionViewLayout:layout];
+    _collectionView = [[STUICollectionView alloc] initWithFrame:CGRectMake(margin, top, self.view.width - 2 * margin, self.view.height - 50 - top-MACRO_UI_SAFEAREA) collectionViewLayout:layout];
     _collectionView.backgroundColor = [UIColor whiteColor];
     _collectionView.dataSource = self;
     _collectionView.delegate = self;

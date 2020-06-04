@@ -36,7 +36,7 @@
 
 @property (strong ,nonatomic)UIView *allView;
 @property (strong ,nonatomic)UIButton *allButton;
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 @property (assign,nonatomic) NSInteger typeNum;
 
 //优化后的界面

@@ -100,7 +100,7 @@
     _recommendScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT)];
     [self.view addSubview:_recommendScrollView];
     
-    _searchResultTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT)];
+    _searchResultTableView = [[STTableView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT)];
     _searchResultTableView.dataSource = self;
     _searchResultTableView.delegate = self;
     _searchResultTableView.showsVerticalScrollIndicator = NO;
@@ -197,18 +197,14 @@
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         NSDictionary *dict = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr_Before:responseObject];
-        if (_searchResultTableView.headerRefreshing) {
-            [_searchResultTableView headerEndRefreshing];
-        }
+        [_searchResultTableView headerEndRefreshing];
         if ([[dict objectForKey:@"code"] integerValue] == 1) {
             [_searchArray removeAllObjects];
             [_searchArray addObjectsFromArray:[YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStrFromData:responseObject]];
         }
         [_searchResultTableView reloadData];
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-        if (_searchResultTableView.headerRefreshing) {
-            [_searchResultTableView headerEndRefreshing];
-        }
+        [_searchResultTableView headerEndRefreshing];
     }];
     [op start];
 }

@@ -35,7 +35,7 @@
 @property (strong ,nonatomic)UIView       *oneView;
 @property (strong ,nonatomic)UIView       *twoView;
 @property (strong ,nonatomic)UIScrollView *twoScrollView;
-@property (strong ,nonatomic)UITableView  *tableView;
+@property (strong ,nonatomic) STTableView  *tableView;
 @property (strong ,nonatomic)UIImageView  *imageView;
 @property (strong ,nonatomic)UIView       *downView;
 

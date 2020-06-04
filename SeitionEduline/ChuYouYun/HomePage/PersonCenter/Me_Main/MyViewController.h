@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface MyViewController : UIViewController<UITableViewDataSource,UITableViewDataSource>
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) STTableView *tableView;
 @property (strong, nonatomic) UIView *tView;
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UIButton *specialBtn;

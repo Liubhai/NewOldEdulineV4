@@ -24,7 +24,7 @@
 }
 
 @property (strong ,nonatomic)UIView           *headerView;
-@property (strong ,nonatomic)UITableView      *tableView;
+@property (strong ,nonatomic) STTableView      *tableView;
 @property (strong ,nonatomic)UIButton         *classButton;
 @property (strong ,nonatomic)UIButton         *rankButton;
 @property (strong ,nonatomic)UIImageView      *imageView;
@@ -157,7 +157,7 @@
 
 #pragma mark --- UITableView
 - (void)addTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64 + 45 , MainScreenWidth, MainScreenHeight - 64 - 45 + 36) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0,64 + 45 , MainScreenWidth, MainScreenHeight - 64 - 45 + 36) style:UITableViewStyleGrouped];
     if (iPhoneX) {
         _tableView.frame = CGRectMake(0, 88 + 45, MainScreenWidth, MainScreenHeight - 88 - 45 + 36);
     }

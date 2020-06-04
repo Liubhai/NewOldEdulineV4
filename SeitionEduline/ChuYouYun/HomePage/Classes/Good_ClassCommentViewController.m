@@ -145,7 +145,7 @@
 }
 
 - (void)addTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, _tabelHeight) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, _tabelHeight) style:UITableViewStyleGrouped];
     _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _tableView.delegate = self;
     _tableView.dataSource = self;

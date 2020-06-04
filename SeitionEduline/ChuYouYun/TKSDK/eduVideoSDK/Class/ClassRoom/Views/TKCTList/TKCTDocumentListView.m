@@ -38,7 +38,7 @@
 //@property (nonatomic,strong)TKDocmentDocModel *whiteBoardModel;//白板文件
 @property (nonatomic,strong)NSMutableArray *iClassFileMutableArray;//课堂文件
 @property (nonatomic,strong)NSMutableArray *iSystemFileMutableArray;//公共文件
-@property (nonatomic,retain)UITableView    *iFileTableView;//展示tableview
+@property (nonatomic,retain) STTableView    *iFileTableView;//展示tableview
 @property (nonatomic,assign)BOOL  isClassBegin;//课堂是否开始
 @property (nonatomic,strong)UIButton*  iCurrrentButton;
 @property (nonatomic,strong)UIButton*  iPreButton;
@@ -133,7 +133,7 @@
     UITapGestureRecognizer *publicFileG = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToHide:)];
     [_publicFileView addGestureRecognizer:publicFileG];
     
-    _publicTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_publicFileView.frame), self.width - 10, _iFileTableView.height) style:UITableViewStylePlain];
+    _publicTableView = [[STTableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_publicFileView.frame), self.width - 10, _iFileTableView.height) style:UITableViewStylePlain];
     _publicTableView.backgroundColor = [UIColor clearColor];
     _publicTableView.separatorColor  = [UIColor clearColor];
     _publicTableView.showsHorizontalScrollIndicator = NO;
@@ -207,7 +207,7 @@
     _fileListHeaderView.hidden = YES;
     _fileListHeaderView.delegate = self;
     
-    _iFileTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, _toolHeight, CGRectGetWidth(frame), CGRectGetHeight(frame)-_toolHeight-40) style:UITableViewStylePlain];
+    _iFileTableView = [[STTableView alloc]initWithFrame:CGRectMake(0, _toolHeight, CGRectGetWidth(frame), CGRectGetHeight(frame)-_toolHeight-40) style:UITableViewStylePlain];
     _iFileTableView.backgroundColor = [UIColor clearColor];
     _iFileTableView.separatorColor  = [UIColor clearColor];
     _iFileTableView.showsHorizontalScrollIndicator = NO;

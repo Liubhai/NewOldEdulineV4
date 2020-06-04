@@ -13,7 +13,7 @@
 
 @interface ClassCourseListVC : BaseViewController<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) STTableView *tableView;
 @property (nonatomic, strong) UIView *headerView;
 @property (strong, nonatomic) ClassDetailViewController *vc;
 @property (assign, nonatomic) BOOL cellTabelCanScroll;

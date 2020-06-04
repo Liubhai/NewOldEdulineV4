@@ -34,7 +34,7 @@
     NSInteger Number;
 }
 
-@property (strong ,nonatomic)UICollectionView *collectionView;
+@property (strong ,nonatomic)STUICollectionView *collectionView;
 @property (strong ,nonatomic)UIView           *headerView;
 @property (strong ,nonatomic)UIButton         *classButton;
 @property (strong ,nonatomic)UIButton         *teacherButton;
@@ -182,7 +182,7 @@ static NSString *cellID = @"cell";
     layout.headerReferenceSize = CGSizeMake(MainScreenWidth, 10);
     layout.footerReferenceSize = CGSizeMake(MainScreenWidth, 10);
     
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(SpaceBaside, 109, MainScreenWidth - 2 * SpaceBaside, MainScreenHeight - 109) collectionViewLayout:layout];
+    _collectionView = [[STUICollectionView alloc] initWithFrame:CGRectMake(SpaceBaside, 109, MainScreenWidth - 2 * SpaceBaside, MainScreenHeight - 109) collectionViewLayout:layout];
     if (iPhoneX) {
         _collectionView.frame = CGRectMake(SpaceBaside, 88 + 45 , MainScreenWidth - 2 * SpaceBaside, MainScreenHeight - 88 - 45);
     }

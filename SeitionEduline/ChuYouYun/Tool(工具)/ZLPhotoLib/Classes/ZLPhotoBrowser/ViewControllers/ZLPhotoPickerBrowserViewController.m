@@ -21,7 +21,7 @@ static NSString *_cellIdentifier = @"collectionViewCell";
 @property (weak,nonatomic) UIButton         *deleleBtn;
 @property (retain,nonatomic) UIButton         *saveBtn;
 @property (weak,nonatomic) UIButton         *backBtn;
-@property (weak,nonatomic) UICollectionView *collectionView;
+@property (weak,nonatomic) STUICollectionView *collectionView;
 
 // 需要增加的导航高度
 @property (assign,nonatomic) CGFloat navigationHeight;
@@ -61,7 +61,7 @@ static NSString *_cellIdentifier = @"collectionViewCell";
         flowLayout.itemSize = CGSizeMake([UIScreen mainScreen].bounds.size.width + ZLPickerColletionViewPadding, [UIScreen mainScreen].bounds.size.height);
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
-        UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.height) collectionViewLayout:flowLayout];
+        UICollectionView *collectionView = [[STUICollectionView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.height) collectionViewLayout:flowLayout];
         collectionView.showsHorizontalScrollIndicator = NO;
         collectionView.showsVerticalScrollIndicator = NO;
         collectionView.pagingEnabled = YES;

@@ -17,7 +17,7 @@
 
 @interface Good_MyClassDownloadViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
-    UITableView * _tableView;
+    STTableView * _tableView;
     UILabel *lable;
     
     BOOL _isOn0;
@@ -42,7 +42,7 @@
     UIImage   *faceImage;
 }
 
-@property (strong ,nonatomic)UITableView   *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 
 @property (strong ,nonatomic)NSArray       *dataArray;
 @property (strong ,nonatomic)NSArray       *sectionArray;
@@ -125,7 +125,7 @@
 }
 
 - (void)addTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.rowHeight = 50 * WideEachUnit;

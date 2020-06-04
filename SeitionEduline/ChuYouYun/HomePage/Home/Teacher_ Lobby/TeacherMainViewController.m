@@ -62,7 +62,7 @@
 @property (strong ,nonatomic)NSString *homeMoreButtonSet;
 
 ///新增内容
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) STTableView *tableView;
 @property(nonatomic,retain)UIScrollView *mainScroll;
 @property (strong, nonatomic) UIView *headerView;
 @property (nonatomic, strong) UIView *buttonBackView;
@@ -702,9 +702,7 @@
         }else{
             [_attentionButton setTitle:@"已关注" forState:UIControlStateNormal];
         }
-        if ([_tableView isHeaderRefreshing]) {
-            [_tableView headerEndRefreshing];
-        }
+        [_tableView headerEndRefreshing];
         sectionHeight = MainScreenHeight - MACRO_UI_UPHEIGHT;
         [self createSubView];
 //        [self addInfoView];

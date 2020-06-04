@@ -122,7 +122,7 @@
 }
 
 - (void)addTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, _tabelHeight) style:UITableViewStylePlain];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, _tabelHeight) style:UITableViewStylePlain];
     _tableView.rowHeight = 130 + 10 - 10;
     _tableView.delegate = self;
     _tableView.dataSource = self;

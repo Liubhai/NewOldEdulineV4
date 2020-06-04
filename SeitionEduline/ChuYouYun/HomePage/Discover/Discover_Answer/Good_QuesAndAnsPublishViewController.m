@@ -21,7 +21,7 @@
 @property (strong ,nonatomic)UILabel        *hintLabel;
 @property (strong ,nonatomic)UIView         *photoView;
 @property (strong ,nonatomic)UIView         *downView;
-@property (strong ,nonatomic)UITableView    *cateTableView;
+@property (strong ,nonatomic) STTableView    *cateTableView;
 
 @property (strong ,nonatomic)NSMutableArray *imagesArray;
 @property (strong ,nonatomic)NSMutableArray *imageIDArray;
@@ -36,7 +36,7 @@
 
 -(UITableView *)cateTableView {
     if (!_cateTableView) {
-        _cateTableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 125, MainScreenWidth - 20, _dataArray.count * 40 * WideEachUnit) style:UITableViewStyleGrouped];
+        _cateTableView = [[STTableView alloc] initWithFrame:CGRectMake(10, 125, MainScreenWidth - 20, _dataArray.count * 40 * WideEachUnit) style:UITableViewStyleGrouped];
         _cateTableView.delegate = self;
         _cateTableView.dataSource = self;
         _cateTableView.rowHeight = 40 * WideEachUnit;
@@ -225,7 +225,7 @@
 }
 
 - (void)addTableView {
-//    _cateTableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 125, MainScreenWidth - 20, _dataArray.count * 40 * WideEachUnit) style:UITableViewStyleGrouped];
+//    _cateTableView = [[STTableView alloc] initWithFrame:CGRectMake(10, 125, MainScreenWidth - 20, _dataArray.count * 40 * WideEachUnit) style:UITableViewStyleGrouped];
 //    _cateTableView.delegate = self;
 //    _cateTableView.dataSource = self;
 //    _cateTableView.rowHeight = 40 * WideEachUnit;

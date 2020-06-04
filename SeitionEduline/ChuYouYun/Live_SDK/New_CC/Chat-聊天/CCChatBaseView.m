@@ -14,7 +14,7 @@
 #import "MJRefresh.h"//下拉刷新
 @interface CCChatBaseView ()<CCChatContentViewDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, assign) BOOL                input;//是否有输入文本框
-@property (nonatomic, strong) UITableView         * publicTableView;//公聊tableView
+@property (nonatomic, strong) STTableView         * publicTableView;//公聊tableView
 @property (nonatomic, strong) CCChatContentView   * inputView;//输入框视图
 @property (nonatomic, strong) NSMutableDictionary * privateChatDict;//私聊字典
 @property (nonatomic, assign) BOOL                privateHidden;//是否隐藏私聊视图
@@ -78,7 +78,7 @@
 #pragma mark - 懒加载
 -(UITableView *)publicTableView {
     if(!_publicTableView) {
-        _publicTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _publicTableView = [[STTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _publicTableView.backgroundColor = [UIColor colorWithHexString:@"#f5f5f5" alpha:1.0f];
         _publicTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _publicTableView.delegate = self;

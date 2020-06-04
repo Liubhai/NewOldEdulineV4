@@ -10,7 +10,7 @@
 
 @interface SpeedSettingViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) STTableView *tableView;
 
 @property (nonatomic, strong) NSMutableArray *items;
 
@@ -25,7 +25,7 @@
     // Do any additional setup after loading the view.
     
     
-    _tableView = [[UITableView alloc]initWithFrame:self.view.bounds];
+    _tableView = [[STTableView alloc]initWithFrame:self.view.bounds];
     [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     [self.view addSubview:_tableView];
     _tableView.delegate = self;

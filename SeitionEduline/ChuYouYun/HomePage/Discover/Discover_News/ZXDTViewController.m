@@ -33,7 +33,7 @@
     UIImageView  *shareImageView;
 }
 
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 @property (strong ,nonatomic)UIImageView *shareImageView;
 @property (strong ,nonatomic)NSDictionary *SYGDic;
 @property (nonatomic,strong) TYAttributedLabel *textLabel;

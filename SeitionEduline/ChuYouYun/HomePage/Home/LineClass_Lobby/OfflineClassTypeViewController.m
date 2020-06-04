@@ -13,9 +13,9 @@
 @interface OfflineClassTypeViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (strong ,nonatomic)UIView      *tabView;//放表格的视图
-@property (strong, nonatomic)UITableView *oneTableView;
-@property (strong ,nonatomic)UITableView *twoTableView;
-@property (strong ,nonatomic)UITableView *thereTableView;
+@property (strong, nonatomic) STTableView *oneTableView;
+@property (strong ,nonatomic) STTableView *twoTableView;
+@property (strong ,nonatomic) STTableView *thereTableView;
 @property (strong ,nonatomic)UIButton    *clearButton;
 
 @property (strong ,nonatomic)NSMutableArray *dataArray;
@@ -65,7 +65,7 @@
 
 - (void)addTabView {
     CGFloat tableViewW = MainScreenWidth / 3;
-    _oneTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, _tabView.height) style:UITableViewStyleGrouped];
+    _oneTableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, _tabView.height) style:UITableViewStyleGrouped];
     _oneTableView.backgroundColor = [UIColor whiteColor];
     _oneTableView.dataSource = self;
     _oneTableView.delegate = self;
@@ -82,7 +82,7 @@
         [ps adapterOfIOS11With:_oneTableView];
     }
     
-    _twoTableView = [[UITableView alloc] initWithFrame:CGRectMake(tableViewW + MainScreenWidth, 0, tableViewW, _tabView.height) style:UITableViewStyleGrouped];
+    _twoTableView = [[STTableView alloc] initWithFrame:CGRectMake(tableViewW + MainScreenWidth, 0, tableViewW, _tabView.height) style:UITableViewStyleGrouped];
     _twoTableView.delegate = self;
     _twoTableView.dataSource = self;
     _twoTableView.rowHeight = 40 * WideEachUnit;
@@ -99,7 +99,7 @@
         [ps adapterOfIOS11With:_twoTableView];
     }
     
-    _thereTableView = [[UITableView alloc] initWithFrame:CGRectMake(tableViewW * 2 + MainScreenWidth, 0, tableViewW, _tabView.height) style:UITableViewStyleGrouped];
+    _thereTableView = [[STTableView alloc] initWithFrame:CGRectMake(tableViewW * 2 + MainScreenWidth, 0, tableViewW, _tabView.height) style:UITableViewStyleGrouped];
     _thereTableView.delegate = self;
     _thereTableView.dataSource = self;
     _thereTableView.rowHeight = 40 * WideEachUnit ;

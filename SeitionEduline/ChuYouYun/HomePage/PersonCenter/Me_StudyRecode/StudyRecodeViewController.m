@@ -24,7 +24,7 @@
     NSString *learnStatus;
 }
 
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) STTableView *tableView;
 
 @property (strong, nonatomic) UIView *topView;
 @property (strong, nonatomic) UISwitch *daySwitch;
@@ -173,7 +173,7 @@
 }
 
 - (void)makeTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT + _topView.height, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - _topView.height) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT + _topView.height, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - _topView.height) style:UITableViewStyleGrouped];
     _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.rowHeight = 67 + 10;
     _tableView.delegate = self;

@@ -15,9 +15,9 @@
     CGRect _frame;
 }
 @property (strong ,nonatomic)UIView      *tabView;//放表格的视图
-@property (strong, nonatomic)UITableView *oneTableView;
-@property (strong ,nonatomic)UITableView *twoTableView;
-@property (strong ,nonatomic)UITableView *thereTableView;
+@property (strong, nonatomic) STTableView *oneTableView;
+@property (strong ,nonatomic) STTableView *twoTableView;
+@property (strong ,nonatomic) STTableView *thereTableView;
 
 @property (strong ,nonatomic)NSMutableArray *oneTableArray;
 @property (strong ,nonatomic)NSMutableArray *twoTableArray;
@@ -63,20 +63,20 @@
 
 - (void)addTableView {
     CGFloat tableViewW = MainScreenWidth / 3;
-    _oneTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, tableViewW, MainScreenHeight - 109 - 200) style:UITableViewStyleGrouped];
+    _oneTableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 0, tableViewW, MainScreenHeight - 109 - 200) style:UITableViewStyleGrouped];
     _oneTableView.backgroundColor = [UIColor greenColor];
     _oneTableView.dataSource = self;
     _oneTableView.delegate = self;
     _oneTableView.rowHeight = 40;
     [_tabView addSubview:_oneTableView];
     
-    _twoTableView = [[UITableView alloc] initWithFrame:CGRectMake(tableViewW, 0, tableViewW, MainScreenHeight - 109 - 200) style:UITableViewStyleGrouped];
+    _twoTableView = [[STTableView alloc] initWithFrame:CGRectMake(tableViewW, 0, tableViewW, MainScreenHeight - 109 - 200) style:UITableViewStyleGrouped];
     _twoTableView.delegate = self;
     _twoTableView.dataSource = self;
     _twoTableView.backgroundColor = [UIColor yellowColor];
     [_tabView addSubview:_twoTableView];
     
-    _thereTableView = [[UITableView alloc] initWithFrame:CGRectMake(tableViewW * 2, 0, tableViewW, MainScreenHeight - 109 - 200) style:UITableViewStyleGrouped];
+    _thereTableView = [[STTableView alloc] initWithFrame:CGRectMake(tableViewW * 2, 0, tableViewW, MainScreenHeight - 109 - 200) style:UITableViewStyleGrouped];
     _thereTableView.delegate = self;
     _thereTableView.dataSource = self;
     _thereTableView.backgroundColor = [UIColor blueColor ];

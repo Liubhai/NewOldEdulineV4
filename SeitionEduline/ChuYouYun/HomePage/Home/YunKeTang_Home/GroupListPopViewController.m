@@ -26,7 +26,7 @@
         [groupTimer invalidate];
         groupTimer = nil;
     }
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(30, 0, MainScreenWidth - 60, 280)];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(30, 0, MainScreenWidth - 60, 280)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.showsVerticalScrollIndicator = NO;

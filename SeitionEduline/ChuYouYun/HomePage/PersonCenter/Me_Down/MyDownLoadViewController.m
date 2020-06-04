@@ -35,7 +35,7 @@
     NSString *_size;
 }
 
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) STTableView *tableView;
 
 @property (nonatomic, strong)ZFDownloadManager *downloadManage;
 @property (atomic, strong) NSMutableArray *downloadObjectArr;
@@ -205,7 +205,7 @@
 //下载页面
 -(void)addDownView{
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc]initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64) style:UITableViewStyleGrouped];
     if (iPhoneX) {
         _tableView.frame = CGRectMake(0, 88, MainScreenWidth, MainScreenHeight - 88);
     }

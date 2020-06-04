@@ -47,7 +47,7 @@
     lineView.backgroundColor = RGBHex(0xF1F1F1);
     [_headerView addSubview:lineView];
     _dataSource = [NSMutableArray new];
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, _tableHeight) style:UITableViewStylePlain];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, _tableHeight) style:UITableViewStylePlain];
     _tableView.showsVerticalScrollIndicator = NO;
     _tableView.showsHorizontalScrollIndicator = NO;
     _tableView.dataSource = self;

@@ -32,7 +32,7 @@
 
 @interface MoreViewController ()<UITableViewDataSource,UITableViewDelegate>
 
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 
 @end
 
@@ -88,7 +88,7 @@
     
     
     //添加表格视图
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, NavigationBarHeight, MainScreenWidth, MainScreenHeight - 64 - 49) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, NavigationBarHeight, MainScreenWidth, MainScreenHeight - 64 - 49) style:UITableViewStyleGrouped];
     if (iPhoneX) {
         _tableView.frame = CGRectMake(0, 88, MainScreenWidth, MainScreenHeight - 88 - 83);
     }

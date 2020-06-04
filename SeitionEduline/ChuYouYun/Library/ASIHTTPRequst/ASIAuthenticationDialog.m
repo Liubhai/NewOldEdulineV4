@@ -41,7 +41,7 @@ static const NSUInteger kDomainSection = 1;
 - (void)orientationChanged:(NSNotification *)notification;
 - (void)cancelAuthenticationFromDialog:(id)sender;
 - (void)loginWithCredentialsFromDialog:(id)sender;
-@property (retain) UITableView *tableView;
+@property (retain) STTableView *tableView;
 @end
 
 @implementation ASIAuthenticationDialog
@@ -294,7 +294,7 @@ static const NSUInteger kDomainSection = 1;
 	f.origin.y = [bar frame].size.height;
 	f.size.height -= f.origin.y;
 
-	[self setTableView:[[[UITableView alloc] initWithFrame:f style:UITableViewStyleGrouped] autorelease]];
+	[self setTableView:[[[STTableView alloc] initWithFrame:f style:UITableViewStyleGrouped] autorelease]];
 	[[self tableView] setDelegate:self];
 	[[self tableView] setDataSource:self];
 	[[self tableView] setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
@@ -482,7 +482,7 @@ static const NSUInteger kDomainSection = 1;
 
 @synthesize request;
 @synthesize type;
-@synthesize tableView;
+//@synthesize tableView;
 @synthesize didEnableRotationNotifications;
 @synthesize presentingController;
 @end

@@ -22,7 +22,7 @@
 
 @property(nonatomic,strong)UIBarButtonItem              * leftBarBtn;//返回按钮
 @property(nonatomic,strong)UIBarButtonItem              * rightBarBtn;//添加下载地址
-@property(nonatomic,strong)UITableView                  * tableView;//下载列表
+@property(nonatomic,strong) STTableView                  * tableView;//下载列表
 @property(nonatomic,strong)CCDownloadModel              * downloadModel;//下载对象模型
 @property(nonatomic,strong)OfflinePlayBack              * offlinePlayBack;//解压
 @property(nonatomic,strong)LoadingView                  * loadingView;//加载视图
@@ -454,7 +454,7 @@
 
 -(UITableView *)tableView {
     if(!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView = [[STTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;

@@ -139,7 +139,7 @@
 @property (strong, nonatomic) UILabel *activityEndLabel;
 
 ///新增内容
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) STTableView *tableView;
 @property(nonatomic, retain) UIScrollView *mainScroll;
 @property (strong, nonatomic) UIView *headerView;
 @property (nonatomic, strong) UIView *buttonBackView;
@@ -887,9 +887,7 @@
     
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        if (_tableView.isHeaderRefreshing) {
-            [_tableView headerEndRefreshing];
-        }
+        [_tableView headerEndRefreshing];
         NSDictionary *dict = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr_Before:responseObject];
         if ([[dict stringValueForKey:@"code"] integerValue] == 1) {
             if ([[dict dictionaryValueForKey:@"data"] isKindOfClass:[NSDictionary class]]) {

@@ -48,9 +48,9 @@
 
 
 //表格
-@property (strong ,nonatomic)UITableView      *chooseTableView;
-@property (strong ,nonatomic)UITableView      *gapTableView;
-@property (strong ,nonatomic)UITableView      *subjectivityTableView;
+@property (strong ,nonatomic) STTableView      *chooseTableView;
+@property (strong ,nonatomic) STTableView      *gapTableView;
+@property (strong ,nonatomic) STTableView      *subjectivityTableView;
 
 //表格头部的webView
 @property (strong ,nonatomic)UIView           *chooseHeaderView;
@@ -538,7 +538,7 @@
 #pragma mark --- 添加表格
 //选择表格
 - (void)addChooseTableView {
-    _chooseTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64) style:UITableViewStyleGrouped];
+    _chooseTableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64) style:UITableViewStyleGrouped];
     _chooseTableView.delegate = self;
     _chooseTableView.dataSource = self;
     _chooseTableView.separatorStyle = UITableViewCellSeparatorStyleNone;//去掉表格中间的分割线

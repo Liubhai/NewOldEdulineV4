@@ -22,7 +22,7 @@
 @interface InstCouponViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (strong ,nonatomic)NSString        *schoolID;
-@property (strong ,nonatomic)UITableView     *tableView;
+@property (strong ,nonatomic) STTableView     *tableView;
 @property (strong ,nonatomic)UIImageView     *imageView;
 @property (strong ,nonatomic)NSMutableArray  *dataArray;
 @property (assign ,nonatomic)NSInteger        number;
@@ -119,7 +119,7 @@
 
 - (void)addTableView {
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 34) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 34) style:UITableViewStyleGrouped];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [self.view addSubview:_tableView];

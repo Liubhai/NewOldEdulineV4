@@ -23,7 +23,7 @@ typedef void(^institutionChooseBlock)(BOOL succesed);
 @property (strong, nonatomic) SYGTextField *institutionSearch;
 @property (strong, nonatomic) UIButton *cancelButton;
 @property (strong, nonatomic) UIScrollView *recommendScrollView;
-@property (strong, nonatomic) UITableView *searchResultTableView;
+@property (strong, nonatomic) STTableView *searchResultTableView;
 @property (strong, nonatomic) NSMutableArray *recommendArray;
 @property (strong, nonatomic) NSMutableArray *searchArray;
 

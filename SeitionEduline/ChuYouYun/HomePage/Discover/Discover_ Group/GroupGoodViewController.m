@@ -27,7 +27,7 @@
 }
 
 @property(nonatomic,strong) NSArray *channelArray;
-@property (strong ,nonnull) UITableView *tableView;
+@property (strong ,nonnull) STTableView *tableView;
 
 @property (strong ,nonatomic)NSString *ID;
 
@@ -81,7 +81,7 @@
     UIView *view = [[UIView alloc] init];
     [view setBackgroundColor:[self randomColor]];
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - 100) style:UITableViewStyleGrouped];
+    UITableView *tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - 100) style:UITableViewStyleGrouped];
     tableView.delegate = self;
     tableView.tag = index;
     tableView.dataSource = self;

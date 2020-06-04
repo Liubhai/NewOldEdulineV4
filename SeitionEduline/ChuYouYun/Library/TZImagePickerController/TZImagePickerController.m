@@ -218,7 +218,7 @@
         
         CGFloat top = 44;
         if (iOS7Later) top += 20;
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, top, self.view.width, self.view.height - top) style:UITableViewStylePlain];
+        _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, top, self.view.width, self.view.height - top) style:UITableViewStylePlain];
         _tableView.rowHeight = 70;
         _tableView.tableFooterView = [[UIView alloc] init];
         _tableView.dataSource = self;
