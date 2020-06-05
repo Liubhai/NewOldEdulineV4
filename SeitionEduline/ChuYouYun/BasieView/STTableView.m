@@ -25,7 +25,7 @@
 - (void)addFooterWithTarget:(id)target action:(SEL)action
 {
     if (!self.mj_footer) {
-        self.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:action];
+        self.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:target refreshingAction:action];
     }
 }
 
