@@ -46,7 +46,6 @@
 #import <AliyunVodPlayerSDK/AliyunVodDownLoadManager.h>
 #import "AliyunVodPlayerView.h"
 
-#import <BCEDocumentReader/BCEDocumentReader.h>
 #import "WebViewController.h"
 
 #import "LBHProgressView.h"
@@ -58,9 +57,10 @@
 #import "Good_MyBalanceViewController.h"
 #import "BaseClass.h"
 #import "YKTWebView.h"
+#import "WebViewController.h"
 
 @import MediaPlayer;
-@interface Good_ClassMainViewController ()<UIScrollViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDelegate,UIScrollViewDelegate,UIGestureRecognizerDelegate,AliyunVodPlayerViewDelegate,BCEDocumentReaderDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface Good_ClassMainViewController ()<UIScrollViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDelegate,UIScrollViewDelegate,UIGestureRecognizerDelegate,AliyunVodPlayerViewDelegate, UITableViewDelegate, UITableViewDataSource> {
     CGRect   playerFrame;
     WMPlayer *wmPlayer;
     BOOL     isShouleVedio;//是否应该缓存视频
@@ -144,10 +144,8 @@
 @property (nonatomic, assign)BOOL isLock;
 @property (nonatomic, assign)BOOL isStatusHidden;
 
-//百度文档
-@property (strong ,nonatomic)BCEDocumentReader   *reader;
-@property (strong ,nonatomic)NSDictionary        *baiDuDocDict;
 
+@property (strong ,nonatomic)NSDictionary *docDict;
 ///新增内容
 @property (strong, nonatomic) STTableView *tableView;
 @property(nonatomic, retain) UIScrollView *mainScroll;
@@ -1119,8 +1117,6 @@
     vc.videoDataSource = ^(NSDictionary *videoDataSource) {
         wekself.seleCurrentDict = videoDataSource;
         if ([[videoDataSource stringValueForKey:@"is_baidudoc"] integerValue] == 1) {
-            [wekself netWorkVideoGetBaiduDocReadToken];
-            //            [self addBaiDuDoc];
             return ;
         }
         if ([[videoDataSource stringValueForKey:@"video_type"] integerValue] == 6) {//考试
@@ -1244,11 +1240,6 @@
     [_textView removeFromSuperview];
     [_webView removeFromSuperview];
     
-    if (_reader != nil && _reader.superview != nil) {
-        [_reader removeFromSuperview];
-        _reader = nil;
-    }
-    
     //配置数据的处理
     if (UserOathToken) {//登录的时候
         
@@ -1332,11 +1323,6 @@
     }
     [_textView removeFromSuperview];
     [_webView removeFromSuperview];
-    
-    if (_reader != nil && _reader.superview != nil) {
-        [_reader removeFromSuperview];
-        _reader = nil;
-    }
 }
 
 - (void)dealKindsOfType:(NSDictionary *)dict {
@@ -1364,11 +1350,6 @@
     }
     [_textView removeFromSuperview];
     [_webView removeFromSuperview];
-    
-    if (_reader != nil && _reader.superview != nil) {
-        [_reader removeFromSuperview];
-        _reader = nil;
-    }
     
     //配置数据的处理
     if (UserOathToken) {//登录的时候
@@ -1868,54 +1849,6 @@
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fakeTapGestureHandler:)];
     [tapGestureRecognizer setDelegate:self];
     [_webView.scrollView addGestureRecognizer:tapGestureRecognizer];
-}
-
-//百度文档
-- (void)addBaiDuDoc {
-    
-    _canScroll = YES;
-    [_tableView setContentOffset:CGPointZero animated:YES];
-    [self tableViewCanNotScroll];
-    
-    //将之前的移除
-    if (wmPlayer != nil|| wmPlayer.superview !=nil){
-        [self releaseWMPlayer];
-        [wmPlayer removeFromSuperview];
-    }
-    
-    if (_playerView != nil) {
-        [_playerView stop];
-        [_playerView releasePlayer];
-        [_playerView removeFromSuperview];
-        _playerView = nil;
-    }
-    [_textView removeFromSuperview];
-    [_webView removeFromSuperview];
-    
-    [_timer invalidate];
-    self.timer = nil;
-    
-    if (self.reader == nil) {
-        self.reader = [[BCEDocumentReader alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 210 * WideEachUnit)];
-        self.reader.delegate = self;
-        [self.view addSubview:self.reader];
-    }
-    [self.view bringSubviewToFront:_navigationView];
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:[_baiDuDocDict stringValueForKey:@"docId"] forKey:BDocPlayerSDKeyDocID];
-    [dict setObject:[_baiDuDocDict stringValueForKey:@"token"] forKey:BDocPlayerSDKeyToken];
-    [dict setObject:[_baiDuDocDict stringValueForKey:@"host"] forKey:BDocPlayerSDKeyHost];
-    [dict setObject:[_baiDuDocDict stringValueForKey:@"format"] forKey:BDocPlayerSDKeyDocType];
-    [dict setObject:[_seleCurrentDict stringValueForKey:@"title"] forKey:BDocPlayerSDKeyDocTitle];
-    [dict setObject:@"1" forKey:BDocPlayerSDKeyPageNumber];
-    [dict setObject:@"6" forKey:BDocPlayerSDKeyTotalPageNum];
-    
-    
-    NSError* error;
-    [self.reader loadDoc:dict error:&error];
-    
-    
-    
 }
 
 - (void)docLoadingStart:(NSError*)error {
@@ -2829,48 +2762,6 @@
     [op start];
 }
 
-
-//获取百度文档的详情
-- (void)netWorkVideoGetBaiduDocReadToken {
-    NSString *endUrlStr = YunKeTang_Video_video_getBaiduDocReadToken;
-    NSString *allUrlStr = [YunKeTang_Api_Tool YunKeTang_GetFullUrl:endUrlStr];
-    
-    NSMutableDictionary *mutabDict = [NSMutableDictionary dictionaryWithCapacity:0];
-    
-    [mutabDict setObject:[_seleCurrentDict stringValueForKey:@"cid"] forKey:@"cid"];
-    
-    NSString *oath_token_Str = nil;
-    if (UserOathToken) {
-        oath_token_Str = [NSString stringWithFormat:@"%@:%@",UserOathToken,UserOathTokenSecret];
-    } else {
-        DLViewController *DLVC = [[DLViewController alloc] init];
-        UINavigationController *Nav = [[UINavigationController alloc] initWithRootViewController:DLVC];
-        [self.navigationController presentViewController:Nav animated:YES completion:nil];
-        return;
-    }
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:allUrlStr]];
-    [request setHTTPMethod:NetWay];
-    NSString *encryptStr = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetEncryptStr:mutabDict];
-    [request setValue:encryptStr forHTTPHeaderField:HeaderKey];
-    [request setValue:oath_token_Str forHTTPHeaderField:OAUTH_TOKEN];
-    
-    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        [TKProgressHUD hideAllHUDsForView:[UIApplication sharedApplication].keyWindow animated:YES];
-        NSDictionary *dict = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject];
-        
-        NSLog(@"---%@",dict);
-        _baiDuDocDict = dict;
-        [self addBaiDuDoc];
-        
-    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-        [TKProgressHUD hideAllHUDsForView:[UIApplication sharedApplication].keyWindow animated:YES];
-        [TKProgressHUD showError:@"加载失败" toView:self.view];
-    }];
-    [op start];
-}
-
 // MARK - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -3219,16 +3110,11 @@
             [_tableView setContentOffset:CGPointMake(0, 0) animated:YES];
             [wekself tableViewCanNotScroll];
         } else if ([[videoDataSource stringValueForKey:@"type"] integerValue] == 4) {
-            if ([[videoDataSource stringValueForKey:@"is_baidudoc"] integerValue] == 1) {
-                [wekself netWorkVideoGetBaiduDocReadToken];
-                return;
-            } else {
-                [wekself removePassView];
-                _videoUrl = [_ailDownDict stringValueForKey:@"video_address"];
-                [wekself addWebView];
-                [_tableView setContentOffset:CGPointZero animated:YES];
-                [wekself tableViewCanNotScroll];
-            }
+            [wekself removePassView];
+            _videoUrl = [_ailDownDict stringValueForKey:@"video_address"];
+            [wekself addWebView];
+            [_tableView setContentOffset:CGPointZero animated:YES];
+            [wekself tableViewCanNotScroll];
         }
         
         /**

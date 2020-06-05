@@ -3031,13 +3031,10 @@
 		819CDFD02264896B00AFA698 /* class_no_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 819CDFCA2264896A00AFA698 /* class_no_press@2x.png */; };
 		819CDFD12264896B00AFA698 /* home_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 819CDFCB2264896B00AFA698 /* home_press@2x.png */; };
 		81A3441D22A8A8E700288939 /* wangwang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 81A3441C22A8A8E600288939 /* wangwang@2x.png */; };
-		81ACF85D22A78DF400E74DBC /* DocPlayerSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 81ACF85C22A78DF300E74DBC /* DocPlayerSDK.bundle */; };
 		81AEB7F42281614300F97858 /* MyTeacherMangerDownClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81AEB7F32281614300F97858 /* MyTeacherMangerDownClassViewController.m */; };
 		81AEB7F72281617900F97858 /* MyTeacherManageReservationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81AEB7F62281617900F97858 /* MyTeacherManageReservationViewController.m */; };
 		81AEB7FA2281618E00F97858 /* MyTeacherManageCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81AEB7F92281618E00F97858 /* MyTeacherManageCompleteViewController.m */; };
 		81AEBE3F21AB915A00402AE6 /* OnlyLoginDealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81AEBE3E21AB915A00402AE6 /* OnlyLoginDealViewController.m */; };
-		81B301E6227EDE69005B1D34 /* BCEDocumentReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B301E0227EDE68005B1D34 /* BCEDocumentReader.framework */; };
-		81B301E7227EDE69005B1D34 /* libZipArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B301E5227EDE68005B1D34 /* libZipArchive.a */; };
 		81C4DE0E21B1240B00A7CAD6 /* BuyAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81C4DE0D21B1240A00A7CAD6 /* BuyAgreementViewController.m */; };
 		81C4DE5A21B1246500A7CAD6 /* biaoqing_68.png in Resources */ = {isa = PBXBuildFile; fileRef = 81C4DE1121B1246400A7CAD6 /* biaoqing_68.png */; };
 		81C4DE5B21B1246500A7CAD6 /* biaoqing_40.png in Resources */ = {isa = PBXBuildFile; fileRef = 81C4DE1221B1246400A7CAD6 /* biaoqing_40.png */; };
@@ -7647,7 +7644,6 @@
 		819CDFCA2264896A00AFA698 /* class_no_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "class_no_press@2x.png"; sourceTree = "<group>"; };
 		819CDFCB2264896B00AFA698 /* home_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_press@2x.png"; sourceTree = "<group>"; };
 		81A3441C22A8A8E600288939 /* wangwang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wangwang@2x.png"; sourceTree = "<group>"; };
-		81ACF85C22A78DF300E74DBC /* DocPlayerSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DocPlayerSDK.bundle; path = BCEDocumentReader.framework/Resources/DocPlayerSDK.bundle; sourceTree = "<group>"; };
 		81AEB7F22281614300F97858 /* MyTeacherMangerDownClassViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyTeacherMangerDownClassViewController.h; sourceTree = "<group>"; };
 		81AEB7F32281614300F97858 /* MyTeacherMangerDownClassViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyTeacherMangerDownClassViewController.m; sourceTree = "<group>"; };
 		81AEB7F52281617900F97858 /* MyTeacherManageReservationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyTeacherManageReservationViewController.h; sourceTree = "<group>"; };
@@ -7656,9 +7652,6 @@
 		81AEB7F92281618E00F97858 /* MyTeacherManageCompleteViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyTeacherManageCompleteViewController.m; sourceTree = "<group>"; };
 		81AEBE3D21AB915A00402AE6 /* OnlyLoginDealViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnlyLoginDealViewController.h; sourceTree = "<group>"; };
 		81AEBE3E21AB915A00402AE6 /* OnlyLoginDealViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OnlyLoginDealViewController.m; sourceTree = "<group>"; };
-		81B301E0227EDE68005B1D34 /* BCEDocumentReader.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BCEDocumentReader.framework; sourceTree = "<group>"; };
-		81B301E3227EDE68005B1D34 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
-		81B301E5227EDE68005B1D34 /* libZipArchive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libZipArchive.a; sourceTree = "<group>"; };
 		81C4DE0C21B1240A00A7CAD6 /* BuyAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyAgreementViewController.h; sourceTree = "<group>"; };
 		81C4DE0D21B1240A00A7CAD6 /* BuyAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyAgreementViewController.m; sourceTree = "<group>"; };
 		81C4DE1121B1246400A7CAD6 /* biaoqing_68.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = biaoqing_68.png; sourceTree = "<group>"; };
@@ -8306,7 +8299,6 @@
 				462712722482AF1600D5E1BE /* Accelerate.framework in Frameworks */,
 				7832CEFF22DDC45C009921DE /* libssl.a in Frameworks */,
 				09FBE1C8214B56A70032AA2C /* libz.1.1.3.tbd in Frameworks */,
-				81B301E6227EDE69005B1D34 /* BCEDocumentReader.framework in Frameworks */,
 				468D793F2480018900B7DB2E /* CFNetwork.framework in Frameworks */,
 				0927F4B821D6369600BFBD91 /* AliyunVodPlayerSDK.framework in Frameworks */,
 				097DC26F21D632850060C974 /* AliyunVodPlayerSDK.framework in Frameworks */,
@@ -8318,7 +8310,6 @@
 				465DBA4C248010A80061EC7C /* HDMarqueeTool.framework in Frameworks */,
 				507A03301ADB51D400EB5C77 /* CoreText.framework in Frameworks */,
 				94D2D6AE1A70AF7700CD7C5C /* CoreGraphics.framework in Frameworks */,
-				81B301E7227EDE69005B1D34 /* libZipArchive.a in Frameworks */,
 				09FBE1CA214B582D0032AA2C /* libbz2.tbd in Frameworks */,
 				506C70F11AA9863800427A76 /* libstdc++.dylib in Frameworks */,
 				884A09AC246D200000FC81C0 /* libWeChatSDK.a in Frameworks */,
@@ -10303,7 +10294,6 @@
 				78DAEC292387CF9C0000311F /* UIActionSheet+Blocks.m */,
 				78DAEC082387CF8B0000311F /* TZImagePickerController */,
 				78355FCE230E7BA100A979D0 /* MBHUD+ADD */,
-				81B301DF227EDE68005B1D34 /* Baidu-DocReader-SDK-iOS-2-2 */,
 				09EEBB2A20C543B80014D5CF /* 进度条（Progress） */,
 				09E0AF30206B454A009788C8 /* WMPlayer */,
 				09E0AF0D206B44BD009788C8 /* SDCycleScrollView */,
@@ -21275,41 +21265,6 @@
 			path = Only_Login;
 			sourceTree = "<group>";
 		};
-		81B301DF227EDE68005B1D34 /* Baidu-DocReader-SDK-iOS-2-2 */ = {
-			isa = PBXGroup;
-			children = (
-				81ACF85C22A78DF300E74DBC /* DocPlayerSDK.bundle */,
-				81B301E0227EDE68005B1D34 /* BCEDocumentReader.framework */,
-				81B301E1227EDE68005B1D34 /* vendor */,
-			);
-			path = "Baidu-DocReader-SDK-iOS-2-2";
-			sourceTree = "<group>";
-		};
-		81B301E1227EDE68005B1D34 /* vendor */ = {
-			isa = PBXGroup;
-			children = (
-				81B301E2227EDE68005B1D34 /* include */,
-				81B301E4227EDE68005B1D34 /* lib */,
-			);
-			path = vendor;
-			sourceTree = "<group>";
-		};
-		81B301E2227EDE68005B1D34 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				81B301E3227EDE68005B1D34 /* ZipArchive.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		81B301E4227EDE68005B1D34 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				81B301E5227EDE68005B1D34 /* libZipArchive.a */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
 		81C4DE0B21B1240A00A7CAD6 /* AgreeOn */ = {
 			isa = PBXGroup;
 			children = (
@@ -24000,7 +23955,6 @@
 				780F85E1230F85EF00B67CEF /* tk_kongxinyuan_selected_cartoon@2x.png in Resources */,
 				81C4DE8821B1246500A7CAD6 /* biaoqing_28.png in Resources */,
 				F19EC1271C8D14270094C2A4 /* wen.png in Resources */,
-				81ACF85D22A78DF400E74DBC /* DocPlayerSDK.bundle in Resources */,
 				F19EC1301C8D14270094C2A4 /* youhengheng.png in Resources */,
 				780F87D2230F85F200B67CEF /* tk_android_red_black@3x.png in Resources */,
 				780F8605230F85F000B67CEF /* tk_icon_left_default@2x.png in Resources */,
@@ -26102,7 +26056,7 @@
 					"$(PROJECT_DIR)/ChuYouYun/Library/Umeng/share/share_ios_6.9.8/SocialLibraries/QQ",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.10;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -26212,7 +26166,7 @@
 					"$(PROJECT_DIR)/ChuYouYun/Library/Umeng/share/share_ios_6.9.8/SocialLibraries/QQ",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.10;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",

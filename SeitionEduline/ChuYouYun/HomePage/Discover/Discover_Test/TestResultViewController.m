@@ -15,7 +15,7 @@
 #import "TestResultTableViewCell.h"
 #import "TestCurrentViewController.h"
 
-@interface TestResultViewController ()<UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate>
+@interface TestResultViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (strong ,nonatomic) STTableView *tableView;
 @property (strong ,nonatomic)UIView       *headerView;
