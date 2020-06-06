@@ -14,9 +14,9 @@
 
 @interface GFCalendarScrollView() <UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (nonatomic, strong) UICollectionView *collectionViewL;
-@property (nonatomic, strong) UICollectionView *collectionViewM;
-@property (nonatomic, strong) UICollectionView *collectionViewR;
+@property (nonatomic, strong) STUICollectionView *collectionViewL;
+@property (nonatomic, strong) STUICollectionView *collectionViewM;
+@property (nonatomic, strong) STUICollectionView *collectionViewR;
 
 @property (nonatomic, strong) NSDate *currentMonthDate;
 
@@ -133,21 +133,21 @@ static NSString *const kCellIdentifier = @"cell";
     CGFloat selfWidth = self.bounds.size.width;
     CGFloat selfHeight = self.bounds.size.height;
     
-    _collectionViewL = [[UICollectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, selfWidth, selfHeight) collectionViewLayout:flowLayout];
+    _collectionViewL = [[STUICollectionView alloc] initWithFrame:CGRectMake(0.0, 0.0, selfWidth, selfHeight) collectionViewLayout:flowLayout];
     _collectionViewL.dataSource = self;
     _collectionViewL.delegate = self;
     _collectionViewL.backgroundColor = [UIColor clearColor];
     [_collectionViewL registerClass:[GFCalendarCell class] forCellWithReuseIdentifier:kCellIdentifier];
     [self addSubview:_collectionViewL];
     
-    _collectionViewM = [[UICollectionView alloc] initWithFrame:CGRectMake(selfWidth, 0.0, selfWidth, selfHeight) collectionViewLayout:flowLayout];
+    _collectionViewM = [[STUICollectionView alloc] initWithFrame:CGRectMake(selfWidth, 0.0, selfWidth, selfHeight) collectionViewLayout:flowLayout];
     _collectionViewM.dataSource = self;
     _collectionViewM.delegate = self;
     _collectionViewM.backgroundColor = [UIColor clearColor];
     [_collectionViewM registerClass:[GFCalendarCell class] forCellWithReuseIdentifier:kCellIdentifier];
     [self addSubview:_collectionViewM];
     
-    _collectionViewR = [[UICollectionView alloc] initWithFrame:CGRectMake(2 * selfWidth, 0.0, selfWidth, selfHeight) collectionViewLayout:flowLayout];
+    _collectionViewR = [[STUICollectionView alloc] initWithFrame:CGRectMake(2 * selfWidth, 0.0, selfWidth, selfHeight) collectionViewLayout:flowLayout];
     _collectionViewR.dataSource = self;
     _collectionViewR.delegate = self;
     _collectionViewR.backgroundColor = [UIColor clearColor];

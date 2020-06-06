@@ -27,7 +27,7 @@
 
 @property (strong ,nonatomic)UIButton *imageButton;
 
-@property (strong ,nonatomic)UITableView *cityTableView;
+@property (strong ,nonatomic) STTableView *cityTableView;
 
 @property (strong ,nonatomic)NSArray *cityDataArray;
 
@@ -329,7 +329,7 @@
     _allButton = allButton;
     
     
-    _cityTableView = [[UITableView alloc] initWithFrame:CGRectMake(80, 185, MainScreenWidth - 100, (_cateArray.count) * 50) style:UITableViewStylePlain];
+    _cityTableView = [[STTableView alloc] initWithFrame:CGRectMake(80, 185, MainScreenWidth - 100, (_cateArray.count) * 50) style:UITableViewStylePlain];
     _cityTableView.rowHeight = 50;
     _cityTableView.delegate = self;
     _cityTableView.dataSource = self;

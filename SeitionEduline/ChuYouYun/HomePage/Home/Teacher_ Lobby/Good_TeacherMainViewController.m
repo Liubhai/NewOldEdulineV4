@@ -25,7 +25,7 @@
 }
 
 @property (strong ,nonatomic)UIView           *headerView;
-@property (strong ,nonatomic)UITableView      *tableView;
+@property (strong ,nonatomic) STTableView      *tableView;
 @property (strong ,nonatomic)UIButton         *classButton;
 @property (strong ,nonatomic)UIButton         *rankButton;
 @property (strong ,nonatomic)UIImageView      *imageView;
@@ -157,7 +157,7 @@
 
 #pragma mark --- UITableView
 - (void)addTableView {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT + 45, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 45) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc]initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT + 45, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 45) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.rowHeight = 130 + 36 + 10;

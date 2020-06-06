@@ -10,7 +10,7 @@
 
 @interface SXXQViewController : UIViewController<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIToolbarDelegate>
 
-@property (strong, nonatomic) UITableView *tableVIew;
+@property (strong, nonatomic) STTableView *tableVIew;
 @property (strong, nonatomic) UITextField *speaktext;
 @property (strong, nonatomic) UIButton *sendBtn;
 @property (strong, nonatomic) UIView *barView;

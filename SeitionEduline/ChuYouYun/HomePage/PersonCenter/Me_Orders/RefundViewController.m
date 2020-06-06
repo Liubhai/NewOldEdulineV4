@@ -22,7 +22,7 @@
 
 @property (strong ,nonatomic)UITextView *textView;
 @property (strong ,nonatomic)UILabel *hintLabel;
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 @property (strong ,nonatomic)UIView      *chooseView;
 @property (strong ,nonatomic)UIView *allView;
 @property (strong ,nonatomic)UIButton *allButton;
@@ -152,7 +152,7 @@
 #pragma mark --- UITableView
 
 - (void)addTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 64 + 170 * WideEachUnit,MainScreenWidth - 20 * WideEachUnit, 4 * 36 * WideEachUnit) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 64 + 170 * WideEachUnit,MainScreenWidth - 20 * WideEachUnit, 4 * 36 * WideEachUnit) style:UITableViewStyleGrouped];
     if (iPhoneX) {
         _tableView.frame = CGRectMake(10 * WideEachUnit, 88 + 170 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit, 4 * 36 * WideEachUnit);
     }

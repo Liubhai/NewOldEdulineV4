@@ -130,7 +130,7 @@
             _cellTableViewSpace.backgroundColor = RGBHex(0xEEEEEE);
             [self addSubview:_cellTableViewSpace];
             _dataSource = [NSMutableArray new];
-            _cellTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50 * WideEachUnit, MainScreenWidth, 1)];
+            _cellTableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 50 * WideEachUnit, MainScreenWidth, 1)];
             _cellTableView.dataSource = self;
             _cellTableView.delegate = self;
             _cellTableView.showsVerticalScrollIndicator = NO;

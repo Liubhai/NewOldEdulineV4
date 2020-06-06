@@ -23,7 +23,7 @@
 
 @interface GroupOneViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 
 
 @property (strong ,nonatomic)NSArray *dataArray;
@@ -58,7 +58,7 @@
 
 - (void)addTableView {
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - 64 - 12) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - 64 - 12) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.rowHeight = 110 * WideEachUnit;

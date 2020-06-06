@@ -16,7 +16,7 @@
 @property(nonatomic,strong)UIView                   *topView;//顶部视图
 @property(nonatomic,strong)UILabel                  *titleLabel;//顶部标题
 @property(nonatomic,strong)UIButton                 *closeButton;//关闭按钮
-@property(nonatomic,strong)UITableView              *tableView;//私聊tableView
+@property(nonatomic,strong) STTableView              *tableView;//私聊tableView
 @property(nonatomic,strong)NSMutableArray           *dataArray;//私聊数据数组
 @property(nonatomic,copy)  CloseBtnClicked          closeBlock;//关闭回调
 @property(nonatomic,copy)  IsResponseBlock          isResponseBlock;//回复回调
@@ -166,7 +166,7 @@
 //私聊视图tableView
 -(UITableView *)tableView {
     if(!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView = [[STTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;

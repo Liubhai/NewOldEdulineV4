@@ -16,7 +16,7 @@
 
 @interface TKAnswerSheetDetailView()<UICollectionViewDelegate,UICollectionViewDataSource>
 
-@property (strong , nonatomic) UICollectionView    *collectionView;
+@property (strong , nonatomic) STUICollectionView    *collectionView;
 @property (strong , nonatomic) TKAnswerSheetLayout *flowLayout;
 
 @property (strong , nonatomic) UILabel *timeLabel;
@@ -418,7 +418,7 @@ static NSString * const reuseID = @"TKAnswerSheetDetailCellID";
 - (UICollectionView *)collectionView
 {
     if (!_collectionView) {
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
+        _collectionView = [[STUICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
         _collectionView.pagingEnabled = NO;
         _collectionView.scrollEnabled = NO;
         _collectionView.dataSource =self;

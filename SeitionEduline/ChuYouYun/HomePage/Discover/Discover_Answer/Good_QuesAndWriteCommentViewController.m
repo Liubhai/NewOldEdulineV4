@@ -20,7 +20,7 @@
 
 @interface Good_QuesAndWriteCommentViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (strong ,nonatomic)UITableView       *tableView;
+@property (strong ,nonatomic) STTableView       *tableView;
 @property (strong ,nonatomic)UIView            *downView;
 
 @property (strong ,nonatomic)NSArray           *dataArray;
@@ -84,7 +84,7 @@
 
 #pragma mark --- 表格
 - (void)addTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];

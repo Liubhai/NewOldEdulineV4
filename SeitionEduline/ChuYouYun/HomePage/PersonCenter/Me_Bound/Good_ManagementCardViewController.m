@@ -16,7 +16,7 @@
 
 @interface Good_ManagementCardViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (strong ,nonatomic)UITableView    *tableView;
+@property (strong ,nonatomic) STTableView    *tableView;
 @property (strong ,nonatomic)UIImageView    *imageView;
 @property (strong ,nonatomic)NSArray        *cardListArray;
 
@@ -94,7 +94,7 @@
 #pragma mark --- UITableView
 
 - (void)addTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT) style:UITableViewStyleGrouped];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     [self.view addSubview:_tableView];

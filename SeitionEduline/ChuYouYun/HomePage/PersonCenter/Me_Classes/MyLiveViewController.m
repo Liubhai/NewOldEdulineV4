@@ -11,7 +11,6 @@
 #import "teacherList.h"
 #import "UIImageView+WebCache.h"
 #import "MJRefresh.h"
-#import "MJRefreshBaseView.h"
 #import "SYGClassTool.h"
 #import "UIButton+WebCache.h"
 #import "GLReachabilityView.h"
@@ -33,7 +32,7 @@
 
 @interface MyLiveViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
-    UITableView * _tableView;
+    STTableView * _tableView;
     NSMutableArray * dataArray2;
     UIView *_view;
     UILabel *_lable;
@@ -91,7 +90,7 @@
     [super viewDidLoad];
     
     _view = (UIView *)[GLReachabilityView popview];
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,0, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 34) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc]initWithFrame:CGRectMake(0,0, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 34) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.rowHeight = 110 * WideEachUnit;

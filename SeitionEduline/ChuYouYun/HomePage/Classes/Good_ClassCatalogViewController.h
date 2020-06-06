@@ -18,7 +18,7 @@
 @property (assign, nonatomic) BOOL cellTabelCanScroll;
 @property (strong ,nonatomic)NSDictionary    *videoInfoDict;//这个课程的详情
 
-@property (strong ,nonatomic)UITableView     *tableView;
+@property (strong ,nonatomic) STTableView     *tableView;
 //学习记录那边传进来的课时id
 @property (strong, nonatomic)NSString *sid;
 @property (assign, nonatomic) BOOL canPlayRecordVideo;

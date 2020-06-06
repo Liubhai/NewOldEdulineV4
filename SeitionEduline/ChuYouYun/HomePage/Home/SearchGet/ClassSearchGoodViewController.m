@@ -50,7 +50,7 @@ static NSString *cellID = @"cell";
 
 
 @property (strong ,nonatomic)UICollectionView *collectionView;
-@property (strong ,nonatomic)UITableView      *tableView;
+@property (strong ,nonatomic) STTableView      *tableView;
 @property (strong ,nonatomic)UIView           *headerView;
 @property (strong ,nonatomic)UIButton         *classOrLiveButton;
 @property (strong ,nonatomic)UIButton         *classTypeButton;
@@ -260,7 +260,7 @@ static NSString *cellID = @"cell";
 #pragma mark --- 表格视图
 - (void)addTableView {
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64 + 45 * WideEachUnit, MainScreenWidth, MainScreenHeight - 64 - 45 * WideEachUnit) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 64 + 45 * WideEachUnit, MainScreenWidth, MainScreenHeight - 64 - 45 * WideEachUnit) style:UITableViewStyleGrouped];
     if ([_typeTagStr integerValue] == 1) {
         _tableView.frame = CGRectMake(0, MACRO_UI_UPHEIGHT + 45 * WideEachUnit, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 45 * WideEachUnit - MACRO_UI_TABBAR_HEIGHT);
     } else {

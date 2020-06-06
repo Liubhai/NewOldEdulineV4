@@ -15,7 +15,7 @@
 
 @interface TKPopView()<UICollectionViewDelegate,UICollectionViewDataSource>
 
-@property (strong , nonatomic) UICollectionView           *collectionView;
+@property (strong , nonatomic) STUICollectionView           *collectionView;
 @property (strong , nonatomic) UICollectionViewFlowLayout *flowLayout;
 @property (strong , nonatomic) NSArray *dataArray;
 
@@ -337,7 +337,7 @@ static NSString * const reuseID = @"TKPopViewCellID";
 - (UICollectionView *)collectionView
 {
     if (!_collectionView) {
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
+        _collectionView = [[STUICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
         _collectionView.pagingEnabled = NO;
         _collectionView.dataSource =self;
         _collectionView.delegate   =self;

@@ -39,7 +39,7 @@
     CGFloat sectionHeight;
 }
 @property (strong ,nonatomic)UIView *infoView;
-@property (strong ,nonatomic)UITableView *cityTableView;
+@property (strong ,nonatomic) STTableView *cityTableView;
 @property (strong ,nonatomic)NSArray *cityDataArray;
 @property (strong ,nonatomic)NSArray *subVcArray;
 //@property (strong ,nonatomic)UIButton *allButton;
@@ -56,7 +56,7 @@
 @property (strong ,nonatomic)NSString *followingStr;
 
 // 新版
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) STTableView *tableView;
 @property(nonatomic, retain) UIScrollView *mainScroll;
 @property (strong, nonatomic) UIView *headerView;
 @property (nonatomic, strong) UIView *buttonBackView;
@@ -901,9 +901,7 @@
     
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        if ([_tableView isHeaderRefreshing]) {
-            [_tableView headerEndRefreshing];
-        }
+        [_tableView headerEndRefreshing];
         _schoolDic = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject];
         _WZLabel.text = [_schoolDic stringValueForKey:@"title"];
         _classArray = [_schoolDic arrayValueForKey:@"recommend_list"];

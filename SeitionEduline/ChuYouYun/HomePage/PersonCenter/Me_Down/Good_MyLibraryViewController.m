@@ -27,7 +27,7 @@
     BOOL _isOn1;
 }
 
-@property (strong ,nonatomic)UITableView    *tableView;
+@property (strong ,nonatomic) STTableView    *tableView;
 @property (strong ,nonatomic)UIImageView    *imageView;
 @property (strong ,nonatomic)NSMutableArray *dataArray;
 @property (strong ,nonatomic)NSArray        *titleArray;
@@ -171,7 +171,7 @@
 #pragma mark --- 添加表格
 - (void)addTableView {
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 34) style:UITableViewStyleGrouped];
+    self.tableView = [[STTableView alloc]initWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 34) style:UITableViewStyleGrouped];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.rowHeight = 90 * WideEachUnit;

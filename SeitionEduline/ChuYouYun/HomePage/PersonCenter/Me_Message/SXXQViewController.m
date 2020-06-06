@@ -107,7 +107,7 @@
     _dateType =[[NSMutableArray  alloc]initWithCapacity:0];
     touserImage = [[UIImageView alloc]init];
     [touserImage sd_setImageWithURL:[NSURL URLWithString:self.uface] placeholderImage:nil];
-    _tableVIew = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, MainScreenWidth, MainScreenHeight - 64 - 48 + 15) style:UITableViewStyleGrouped];
+    _tableVIew = [[STTableView alloc] initWithFrame:CGRectMake(0, 50, MainScreenWidth, MainScreenHeight - 64 - 48 + 15) style:UITableViewStyleGrouped];
     if (iPhoneX) {
         _tableVIew.frame = CGRectMake(0, 74, MainScreenWidth, MainScreenHeight - 88 - 48 + 15);
     }

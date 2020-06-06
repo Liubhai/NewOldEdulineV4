@@ -16,7 +16,7 @@
 
 @interface Good__UseDiscountViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 @property (strong ,nonatomic)NSMutableArray     *dataArray;
 @property (strong ,nonatomic)UIImageView *imageView;
 
@@ -66,7 +66,7 @@
 
 
 - (void)addTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 34) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 34) style:UITableViewStyleGrouped];
     _tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     _tableView.rowHeight = 170 * WideEachUnit;
     _tableView.delegate = self;

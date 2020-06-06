@@ -18,7 +18,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TKCTNewChatView : TKCTChatView <UIScrollViewDelegate, TKChatToolViewDelegate>
-//@property (nonatomic, strong) UITableView *iChatTableView; // 聊天tableView
+//@property (nonatomic, strong) STTableView *iChatTableView; // 聊天tableView
 @property (nonatomic, strong) UIButton *leftBtn;
 @property (nonatomic, strong) TKChatToolView *keyboardView;// 实际 聊天输入工具条
 @property (nonatomic, strong) void(^messageBtnClickBlock)(UIButton *);

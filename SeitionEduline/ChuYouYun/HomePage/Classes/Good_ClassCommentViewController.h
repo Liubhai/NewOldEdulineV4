@@ -16,7 +16,7 @@
 @property (assign, nonatomic) BOOL cellTabelCanScroll;
 @property (assign, nonatomic) BOOL isNewClass;
 
-@property (strong ,nonatomic)UITableView     *tableView;
+@property (strong ,nonatomic) STTableView     *tableView;
 
 @property (strong ,nonatomic)void(^vcHight)(CGFloat hight);
 -(instancetype)initWithNumID:(NSString *)ID;

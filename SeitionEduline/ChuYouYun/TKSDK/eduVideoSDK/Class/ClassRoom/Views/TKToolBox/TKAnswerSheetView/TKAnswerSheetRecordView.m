@@ -17,7 +17,7 @@
 {
     NSInteger _currentPage;
 }
-@property (strong , nonatomic) UICollectionView    *collectionView;
+@property (strong , nonatomic) STUICollectionView    *collectionView;
 @property (strong , nonatomic) UICollectionViewFlowLayout *flowLayout;
 
 @property (strong , nonatomic) UILabel *timeLabel;
@@ -390,10 +390,10 @@ static NSString * const reuseID = @"TKAnswerSheetRecordCellID";
     return _flowLayout;
 }
 
-- (UICollectionView *)collectionView
+- (STUICollectionView *)collectionView
 {
     if (!_collectionView) {
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
+        _collectionView = [[STUICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
         _collectionView.pagingEnabled = NO;
         _collectionView.scrollEnabled = YES;
         _collectionView.dataSource =self;

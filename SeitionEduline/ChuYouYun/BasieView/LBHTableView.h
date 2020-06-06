@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LBHTableView : UITableView<UIGestureRecognizerDelegate>
+@interface LBHTableView : STTableView<UIGestureRecognizerDelegate>
 
 @end

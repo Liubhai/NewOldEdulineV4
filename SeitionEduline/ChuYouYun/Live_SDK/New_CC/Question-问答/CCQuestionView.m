@@ -20,7 +20,7 @@
 
 @interface CCQuestionView()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 
-@property(nonatomic,strong)UITableView                  *questionTableView;//问答视图
+@property(nonatomic,strong) STTableView                  *questionTableView;//问答视图
 //@property(nonatomic,strong)NSMutableArray               *tableArray;
 @property(nonatomic,copy)  NSString                     *antename;//名称
 @property(nonatomic,copy)  NSString                     *anteid;//id
@@ -236,10 +236,8 @@
         }else if(questionSouceType == QuestionSourceTypeFromLiveHistory) {
             
             // 包含历史数据显示下拉加载更多
-            if (self.questionTableView.isHeaderHidden == YES) {
-                self.questionTableView.headerHidden = NO;
-            }
-            
+            self.questionTableView.headerHidden = NO;
+
             [self.questionTableView headerEndRefreshing];
             // 下拉无缝加载
             NSInteger row = _newKeysArr.count - _liveCurrentPage * lowVersionDeviceLoadDataCount;
@@ -557,7 +555,7 @@
  */
 -(UITableView *)questionTableView {
     if(!_questionTableView) {
-        _questionTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _questionTableView = [[STTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _questionTableView.backgroundColor = [UIColor colorWithHexString:@"#f5f5f5" alpha:1.0f];
         _questionTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _questionTableView.delegate = self;

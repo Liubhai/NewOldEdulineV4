@@ -22,7 +22,7 @@
 @property (strong ,nonatomic)NSMutableArray   *dataArray;
 
 @property (strong ,nonatomic)UIImageView  *imageView;
-@property (strong ,nonatomic)UITableView  *tableView;
+@property (strong ,nonatomic) STTableView  *tableView;
 
 @end
 
@@ -106,7 +106,7 @@
 
 - (void)addTableView {
     self.automaticallyAdjustsScrollViewInsets = false;
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];

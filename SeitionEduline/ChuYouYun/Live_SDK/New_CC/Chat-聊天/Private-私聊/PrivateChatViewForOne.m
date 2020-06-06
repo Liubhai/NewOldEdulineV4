@@ -23,7 +23,7 @@
 @property(nonatomic,strong)UILabel                  *titleLabel;//标题文本
 @property(nonatomic,strong)UIButton                 *closeButton;//关闭按钮
 @property(nonatomic,strong)UIButton                 *returnButton;//返回按钮
-@property(nonatomic,strong)UITableView              *tableView;//私聊tableView
+@property(nonatomic,strong) STTableView              *tableView;//私聊tableView
 //@property(nonatomic,strong)UIView                   *contentView;//输入框视图
 //@property(nonatomic,strong)UIButton                 *rightView;//右侧表情按钮
 @property(nonatomic,strong)CCChatContentView        * inputView;//输入框视图
@@ -275,7 +275,7 @@
 //tableView
 -(UITableView *)tableView {
     if(!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView = [[STTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;

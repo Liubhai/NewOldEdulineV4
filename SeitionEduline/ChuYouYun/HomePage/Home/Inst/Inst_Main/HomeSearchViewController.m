@@ -22,7 +22,7 @@
 
 @interface HomeSearchViewController ()<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 @property (strong ,nonatomic)SYGTextField *searchText;
 
 @property (strong ,nonatomic)NSMutableArray *dataArray;
@@ -278,7 +278,7 @@
 
 - (void)addTableView {
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(SpaceBaside * WideEachUnit, 64, MainScreenWidth - 2 * SpaceBaside * WideEachUnit, MainScreenHeight - 64) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(SpaceBaside * WideEachUnit, 64, MainScreenWidth - 2 * SpaceBaside * WideEachUnit, MainScreenHeight - 64) style:UITableViewStyleGrouped];
     if (iPhoneX) {
         _tableView.frame = CGRectMake(SpaceBaside * WideEachUnit, 88, MainScreenWidth - 2 * SpaceBaside * WideEachUnit, MainScreenHeight - 88);
     }

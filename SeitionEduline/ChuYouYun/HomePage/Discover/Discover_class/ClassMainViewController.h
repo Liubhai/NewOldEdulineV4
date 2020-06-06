@@ -10,7 +10,7 @@
 
 @interface ClassMainViewController : BaseViewController<UICollectionViewDelegate, UICollectionViewDataSource, UIAlertViewDelegate>
 
-@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) STUICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 
 @property (strong ,nonatomic)NSString *cate_ID;//总分类跳过来的

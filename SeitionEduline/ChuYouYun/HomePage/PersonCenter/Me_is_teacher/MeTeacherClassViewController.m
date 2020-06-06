@@ -20,7 +20,7 @@
 @interface MeTeacherClassViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 
 @property (strong ,nonatomic)UIImageView       *imageView;
-@property (strong ,nonatomic)UITableView       *tableView;
+@property (strong ,nonatomic) STTableView       *tableView;
 
 @property (assign ,nonatomic)NSInteger         number;
 @property (strong ,nonatomic)NSMutableArray    *dataArray;
@@ -73,7 +73,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"我的课程";
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 98, MainScreenWidth, MainScreenHeight - 98 + 36) style:UITableViewStyleGrouped];
+    self.tableView = [[STTableView alloc]initWithFrame:CGRectMake(0, 98, MainScreenWidth, MainScreenHeight - 98 + 36) style:UITableViewStyleGrouped];
     if (iPhoneX) {
         self.tableView.frame = CGRectMake(0, 98, MainScreenWidth, MainScreenHeight - 88 - 34 + 36);
     }

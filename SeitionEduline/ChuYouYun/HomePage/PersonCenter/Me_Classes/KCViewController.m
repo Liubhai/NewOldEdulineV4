@@ -95,7 +95,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"我的课程";
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0 , MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 34) style:UITableViewStyleGrouped];
+    self.tableView = [[STTableView alloc]initWithFrame:CGRectMake(0, 0 , MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 34) style:UITableViewStyleGrouped];
     self.tableView.backgroundColor = [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:237.0/255.0 alpha:1];
     self.tableView.userInteractionEnabled = YES;
     self.tableView.showsVerticalScrollIndicator = NO;

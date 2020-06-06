@@ -15,7 +15,7 @@
 
 @property (strong ,nonatomic)UIButton *seletButton;
 
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
 
@@ -83,7 +83,7 @@
 
 - (void)addTableView {
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 104, MainScreenWidth, MainScreenHeight) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 104, MainScreenWidth, MainScreenHeight) style:UITableViewStyleGrouped];
     _tableView.backgroundColor = [UIColor colorWithRed:243.f / 255 green:244.f / 255 blue:245.f / 255 alpha:1];
     [self.view addSubview:_tableView];
     

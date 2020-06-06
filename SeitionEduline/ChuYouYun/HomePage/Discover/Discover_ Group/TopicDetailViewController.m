@@ -30,7 +30,7 @@
 
 @property (strong ,nonatomic)PhotosView *photoView;
 
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 
 @property (strong ,nonatomic)NSArray *dataArray;
 

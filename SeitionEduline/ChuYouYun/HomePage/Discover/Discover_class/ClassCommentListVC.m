@@ -99,7 +99,7 @@
     _addCommentButton.titleEdgeInsets = UIEdgeInsetsMake(0, -13-4/2.0, 0, 13+4/2.0);
     [_addCommentButton addTarget:self action:@selector(addCommentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, _tableHeight) style:UITableViewStylePlain];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, _tableHeight) style:UITableViewStylePlain];
     _tableView.showsVerticalScrollIndicator = NO;
     _tableView.showsHorizontalScrollIndicator = NO;
     _tableView.dataSource = self;

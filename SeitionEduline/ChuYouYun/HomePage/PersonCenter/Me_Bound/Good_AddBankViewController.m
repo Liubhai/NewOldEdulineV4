@@ -21,7 +21,7 @@
 @property (strong ,nonatomic)UIView          *openProvinceView;
 @property (strong ,nonatomic)UIView          *kinsView;
 @property (strong ,nonatomic)UIButton        *submitButton;
-@property (strong ,nonatomic)UITableView     *tableView;
+@property (strong ,nonatomic) STTableView     *tableView;
 
 @property (strong ,nonatomic)UILabel         *addBankTitle;
 @property (strong ,nonatomic)UILabel         *provinceLabel;
@@ -311,7 +311,7 @@
 
 #pragma mark --- 添加表格
 - (void)addTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 80 * WideEachUnit, MainScreenWidth - 30 * WideEachUnit,_banksArray.count * 60 * WideEachUnit) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 80 * WideEachUnit, MainScreenWidth - 30 * WideEachUnit,_banksArray.count * 60 * WideEachUnit) style:UITableViewStyleGrouped];
     NSLog(@"%lf  %lf",_banksArray.count * 60 * WideEachUnit,MainScreenHeight - 80 - 64);
     if (_banksArray.count * 60 * WideEachUnit > MainScreenHeight - 120 * WideEachUnit - 64) {
         _tableView.frame = CGRectMake(15 * WideEachUnit, 80 * WideEachUnit, MainScreenWidth - 30 * WideEachUnit, MainScreenHeight - 120 * WideEachUnit - 64);

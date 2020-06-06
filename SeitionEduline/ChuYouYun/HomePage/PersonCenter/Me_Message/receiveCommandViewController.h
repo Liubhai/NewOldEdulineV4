@@ -12,7 +12,7 @@
 @interface receiveCommandViewController : BaseViewController<UITableViewDelegate,UITableViewDataSource>
 //@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 @property (strong, nonatomic)NSMutableArray *muArr;
 @property (strong ,nonatomic)NSArray        *dataArr;
 

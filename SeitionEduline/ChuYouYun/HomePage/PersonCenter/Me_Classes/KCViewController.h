@@ -10,7 +10,7 @@
 
 @interface KCViewController : UIViewController
 
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) STTableView *tableView;
 @property (strong, nonatomic)NSMutableArray *dataArr;
 @property (strong, nonatomic) NSString *typeString;// newClass 班级课 course 点播课 combo 套餐
 

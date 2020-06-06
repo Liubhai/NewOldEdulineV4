@@ -33,7 +33,7 @@
 @property (strong ,nonatomic)NSDictionary     *cellDict;
 @property (strong ,nonatomic)NSDictionary     *liveInfo;
 
-@property (strong, nonatomic) UITableView *cellTableView;
+@property (strong, nonatomic) STTableView *cellTableView;
 @property (assign, nonatomic) BOOL isClassNew;
 @property (strong, nonatomic) NSMutableArray *dataSource;
 @property (strong, nonatomic) UIView *cellTableViewSpace;

@@ -241,6 +241,9 @@ alpha:1.0]
 #import "TKNotificationHeader.h"
 #import "Masonry.h"
 #import "TKRoomJsonModel.h"
+#import "STTableView.h"
+#import "STUICollectionView.h"
+
 #define ScreenFitWidth [UIScreen mainScreen].bounds.size.width / 375
 #define ScreenFitHeight [UIScreen mainScreen].bounds.size.height / 667
 

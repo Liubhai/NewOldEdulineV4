@@ -10,7 +10,7 @@
 
 @interface CCAlertView ()<UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView * alertTableView;//提示列表
+@property (nonatomic, strong) STTableView * alertTableView;//提示列表
 
 @property (nonatomic, strong) NSMutableArray * titleArr;//盛放内容的数组
 
@@ -151,7 +151,7 @@
 #pragma mark - 懒加载
 -(UITableView *)alertTableView{
     if (!_alertTableView) {
-        _alertTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _alertTableView = [[STTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _alertTableView.backgroundColor = [UIColor clearColor];
         _alertTableView.scrollEnabled = NO;
         _alertTableView.delegate = self;

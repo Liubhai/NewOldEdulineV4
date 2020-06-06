@@ -41,9 +41,9 @@
 @property (assign ,nonatomic)CGFloat buttonW;
 @property (assign ,nonatomic)NSInteger Number;
 
-@property (strong ,nonatomic)UITableView *classTableView;
-@property (strong ,nonatomic)UITableView *instationTableView;
-@property (strong ,nonatomic)UITableView *teacherTableView;
+@property (strong ,nonatomic) STTableView *classTableView;
+@property (strong ,nonatomic) STTableView *instationTableView;
+@property (strong ,nonatomic) STTableView *teacherTableView;
 @property (strong ,nonatomic)UIView *downView;
 @property (assign ,nonatomic)CGFloat oldContentY;
 @property (strong ,nonatomic)UIButton *typeButton;
@@ -243,7 +243,7 @@
 #pragma mark --- 表格视图
 - (void)addClassTableView {
     
-    _classTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64 + 92 * WideEachUnit, MainScreenWidth, MainScreenHeight -  64 - 92 * WideEachUnit) style:UITableViewStyleGrouped];
+    _classTableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 64 + 92 * WideEachUnit, MainScreenWidth, MainScreenHeight -  64 - 92 * WideEachUnit) style:UITableViewStyleGrouped];
     _classTableView.delegate = self;
     _classTableView.dataSource = self;
     _classTableView.rowHeight = 100 * WideEachUnit;
@@ -252,7 +252,7 @@
 }
 
 - (void)addTeacherTableView {
-    _teacherTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64 + 92 * WideEachUnit, MainScreenWidth, MainScreenHeight - 64 - 92 * WideEachUnit) style:UITableViewStyleGrouped];
+    _teacherTableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 64 + 92 * WideEachUnit, MainScreenWidth, MainScreenHeight - 64 - 92 * WideEachUnit) style:UITableViewStyleGrouped];
     _teacherTableView.delegate = self;
     _teacherTableView.dataSource = self;
     _teacherTableView.rowHeight = 130;
@@ -261,7 +261,7 @@
 }
 
 - (void)addInstationTableView {
-    _instationTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64 + 92 * WideEachUnit, MainScreenWidth, MainScreenHeight - 64 - 92 * WideEachUnit) style:UITableViewStyleGrouped];
+    _instationTableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 64 + 92 * WideEachUnit, MainScreenWidth, MainScreenHeight - 64 - 92 * WideEachUnit) style:UITableViewStyleGrouped];
     _instationTableView.delegate = self;
     _instationTableView.dataSource = self;
     _instationTableView.rowHeight = 106;

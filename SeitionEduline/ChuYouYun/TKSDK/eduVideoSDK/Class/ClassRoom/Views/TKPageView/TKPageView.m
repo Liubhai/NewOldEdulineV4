@@ -24,7 +24,7 @@
 
 @property (nonatomic, strong) UIImageView  *contentView;
 
-@property (nonatomic, strong) UITableView  *tableView;
+@property (nonatomic, strong) STTableView  *tableView;
 
 @property (nonatomic, assign) TKPageShowType pageShowType;
 
@@ -106,7 +106,7 @@
 - (void)initTableView{
     
     _tableView = ({
-        UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(1, 15 , tWidth-2, 0) style:UITableViewStylePlain];
+        UITableView *tableView = [[STTableView alloc]initWithFrame:CGRectMake(1, 15 , tWidth-2, 0) style:UITableViewStylePlain];
         tableView.backgroundColor = [UIColor clearColor];
         tableView.separatorColor  = [UIColor clearColor];
         tableView.showsHorizontalScrollIndicator = NO;

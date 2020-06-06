@@ -572,7 +572,7 @@ static NSString *const sDefaultCellIdentifier           = @"defaultCellIdentifie
 - (UITableView *)iChatTableView {
     if (!_iChatTableView) {
         
-        _iChatTableView = [[UITableView alloc]initWithFrame:CGRectMake(15, 0, self.contentImageView.width - 30, self.contentImageView.height-chatToolHeight-margin*2) style: UITableViewStyleGrouped];
+        _iChatTableView = [[STTableView alloc]initWithFrame:CGRectMake(15, 0, self.contentImageView.width - 30, self.contentImageView.height-chatToolHeight-margin*2) style: UITableViewStyleGrouped];
         
         _iChatTableView.delegate   = self;
         _iChatTableView.dataSource = self;

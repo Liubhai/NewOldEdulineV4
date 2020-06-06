@@ -11,7 +11,7 @@
 
 @interface InstationClassViewController : UIViewController
 
-@property (strong ,nonatomic)UITableView *tableView;
+@property (strong ,nonatomic) STTableView *tableView;
 @property (assign, nonatomic) CGFloat tabelHeight;
 @property (strong, nonatomic) InstitutionMainViewController *vc;
 @property (assign, nonatomic) BOOL cellTabelCanScroll;

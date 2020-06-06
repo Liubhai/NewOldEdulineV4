@@ -47,7 +47,7 @@
 
 @interface YunKeTang_HomeViewController ()<SDCycleScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 
-@property (strong ,nonatomic)UITableView             *tableView;
+@property (strong ,nonatomic) STTableView             *tableView;
 @property (strong ,nonatomic)UICollectionView        *collectionView;
 @property (strong ,nonatomic)UIView                  *tableViewHeaderView;
 @property (strong ,nonatomic)UIScrollView            *imageScrollView;
@@ -509,7 +509,7 @@ static NSString *cellID = @"cell";
 
 #pragma mark --- 添加表格视图
 - (void)addTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64 - 50) style:UITableViewStyleGrouped];
+    _tableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64 - 50) style:UITableViewStyleGrouped];
     if (iPhone6Plus) {
         _tableView.frame = CGRectMake(0, 64, MainScreenWidth, MainScreenHeight - 64 - 50);
     } else if (iPhoneX) {

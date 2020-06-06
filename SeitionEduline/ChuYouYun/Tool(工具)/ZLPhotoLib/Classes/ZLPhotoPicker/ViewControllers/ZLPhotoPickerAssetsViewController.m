@@ -28,7 +28,7 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
 // 相片View
 @property (nonatomic , strong) ZLPhotoPickerCollectionView *collectionView;
 // 底部CollectionView
-@property (nonatomic , weak) UICollectionView *toolBarThumbCollectionView;
+@property (nonatomic , weak) STUICollectionView *toolBarThumbCollectionView;
 // 标记View
 @property (nonatomic , weak) UILabel *makeView;
 @property (nonatomic , strong) UIButton *doneBtn;
@@ -89,7 +89,7 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
         // CGRectMake(0, 22, 300, 44)
-        UICollectionView *toolBarThumbCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(10, 0, self.view.zl_width - 100, 44) collectionViewLayout:flowLayout];
+        UICollectionView *toolBarThumbCollectionView = [[STUICollectionView alloc] initWithFrame:CGRectMake(10, 0, self.view.zl_width - 100, 44) collectionViewLayout:flowLayout];
         toolBarThumbCollectionView.backgroundColor = [UIColor clearColor];
         toolBarThumbCollectionView.dataSource = self;
         toolBarThumbCollectionView.delegate = self;
