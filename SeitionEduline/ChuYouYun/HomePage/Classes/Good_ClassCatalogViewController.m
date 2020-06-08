@@ -1710,7 +1710,9 @@
     [self.timer invalidate];
     self.timer = nil;
     recodeNum = 0;
-    
+    [self tableView:_tableView didSelectRowAtIndexPath:indexPath];
+    return;
+/*
     [_tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([_free_course_opt integerValue] == 1) {
         if (!UserOathToken) {
@@ -1814,6 +1816,7 @@
             
         }
     }
+ */
 }
 
 // 播放的时候如果有记录 就传递记录时间给 recodeNum
