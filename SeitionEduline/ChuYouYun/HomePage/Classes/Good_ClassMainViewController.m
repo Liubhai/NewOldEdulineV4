@@ -1735,12 +1735,24 @@
     [self.playerView playViewPrepareWithURL:url];
     self.playerView.userInteractionEnabled = YES;
     NSString *learn_record = [NSString stringWithFormat:@"%@",[_ailDownDict objectForKey:@"learn_record"]];
-    if ([learn_record integerValue] > 0) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"recodeNumChange" object:nil userInfo:@{@"recodeNum":learn_record}];
-        [self.playerView edulineSeekToTime:[learn_record integerValue]];
+    // 跳转到学习记录
+    NSString *durationString = _ailDownDict[@"duration"];
+    if (durationString != nil && [durationString isKindOfClass:[NSString class]]) {
+        NSArray *coms = [durationString componentsSeparatedByString:@":"];
+        int hour, mine, second, totalDuration;
+        if (coms.count == 3) {
+            hour = [(NSString*)coms[0] intValue];
+            mine = [(NSString*)coms[1] intValue];
+            second = [(NSString*)coms[2] intValue];
+            totalDuration = hour * 60 * 60 + mine * 60 + second;
+        }
+        if ([learn_record integerValue] < (totalDuration - 5)) {
+            /// 总时长还有5秒及其以上就跳转到上次学习记录的位置
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"recodeNumChange" object:nil userInfo:@{@"recodeNum":learn_record}];
+            [self.playerView edulineSeekToTime:[learn_record integerValue]];
+        }
     }
-    
-    
+
     //设置尺寸
     [_allScrollView bringSubviewToFront:_videoView];
     _videoView.frame = CGRectMake(0, scrollContentY, MainScreenWidth, 210 * WideEachUnit);
