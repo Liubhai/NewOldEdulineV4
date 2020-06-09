@@ -22,6 +22,10 @@ static bool hasAddObersver = NO;
     NSString           *priceStr;
     NSString           *receipt_data_str;
 }
+
+@property (nonatomic, copy)NSString *logs;
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
+
 @end
 
 @implementation STRIAPManager
@@ -47,6 +51,10 @@ static bool hasAddObersver = NO;
             [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
         }
     }
+    [UIPasteboard generalPasteboard].string = @"";
+    self.logs = @"日志：\n";
+    self.dateFormatter = [[NSDateFormatter alloc]init];
+    self.dateFormatter.dateFormat = @"mm:ss";
     return self;
 }
 
@@ -57,6 +65,7 @@ static bool hasAddObersver = NO;
 
 #pragma mark - 🚪public
 - (void)startPurchWithID:(NSString *)purchID completeHandle:(IAPCompletionHandle)handle{
+    [self addLog:[NSString stringWithFormat:@"startPurchWithID %@", purchID]];
     if (purchID) {
         if ([SKPaymentQueue canMakePayments]) {
             // 开始购买服务
@@ -67,21 +76,36 @@ static bool hasAddObersver = NO;
             request.delegate = self;
             [request start];
         }else{
+            [self addLog:@"不可使用IAP"];
             [self handleActionWithType:SIAPPurchNotArrow data:nil];
         }
+    } else {
+        [self addLog:@"startPurchWithID 为空"];
     }
 }
+
+- (void)addLog: (NSString*)log {
+    if (!self.isTest) {
+        return;
+    }
+    NSString *dateStr = [self.dateFormatter stringFromDate:[[NSDate alloc]init]];
+    self.logs = [NSString stringWithFormat:@"%@\n%@:%@", self.logs, dateStr,  log];
+    [UIPasteboard generalPasteboard].string = self.logs;
+}
+
 #pragma mark - 🔒private
 - (void)handleActionWithType:(SIAPPurchType)type data:(NSData *)data{
-#if DEBUG
+    [self addLog:[NSString stringWithFormat:@"handleActionWithType %d", type]];
     switch (type) {
         case SIAPPurchSuccess:
             NSLog(@"购买成功");
             if (receipt_data_str == nil) {
+                [self addLog:[NSString stringWithFormat:@"handleActionWithType %d 没有支付凭证", type]];
                 if (self.controlLoadingBlock) {
                     self.controlLoadingBlock(NO, @"未能获取到支付凭据");
                 }
             } else {
+                [self addLog:[NSString stringWithFormat:@"handleActionWithType %d 开始网络验证", type]];
                 [self netWorkApplePayResults:receipt_data_str];
             }
             break;
@@ -118,7 +142,6 @@ static bool hasAddObersver = NO;
         default:
             break;
     }
-#endif
     if(_handle){
         _handle(type,data);
     }
@@ -128,11 +151,13 @@ static bool hasAddObersver = NO;
 #pragma mark - 🍐delegate
 // 交易结束
 - (void)completeTransaction:(SKPaymentTransaction *)transaction{
+    [self addLog:@"completeTransaction"];
     [self verifyPurchaseWithPaymentTransaction:transaction];
 }
 
 // 交易失败
 - (void)failedTransaction:(SKPaymentTransaction *)transaction{
+    [self addLog:@"failedTransaction"];
     if (transaction.error.code != SKErrorPaymentCancelled) {
         [self handleActionWithType:SIAPPurchFailed data:nil];
     }else{
@@ -143,31 +168,21 @@ static bool hasAddObersver = NO;
 }
 
 - (void)verifyPurchaseWithPaymentTransaction:(SKPaymentTransaction *)transaction {
+    [self addLog:@"verifyPurchaseWithPaymentTransaction"];
+
     //交易验证
     NSURL *recepitURL = [[NSBundle mainBundle] appStoreReceiptURL];
     NSData *receipt = [NSData dataWithContentsOfURL:recepitURL];
     
     if(!receipt){
+        [self addLog:@"verifyPurchaseWithPaymentTransaction 交易凭证为空验证失败"];
         // 交易凭证为空验证失败
         [self handleActionWithType:SIAPPurchVerFailed data:nil];
         return;
     }
-   
-    
-    NSError *error;
-    NSDictionary *requestContents = @{
-                                      @"receipt-data": [receipt base64EncodedStringWithOptions:0]
-                                      };
-    NSData *requestData = [NSJSONSerialization dataWithJSONObject:requestContents
-                                                          options:0
-                                                            error:&error];
-    
-    receipt_data_str = [requestContents stringValueForKey:@"receipt-data"];
-    
-    if (!requestData) { // 交易凭证为空验证失败
-        [self handleActionWithType:SIAPPurchVerFailed data:nil];
-        return;
-    }
+    receipt_data_str = [receipt base64EncodedString];
+    [self addLog:@"verifyPurchaseWithPaymentTransaction 开始椒盐支付凭证"];
+
     // 购买成功将交易凭证发送给服务端进行再次校验
     [self handleActionWithType:SIAPPurchSuccess data:receipt];
     // 验证成功与否都注销交易,否则会出现虚假凭证信息一直验证不通过,每次进程序都得输入苹果账号
@@ -179,9 +194,8 @@ static bool hasAddObersver = NO;
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response{
     NSArray *product = response.products;
     if([product count] <= 0){
-#if DEBUG
+        [self addLog:@"didReceiveResponse 没有商品"];
         NSLog(@"--------------没有商品------------------");
-#endif
         return;
     }
     
@@ -192,8 +206,6 @@ static bool hasAddObersver = NO;
             break;
         }
     }
-    
-#if DEBUG
     NSLog(@"productID:%@", response.invalidProductIdentifiers);
     NSLog(@"产品付费数量:%lu",(unsigned long)[product count]);
     NSLog(@"%@",[selectedProduct description]);
@@ -203,8 +215,8 @@ static bool hasAddObersver = NO;
     NSLog(@"%@",[selectedProduct productIdentifier]);
     NSLog(@"发送购买请求");
     priceStr = [NSString stringWithFormat:@"%@",[selectedProduct price]];
-#endif
-    
+    [self addLog:[NSString stringWithFormat:@"didReceiveResponse 开始支付 %@", response.invalidProductIdentifiers]];
+
     SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:selectedProduct];
     payment.quantity = 1;
     [[SKPaymentQueue defaultQueue] addPayment:payment];
@@ -212,46 +224,46 @@ static bool hasAddObersver = NO;
 
 //请求失败
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error{
-#if DEBUG
+    [self addLog:[NSString stringWithFormat:@"didFailWithError %@", error.localizedDescription]];
     NSLog(@"------------------错误-----------------:%@", error);
-#endif
     if (self.controlLoadingBlock) {
         self.controlLoadingBlock(NO, error.description);
     }
 }
 
 - (void)requestDidFinish:(SKRequest *)request{
-#if DEBUG
+    [self addLog:@"requestDidFinish"];
     NSLog(@"------------反馈信息结束-----------------");
-    
-#endif
 }
 
 #pragma mark - SKPaymentTransactionObserver
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray<SKPaymentTransaction *> *)transactions{
-    
+    [self addLog:@"updatedTransactions bg"];
     if (![SKPaymentQueue canMakePayments]) {
         if (self.controlLoadingBlock) {
             self.controlLoadingBlock(NO, @"不可进行苹果内购");
         }
+        [self addLog:@"updatedTransactions 不可进行苹果内购"];
         return;
     }
 
     for (SKPaymentTransaction *tran in transactions) {
+        [self addLog:[NSString stringWithFormat:@"updatedTransactions %ld", (long)tran.transactionState]];
+
         switch (tran.transactionState) {
             case SKPaymentTransactionStatePurchased:
+                [self addLog:@"updatedTransactions SKPaymentTransactionStatePurchased"];
+
                 [[SKPaymentQueue defaultQueue] finishTransaction:tran];
                 [self completeTransaction:tran];
                 break;
             case SKPaymentTransactionStatePurchasing:
-#if DEBUG
+                [self addLog:@"updatedTransactions SKPaymentTransactionStatePurchasing"];
                 NSLog(@"商品添加进列表11");
-#endif
                 break;
             case SKPaymentTransactionStateRestored:
-#if DEBUG
+                [self addLog:@"updatedTransactions SKPaymentTransactionStateRestored"];
                 NSLog(@"已经购买过商品");
-#endif
                 // 消耗型不支持恢复购买
                 [[SKPaymentQueue defaultQueue] finishTransaction:tran];
                 if (self.controlLoadingBlock) {
@@ -259,6 +271,8 @@ static bool hasAddObersver = NO;
                 }
                 break;
             case SKPaymentTransactionStateFailed:
+                [self addLog:@"updatedTransactions SKPaymentTransactionStateFailed"];
+
                 [self failedTransaction:tran];
 
                 if (tran.error.code == 0) {
@@ -272,6 +286,8 @@ static bool hasAddObersver = NO;
                 }
                 break;
             default:
+                [self addLog:[NSString stringWithFormat:@"updatedTransactions default %ld", (long)tran.transactionState]];
+
                 break;
         }
     }
@@ -282,7 +298,9 @@ static bool hasAddObersver = NO;
 #pragma mark  ----
 
 - (void)netWorkApplePayResults:(NSString *)str {
+    [self addLog:@"netWorkApplePayResults"];
     if (str == nil || str.length == 0) {
+        [self addLog:@"netWorkApplePayResults 支付凭证为空"];
         if (self.controlLoadingBlock) {
             self.controlLoadingBlock(NO, @"支付凭证为空");
         }
@@ -304,7 +322,8 @@ static bool hasAddObersver = NO;
     NSString *encryptStr = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetEncryptStr:mutabDict];
     [request setValue:encryptStr forHTTPHeaderField:HeaderKey];
     [request setValue:oath_token_Str forHTTPHeaderField:OAUTH_TOKEN];
-    
+    [self addLog:@"netWorkApplePayResults initWithRequest"];
+
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadBalanceData" object:nil];
@@ -320,7 +339,11 @@ static bool hasAddObersver = NO;
             }
         }
         NSLog(@"%@",dict);
+        [self addLog:[NSString stringWithFormat:@"netWorkApplePayResults setCompletionBlockWithSuccess %@", dict]];
+
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        [self addLog:[NSString stringWithFormat:@"netWorkApplePayResults failure %@", error.debugDescription]];
+
         if (self.controlLoadingBlock) {
             self.controlLoadingBlock(NO, @"支付凭证验证失败");
         }

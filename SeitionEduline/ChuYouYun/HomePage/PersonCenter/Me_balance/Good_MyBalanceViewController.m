@@ -414,19 +414,15 @@
     }
     
     _fourButton.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
-    NSString *price = [NSString stringWithFormat:@"%@",[[_netWorkBalanceArray objectAtIndex:button.tag] stringValueForKey:@"rechange"]];
-    if ([price isEqualToString:@"4.2"]) {
-        _realMoney.text = @"¥6";
-    } else if ([price isEqualToString:@"8.4"]) {
-        _realMoney.text = @"¥12";
-    } else if ([price isEqualToString:@"21"]) {
-        _realMoney.text = @"¥30";
-    } else if ([price isEqualToString:@"35"]) {
-        _realMoney.text = @"¥50";
-    } else if ([price isEqualToString:@"131.6"]) {
-        _realMoney.text = @"¥188";
-    } else if ([price isEqualToString:@"432.6"]) {
-        _realMoney.text = @"¥618";
+    NSString *payString = [[_applepayArray objectAtIndex:button.tag] stringValueForKey:@"pay"];
+    if (payString != nil) {
+        if ([payString hasPrefix:@"¥"]) {
+            _realMoney.text = payString;
+        } else {
+            _realMoney.text = [NSString stringWithFormat:@"¥%@", payString];
+        }
+    } else {
+        _realMoney.text = @"..";
     }
     if (_applepayArray.count) {
         _productID = [[_applepayArray objectAtIndex:button.tag] stringValueForKey:@"product_id"];
