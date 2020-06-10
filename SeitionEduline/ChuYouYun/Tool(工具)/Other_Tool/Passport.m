@@ -429,11 +429,11 @@
         tableView.estimatedSectionHeaderHeight = 0;
         tableView.estimatedSectionFooterHeight = 0;
     }
-    if (@available(iOS 11.0, *)) {
-        tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-        tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-        tableView.scrollIndicatorInsets = tableView.contentInset;
-    }
+//    if (@available(iOS 11.0, *)) {
+//        tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+//        tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+//        tableView.scrollIndicatorInsets = tableView.contentInset;
+//    }
 #else
 #endif
 //    tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
