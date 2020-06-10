@@ -48,7 +48,7 @@
     [super viewDidLoad];
     [self interFace];
     [self addTableView];
-    [self netWorkWenGetList:1];
+    [_tableView.mj_header beginRefreshing];
 }
 
 - (void)interFace {
