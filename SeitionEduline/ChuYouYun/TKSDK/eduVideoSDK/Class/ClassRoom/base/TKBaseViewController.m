@@ -98,6 +98,12 @@
     [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
+    [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+}
+
 - (void)addBaseNotification {
 
     // 声音
