@@ -24,6 +24,7 @@ typedef void (^IAPCompletionHandle)(SIAPPurchType type,NSData *data);
 @interface STRIAPManager : NSObject
 
 @property(nonatomic, copy) void(^controlLoadingBlock)(BOOL, NSString*);
+@property(assign) BOOL isTest;
 
 + (instancetype)shareSIAPManager;
 //开始内购

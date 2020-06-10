@@ -1710,10 +1710,10 @@
     [self.timer invalidate];
     self.timer = nil;
     recodeNum = 0;
-    
-//    [_tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self tableView:_tableView didSelectRowAtIndexPath:indexPath];
     return;
+/*
+    [_tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([_free_course_opt integerValue] == 1) {
         if (!UserOathToken) {
             DLViewController *vc = [[DLViewController alloc] init];
@@ -1816,6 +1816,7 @@
             
         }
     }
+ */
 }
 
 // 播放的时候如果有记录 就传递记录时间给 recodeNum
