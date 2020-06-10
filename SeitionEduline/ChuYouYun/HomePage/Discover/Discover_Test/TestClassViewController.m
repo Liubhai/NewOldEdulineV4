@@ -34,8 +34,8 @@
     [super viewDidLoad];
     [self interFace];
     [self addAllView];
-    [self addTabView];
     [self addClearButton];
+    [self addTabView];
 //    [self netWorkGetCateList];
 //    [self NetWorkGetSubjectCategory];
     [self netWorkExamsGetCategory];
@@ -93,7 +93,7 @@
     _twoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _twoTableView.showsVerticalScrollIndicator = NO;
     _twoTableView.showsHorizontalScrollIndicator = NO;
-    [_tabView addSubview:_twoTableView];
+    [self.view addSubview:_twoTableView];
     
     //iOS 11 适配
     if (currentIOS >= 11.0) {
@@ -110,7 +110,7 @@
     _thereTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _thereTableView.showsVerticalScrollIndicator = NO;
     _thereTableView.showsHorizontalScrollIndicator = NO;
-    [_tabView addSubview:_thereTableView];
+    [self.view addSubview:_thereTableView];
     
     //iOS 11 适配
     if (currentIOS >= 11.0) {
@@ -224,10 +224,15 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+//    [self.view bringSubviewToFront:self.oneTableView];
+//    [self.view bringSubviewToFront:self.twoTableView];
+//    [self.view bringSubviewToFront:self.thereTableView];
+
     if (_oneTableView == tableView) {//点击一级分类的时候
         _oneTableView.hidden = NO;
         _twoTableView.hidden = NO;
+
+
         _thereTableView.hidden = YES;
         [UIView animateWithDuration:0.25 animations:^{
             _oneTableView.frame = CGRectMake(0, 0, MainScreenWidth / 2, 160);
