@@ -82,7 +82,9 @@
     }
     
     NSDictionary *dict = _dataArray[indexPath.row];
-    [cell dataWithDict:dict];
+    if ([dict isKindOfClass:[NSDictionary class]]) {
+            [cell dataWithDict:dict];
+    }
     
 //    [cell.onlineButton addTarget:self action:@selector(onlineButtonCilck:) forControlEvents:UIControlEventTouchUpInside];
 //    [cell.orderButton addTarget:self action:@selector(orderButtonCilck:) forControlEvents:UIControlEventTouchUpInside];
@@ -93,7 +95,13 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    if (_dataArray.count <= indexPath.row) {
+        return;
+    }
+    NSDictionary *dic = _dataArray[indexPath.row];
+    if (![dic isKindOfClass:[NSDictionary class]]) {
+        return;
+    }
     [_tableView deselectRowAtIndexPath:indexPath animated:NO];
     OfflineDetailViewController *vc = [[OfflineDetailViewController alloc] init];
     vc.ID = [[_dataArray objectAtIndex:indexPath.row] stringValueForKey:@"course_id"];
