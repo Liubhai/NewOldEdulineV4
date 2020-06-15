@@ -4222,7 +4222,7 @@
 		504C759D1AA4395E00DF3018 /* Top2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Top2.png; sourceTree = "<group>"; };
 		504C759E1AA4395E00DF3018 /* Top3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Top3.png; sourceTree = "<group>"; };
 		5051459D1AE49F4E00CCCAE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		50566DFC1A6F44A400F093DE /* Eduline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eduline.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50566DFC1A6F44A400F093DE /* 匠人网校.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "匠人网校.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50566E001A6F44A400F093DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50566E011A6F44A400F093DE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		50566E0C1A6F44A400F093DE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -10134,7 +10134,7 @@
 		50566DFD1A6F44A400F093DE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				50566DFC1A6F44A400F093DE /* Eduline.app */,
+				50566DFC1A6F44A400F093DE /* 匠人网校.app */,
 				50566E151A6F44A400F093DE /* YunKeTang.xctest */,
 			);
 			name = Products;
@@ -22287,7 +22287,7 @@
 			);
 			name = YunKeTang;
 			productName = ChuYouYun;
-			productReference = 50566DFC1A6F44A400F093DE /* Eduline.app */;
+			productReference = 50566DFC1A6F44A400F093DE /* 匠人网校.app */;
 			productType = "com.apple.product-type.application";
 		};
 		50566E141A6F44A400F093DE /* YunKeTangTests */ = {
@@ -22319,8 +22319,8 @@
 				TargetAttributes = {
 					50566DFB1A6F44A400F093DE = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 5QQ23A4NX6;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = 2VGCGZZ87Y;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -25969,10 +25969,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 5QQ23A4NX6;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2VGCGZZ87Y;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -26056,16 +26056,16 @@
 					"$(PROJECT_DIR)/ChuYouYun/Library/Umeng/share/share_ios_6.9.8/SocialLibraries/QQ",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 2.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.saixin.eduline02;
-				PRODUCT_NAME = Eduline;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jiangrenonline.com;
+				PRODUCT_NAME = "匠人网校";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "Dev*";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7s armv7 arm64";
@@ -26082,7 +26082,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 5QQ23A4NX6;
+				DEVELOPMENT_TEAM = XXJKP34A4A;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -26166,16 +26166,16 @@
 					"$(PROJECT_DIR)/ChuYouYun/Library/Umeng/share/share_ios_6.9.8/SocialLibraries/QQ",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 2.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.saixin.eduline02;
-				PRODUCT_NAME = Eduline;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jiangrenonline.com;
+				PRODUCT_NAME = "匠人网校";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = tongyongDis;
+				PROVISIONING_PROFILE_SPECIFIER = jiangrenjiaoyuAppstoreDis;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7s armv7 arm64";
