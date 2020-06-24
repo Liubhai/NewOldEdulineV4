@@ -2094,6 +2094,12 @@
 
 #pragma mark ---- aliPalyerDelegate
 
+- (void)aliyunVodPlayerView:(AliyunVodPlayerView*)playerView onSeekDone:(NSTimeInterval)seekDoneTime {
+    if (self.playerView) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"recodeNumChange" object:nil userInfo:@{@"recodeNum":[NSString stringWithFormat:@"%@",@(seekDoneTime)]}];
+        [self.playerView edulineSeekToTime:seekDoneTime];
+    }
+}
 
 - (void)aliyunVodPlayerView:(AliyunVodPlayerView *)playerView lockScreen:(BOOL)isLockScreen{
     self.isLock = isLockScreen;

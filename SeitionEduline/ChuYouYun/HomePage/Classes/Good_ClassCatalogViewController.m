@@ -48,6 +48,7 @@
     BOOL      isScene;//是否配置（人脸识别）
     NSInteger indexPathSection;//
     NSInteger indexPathRow;//记录当前数据的相关
+    NSInteger newCourseRow;
     
     UIImage   *faceImage;
 }
@@ -151,6 +152,7 @@
     _isOn5 = NO;
     indexPathSection = 0;
     indexPathRow = 0;
+    newCourseRow = 0;
     recodeNum = 0;
     
     //播放完成
@@ -690,6 +692,7 @@
     [_tableView reloadData];
     indexPathRow = cellSection;
     indexPathSection = cellRow;
+    newCourseRow = classCellRow;
     NSDictionary *cellDict = [NSDictionary dictionaryWithDictionary:classCourseCellDict];
     _cellDict = cellDict;
     
@@ -1657,18 +1660,38 @@
 }
 
 - (void)judgePlayWhichVideo {
-    if (SWNOTEmptyStr(_sid) && SWNOTEmptyArr(_newsDataArray) && _canPlayRecordVideo) {
-        _canPlayRecordVideo = NO;
-        for (int i = 0; i < _newsDataArray.count; i++) {
-            NSArray *courseArray = _newsDataArray[i];
-            for (int j = 0; j < courseArray.count; j++) {
-                NSDictionary *dict = courseArray[j];
-                if ([_sid isEqualToString:[NSString stringWithFormat:@"%@",[dict objectForKey:@"id"]]]) {
-                    __weak Good_ClassCatalogViewController *weakSelf = self;
-                    _cellDict = dict;
-                    weakSelf.videoDataSource(dict);
-                    _sid = @"";
-                    return;
+    if (_isClassCourse) {
+        if (SWNOTEmptyStr(_sid) && SWNOTEmptyArr(_newsDataArray) && _canPlayRecordVideo) {
+            _canPlayRecordVideo = NO;
+            for (int i = 0; i < _newsDataArray.count; i++) {
+                NSArray *courseArray = _newsDataArray[i];
+                for (int j = 0; j < courseArray.count; j++) {
+                    NSDictionary *passdict = courseArray[j];
+                    NSArray *pass = [passdict objectForKey:@"child"];
+                    for (int k = 0; k<pass.count; k++) {
+                        NSDictionary *dict = pass[k];
+                        if ([_sid isEqualToString:[NSString stringWithFormat:@"%@",[dict objectForKey:@"id"]]]) {
+                            [self classCourseCellTableViewCellSelected:dict cellSection:i cellRow:j classCellRow:k];
+                            _sid = @"";
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        if (SWNOTEmptyStr(_sid) && SWNOTEmptyArr(_newsDataArray) && _canPlayRecordVideo) {
+            _canPlayRecordVideo = NO;
+            for (int i = 0; i < _newsDataArray.count; i++) {
+                NSArray *courseArray = _newsDataArray[i];
+                for (int j = 0; j < courseArray.count; j++) {
+                    NSDictionary *dict = courseArray[j];
+                    if ([_sid isEqualToString:[NSString stringWithFormat:@"%@",[dict objectForKey:@"id"]]]) {
+                        NSIndexPath *currentIndex = [NSIndexPath indexPathForRow:j inSection:i];
+                        [self autoDidselectedNextIndexPath:currentIndex];
+                        _sid = @"";
+                        return;
+                    }
                 }
             }
         }
@@ -1676,29 +1699,74 @@
 }
 
 - (void)autoPlayNextCourse {
-    if (SWNOTEmptyDictionary(_cellDict) && SWNOTEmptyArr(_newsDataArray)) {
-        NSString *courseId = [NSString stringWithFormat:@"%@",[_cellDict objectForKey:@"id"]];
-        int currentSection = 0;// 当前播放课时在数组中的section
-        int currentRow = 0;// 当前播放课时在数组中的row
-        for (int i = 0; i < _newsDataArray.count; i++) {
-            NSArray *courseArray = _newsDataArray[i];
-            for (int j = 0; j < courseArray.count; j++) {
-                NSDictionary *dict = courseArray[j];
-                if ([courseId isEqualToString:[NSString stringWithFormat:@"%@",[dict objectForKey:@"id"]]]) {
-                    if (j < (courseArray.count - 1)) {
-                        currentRow = j + 1;
-                        currentSection = i;
-                        NSIndexPath *currentIndex = [NSIndexPath indexPathForRow:currentRow inSection:currentSection];
-                        [self autoDidselectedNextIndexPath:currentIndex];
-                    } else {
-                        if (i < (_newsDataArray.count - 1)) {
-                            currentSection = i + 1;
-                            currentRow = 0;
-                            NSIndexPath *currentIndex = [NSIndexPath indexPathForRow:currentRow inSection:currentSection];
-                            [self autoDidselectedNextIndexPath:currentIndex];
+    if (_isClassCourse) {
+        if (SWNOTEmptyDictionary(_cellDict) && SWNOTEmptyArr(_newsDataArray)) {
+            NSString *courseId = [NSString stringWithFormat:@"%@",[_cellDict objectForKey:@"id"]];
+            int currentSection = 0;// 当前播放课时在数组中的section
+            int currentRow = 0;// 当前播放课时在数组中的row
+            int currentNewRow = 0;
+            for (int i = 0; i < _newsDataArray.count; i++) {
+                NSArray *courseArray = _newsDataArray[i];
+                for (int j = 0; j < courseArray.count; j++) {
+                    NSDictionary *passdict = courseArray[j];
+                    NSArray *pass = [passdict objectForKey:@"child"];
+                    for (int k = 0; k<pass.count; k++) {
+                        NSDictionary *dict = pass[k];
+                        if ([courseId isEqualToString:[NSString stringWithFormat:@"%@",[dict objectForKey:@"id"]]]) {
+                            if (k < (pass.count - 1)) {
+                                [self classCourseCellTableViewCellSelected:pass[k + 1] cellSection:i cellRow:j classCellRow:k + 1];
+                            } else {
+                                if (j < (courseArray.count - 1)) {
+                                    NSDictionary *courseDict = courseArray[j + 1];
+                                    NSArray *secondCourseArray = [courseDict objectForKey:@"child"];
+                                    if (SWNOTEmptyArr(secondCourseArray)) {
+                                        [self classCourseCellTableViewCellSelected:secondCourseArray[0] cellSection:i cellRow:j + 1 classCellRow:0];
+                                    }
+                                } else {
+                                    if (i < (_newsDataArray.count - 1)) {
+                                        NSDictionary *courseDict = _newsDataArray[i + 1];
+                                        NSArray *secondArray = [courseDict objectForKey:@"child"];
+                                        if (SWNOTEmptyArr(secondArray)) {
+                                            NSDictionary *thirdDict = _sectionArray[0];
+                                            NSArray *thirdArray = [thirdDict objectForKey:@"child"];
+                                            if (SWNOTEmptyArr(thirdArray)) {
+                                                [self classCourseCellTableViewCellSelected:thirdArray[0] cellSection:i + 1 cellRow:0 classCellRow:0];
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            break;
                         }
                     }
-                    break;
+                }
+            }
+        }
+    } else {
+        if (SWNOTEmptyDictionary(_cellDict) && SWNOTEmptyArr(_newsDataArray)) {
+            NSString *courseId = [NSString stringWithFormat:@"%@",[_cellDict objectForKey:@"id"]];
+            int currentSection = 0;// 当前播放课时在数组中的section
+            int currentRow = 0;// 当前播放课时在数组中的row
+            for (int i = 0; i < _newsDataArray.count; i++) {
+                NSArray *courseArray = _newsDataArray[i];
+                for (int j = 0; j < courseArray.count; j++) {
+                    NSDictionary *dict = courseArray[j];
+                    if ([courseId isEqualToString:[NSString stringWithFormat:@"%@",[dict objectForKey:@"id"]]]) {
+                        if (j < (courseArray.count - 1)) {
+                            currentRow = j + 1;
+                            currentSection = i;
+                            NSIndexPath *currentIndex = [NSIndexPath indexPathForRow:currentRow inSection:currentSection];
+                            [self autoDidselectedNextIndexPath:currentIndex];
+                        } else {
+                            if (i < (_newsDataArray.count - 1)) {
+                                currentSection = i + 1;
+                                currentRow = 0;
+                                NSIndexPath *currentIndex = [NSIndexPath indexPathForRow:currentRow inSection:currentSection];
+                                [self autoDidselectedNextIndexPath:currentIndex];
+                            }
+                        }
+                        break;
+                    }
                 }
             }
         }
