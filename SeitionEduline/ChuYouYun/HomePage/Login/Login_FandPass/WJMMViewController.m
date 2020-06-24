@@ -33,6 +33,12 @@
 
 @property (strong ,nonatomic)UILabel *waitLabel;
 
+@property (strong, nonatomic) UIButton *YZMButton;
+
+@property (strong ,nonatomic)NSTimer *timer;
+
+@property (assign ,nonatomic)NSInteger number;
+
 @end
 
 @implementation WJMMViewController
@@ -111,14 +117,14 @@
     [self.view addSubview:_phoneField];
     
     //添加发送验证码
-    UIButton *YZMButton = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth - 100, 7 + 100, 80, 36)];
-    [YZMButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-    [YZMButton addTarget:self action:@selector(YZMButton) forControlEvents:UIControlEventTouchUpInside];
-    YZMButton.backgroundColor = [UIColor colorWithRed:32.f / 255 green:105.f / 255 blue:207.f / 255 alpha:1];
-    [YZMButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    YZMButton.layer.cornerRadius = 3;
-    YZMButton.titleLabel.font = [UIFont systemFontOfSize:13];
-    [self.view addSubview:YZMButton];
+    _YZMButton = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth - 100, 7 + 100, 80, 36)];
+    [_YZMButton setTitle:@"发送验证码" forState:UIControlStateNormal];
+    [_YZMButton addTarget:self action:@selector(YZMButton) forControlEvents:UIControlEventTouchUpInside];
+    _YZMButton.backgroundColor = [UIColor colorWithRed:32.f / 255 green:105.f / 255 blue:207.f / 255 alpha:1];
+    [_YZMButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _YZMButton.layer.cornerRadius = 3;
+    _YZMButton.titleLabel.font = [UIFont systemFontOfSize:13];
+    [self.view addSubview:_YZMButton];
 
     //验证码
     _YZMField= [[UITextField alloc] initWithFrame:CGRectMake(0, 151, MainScreenWidth, 50)];
@@ -210,6 +216,9 @@
             return ;
         } else if ([[dict stringValueForKey:@"code"] integerValue] == 1) {
              [TKProgressHUD showSuccess:[dict stringValueForKey:@"msg"] toView:self.view];
+            _number = 0;
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timePast) userInfo:nil repeats:YES];
+            _YZMButton.enabled = NO;
         }
         
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
@@ -217,6 +226,24 @@
     [op start];
 }
 
+- (void)timePast {
+    
+    _number ++;
+    NSInteger endTime = 60 - _number;
+    NSString *endString = [NSString stringWithFormat:@"%ld", endTime];
+    NSString *MStr = [NSString stringWithFormat:@"%@S后重发",endString];
+    [_YZMButton setTitle:MStr forState:UIControlStateNormal];
+    _YZMButton.backgroundColor = RGBHex(0xd4d4d4);
+    
+    if ([_YZMButton.titleLabel.text isEqualToString:@"0S后重发"]) {
+        
+        _YZMButton.enabled = YES;
+        _YZMButton.backgroundColor = [UIColor colorWithRed:32.f / 255 green:105.f / 255 blue:207.f / 255 alpha:1];
+        [_YZMButton setTitle:@"发送验证码" forState:UIControlStateNormal];
+        [_timer invalidate];
+        _number = 0;
+    }
+}
 
 - (void)backPressed {
     [self.navigationController popViewControllerAnimated:YES];
