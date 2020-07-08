@@ -10,11 +10,19 @@
 #import "rootViewController.h"
 #import "AppDelegate.h"
 #import "SYG.h"
+#import "BigWindCar.h"
+#import "UIImageView+WebCache.h"
+#import "TKProgressHUD+Add.h"
+#import "MyHttpRequest.h"
+#import "ZhiyiHTTPRequest.h"
+#import "YKTWebView.h"
 
 
 @interface XYViewController ()
 
 @property (strong ,nonatomic)UIScrollView *scrollView;
+@property (strong ,nonatomic)YKTWebView     *webView;
+@property (strong ,nonatomic)NSString      *H5Str;
 
 @end
 
@@ -47,8 +55,57 @@
     _titleImage.backgroundColor = BasidColor;
     _titleLabel.text = @"注册协议";
     [self interFace];
-    [self addScrollView];
+    [self addWebView];
+    [self netWorkBasicSingle];
 }
+
+#pragma mark --- 添加网络试图
+- (void)addWebView {
+    
+    _webView = [[YKTWebView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT)];
+    _webView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:_webView];
+    
+    
+    [_webView setUserInteractionEnabled:YES];//是否支持交互
+    [_webView setOpaque:YES];//opaque是不透明的意思
+    [_webView loadHTMLString:_H5Str baseURL:nil];
+}
+
+#pragma mark --- 事件监听
+- (void)backPressed {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+#pragma mark --- 网络请求
+
+//获取单页面
+- (void)netWorkBasicSingle {
+    
+    NSString *endUrlStr = YunKeTang_Basic_Basic_single;
+    NSString *allUrlStr = [YunKeTang_Api_Tool YunKeTang_GetFullUrl:endUrlStr];
+    
+    NSMutableDictionary *mutabDict = [NSMutableDictionary dictionaryWithCapacity:0];
+    [mutabDict setValue:@"reg" forKey:@"key"];
+    
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:allUrlStr]];
+    [request setHTTPMethod:NetWay];
+    NSString *encryptStr = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetEncryptStr:mutabDict];
+    [request setValue:encryptStr forHTTPHeaderField:HeaderKey];
+    
+    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    
+    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        NSString *receiveStr = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        _H5Str = receiveStr;
+        [self addWebView];
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+    }];
+    [op start];
+}
+
 - (void)interFace {
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -79,11 +136,6 @@
     [SYGView addSubview:button];
     
 }
-
-- (void)backPressed {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 
 - (void)addScrollView {
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT)];
