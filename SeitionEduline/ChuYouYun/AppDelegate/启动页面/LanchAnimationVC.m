@@ -48,14 +48,8 @@
     
     [self.view addSubview:_bgImageView];
     [self.view addSubview:_logImageView];
-    if (MACRO_UI_SAFEAREA) {
-        _bgImageView.image = [UIImage imageNamed:@"lauchIphoneX"];
-        _logImageView.image = [UIImage imageNamed:@"lauchIphoneX"];
-    }
-    else{
-        _bgImageView.image = [UIImage imageNamed:@"lauch375"];
-        _logImageView.image = [UIImage imageNamed:@"lauch375"];
-    }
+    _bgImageView.image = [UIImage imageNamed:@"aLaunchImage"];
+    _logImageView.image = [UIImage imageNamed:@"aLaunchImage"];
 
     _timerbutton = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth - 20 - 60, MACRO_UI_LIUHAI_HEIGHT + 30, 60, 30)];
     _timerbutton.clipsToBounds = YES;
