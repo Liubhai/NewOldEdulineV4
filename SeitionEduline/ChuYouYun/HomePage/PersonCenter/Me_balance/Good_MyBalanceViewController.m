@@ -473,14 +473,28 @@
     }
 
     
+    
+    _iapManager.isTest = [[NSUserDefaults standardUserDefaults] boolForKey:@"st-log"];
+
     // iTunesConnect 苹果后台配置的产品ID
     if (_productID == nil) {
         [TKProgressHUD showError:@"请选择充值的金额" toView:self.view];
         return;
     }
-    [TKProgressHUD showSuccess:@"请稍等" toView:self.view];
+    [TKProgressHUD showMessag:@"请稍等..." toView:self.view];
+    WS(weakSelf)
+    _iapManager.controlLoadingBlock = ^(BOOL status, NSString *message) {
+        [TKProgressHUD hideHUDForView:weakSelf.view];
+        if (status) {
+            /// 更新用户积分
+            [weakSelf getUsersCount];
+            [TKProgressHUD showSuccess:message toView:weakSelf.view];
+        } else {
+            [TKProgressHUD showError:message toView:weakSelf.view];
+        }
+    };
+
     [_iapManager startPurchWithID:_productID completeHandle:^(SIAPPurchType type,NSData *data) {
-        NSLog(@"----%@",data);
         NSString *str =[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"JSON: %@", str);
     }];
@@ -607,5 +621,34 @@
     }];
     [op start];
 }
+- (void)getUsersCount {
+    
+    NSString *endUrlStr = YunKeTang_User_user_balanceConfig;
+    NSString *allUrlStr = [YunKeTang_Api_Tool YunKeTang_GetFullUrl:endUrlStr];
+    
+    NSMutableDictionary *mutabDict = [NSMutableDictionary dictionaryWithCapacity:0];
+    [mutabDict setObject:@"1"forKey:@"tab"];
+    [mutabDict setObject:@"50"forKey:@"limit"];
+    
+    NSString *oath_token_Str = nil;
+    if (UserOathToken) {
+        oath_token_Str = [NSString stringWithFormat:@"%@:%@",UserOathToken,UserOathTokenSecret];
+    }
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:allUrlStr]];
+    [request setHTTPMethod:NetWay];
+    NSString *encryptStr = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetEncryptStr:mutabDict];
+    [request setValue:encryptStr forHTTPHeaderField:HeaderKey];
+    [request setValue:oath_token_Str forHTTPHeaderField:OAUTH_TOKEN];
+    
+    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        _balanceDict = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject];
+        _balanceLabel.text = [NSString stringWithFormat:@"%@",[[_balanceDict dictionaryValueForKey:@"learncoin_info"] stringValueForKey:@"balance" defaultValue:@"0"]];
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+    }];
+    [op start];
+}
+
 
 @end
