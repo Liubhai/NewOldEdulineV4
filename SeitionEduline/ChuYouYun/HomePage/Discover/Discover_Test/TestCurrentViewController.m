@@ -208,7 +208,7 @@
         }
         _fenshuL.text = [NSString stringWithFormat:@"%@",@([_fenshuL.text integerValue] + 1)];
     } else if (sender == _applyScoreBtn) {
-        
+        [self manageAnswer];
     }
 }
 
@@ -2247,6 +2247,7 @@
         }
     }
     
+    NSLog(@"%@",self.mangerAnswerDict);
 }
 
 #pragma mark ---- 在查看模式下的到接口返回的用户的答案
