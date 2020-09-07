@@ -34,6 +34,9 @@
     NSInteger timePastting;//记录流逝的时间(记录当前用过的时间)
     NSInteger allTime;//全部的时间（当有时间限制的时候才会有这个东西）
     NSString  *stayWhiceController;//这个字符串是标示 当前用户的界面是停留在当前界面还是后面的答题卡界面（因为交卷的时候需要这个标识符）
+    
+    // 定制 解析题分值
+    NSInteger essaysScore;
 }
 
 //点击暂停以及返回的按钮
@@ -124,11 +127,90 @@
 @property (strong ,nonatomic)NSArray          *allUserAnswerArray;//用户的全部答案（接口返回的全部都在这里）
 
 
+@property (strong, nonatomic) UIView *userSetScoreBack;
+@property (strong, nonatomic) UILabel *pingfenL;
+@property (strong, nonatomic) UILabel *fenshuL;
+@property (strong, nonatomic) UIImageView *icon1;
+@property (strong, nonatomic) UIButton *iconBtn1;
+@property (strong, nonatomic) UIButton *iconBtn2;
+@property (strong, nonatomic) UIButton *applyScoreBtn;
+@property (strong ,nonatomic) NSMutableArray *examTypeScoreArray;//用户的全部答案（接口返回的全部都在这里）
+
 @end
 
 @implementation TestCurrentViewController
 
 #pragma mark --- 懒加载
+
+- (void)makeUserSetScoreView:(CGFloat)yy {
+    
+    if (whichSubject != 5) {
+        _userSetScoreBack = [[UIView alloc] initWithFrame:CGRectMake(0, yy, MainScreenWidth, 0)];
+        _userSetScoreBack.backgroundColor = [UIColor whiteColor];
+        _userSetScoreBack.hidden = YES;
+        return;
+    }
+    
+    _userSetScoreBack = [[UIView alloc] initWithFrame:CGRectMake(0, yy, MainScreenWidth, 48)];
+    _userSetScoreBack.backgroundColor = [UIColor whiteColor];
+    
+    _pingfenL = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 42, 48)];
+    _pingfenL.text = @"评分";
+    _pingfenL.textColor = RGBHex(0x303133);
+    _pingfenL.font = SYSTEMFONT(15);
+    [_userSetScoreBack addSubview:_pingfenL];
+    
+    _icon1 = [[UIImageView alloc] initWithFrame:CGRectMake(_pingfenL.right, 10, 100, 28)];
+    _icon1.image = Image(@"box");
+    [_userSetScoreBack addSubview:_icon1];
+    
+    _iconBtn1 = [[UIButton alloc] initWithFrame:CGRectMake(_icon1.left + 3, 0, 22, 22)];
+    [_iconBtn1 setImage:Image(@"minus") forState:0];
+    _iconBtn1.centerY = _icon1.centerY;
+    [_iconBtn1 addTarget:self action:@selector(setUserScoreButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_userSetScoreBack addSubview:_iconBtn1];
+    
+    _iconBtn2 = [[UIButton alloc] initWithFrame:CGRectMake(_icon1.right - 3 - 22, 0, 22, 22)];
+    [_iconBtn2 setImage:Image(@"plus") forState:0];
+    _iconBtn2.centerY = _icon1.centerY;
+    [_iconBtn2 addTarget:self action:@selector(setUserScoreButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_userSetScoreBack addSubview:_iconBtn2];
+    
+    _fenshuL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 24)];
+    _fenshuL.centerY = _icon1.centerY;
+    _fenshuL.centerX = _icon1.centerX;
+    _fenshuL.text = @"0";
+    _fenshuL.textAlignment = NSTextAlignmentCenter;
+    _fenshuL.textColor = RGBHex(0x606266);
+    _fenshuL.font = SYSTEMFONT(14);
+    [_userSetScoreBack addSubview:_fenshuL];
+    
+    _applyScoreBtn = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth - 15 - 80, 10, 80, 28)];
+    _applyScoreBtn.layer.masksToBounds = YES;
+    _applyScoreBtn.layer.cornerRadius = _applyScoreBtn.height / 2.0;
+    _applyScoreBtn.backgroundColor = RGBHex(0x5191FF);
+    [_applyScoreBtn setTitle:@"提交" forState:0];
+    [_applyScoreBtn setTitleColor:[UIColor whiteColor] forState:0];
+    _applyScoreBtn.titleLabel.font = SYSTEMFONT(16);
+    [_applyScoreBtn addTarget:self action:@selector(setUserScoreButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_userSetScoreBack addSubview:_applyScoreBtn];
+}
+
+- (void)setUserScoreButton:(UIButton *)sender {
+    if (sender == _iconBtn1) {
+        if ([_fenshuL.text integerValue] == 0) {
+            return;
+        }
+        _fenshuL.text = [NSString stringWithFormat:@"%@",@([_fenshuL.text integerValue] - 1)];
+    } else if (sender == _iconBtn2) {
+        if ([_fenshuL.text integerValue] == essaysScore) {
+            return;
+        }
+        _fenshuL.text = [NSString stringWithFormat:@"%@",@([_fenshuL.text integerValue] + 1)];
+    } else if (sender == _applyScoreBtn) {
+        
+    }
+}
 
 //头部视图
 -(UIView *)chooseHeaderView {
@@ -323,6 +405,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _examTypeScoreArray = [NSMutableArray new];
+    essaysScore = 0;
     [self interFace];
     [self initialization];//初始化
     [self addNav];
@@ -388,6 +472,15 @@
     _judgeArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"3"];
     _gapArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"4"];
     _subjectivityArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"5"];
+    [_examTypeScoreArray removeAllObjects];
+    [_examTypeScoreArray addObjectsFromArray:[[_dataSource objectForKey:@"paper_options"] objectForKey:@"options_type"]];
+    for (int i = 0; i<_examTypeScoreArray.count; i++) {
+        NSString *examType = [NSString stringWithFormat:@"%@",_examTypeScoreArray[i][@"question_type_key"]];
+        if ([examType isEqualToString:@"essays"]) {
+            essaysScore = [[NSString stringWithFormat:@"%@",_examTypeScoreArray[i][@"score"]] integerValue];
+            break;
+        }
+    }
     
     //将每个将要装答案的数据先用其他的数据先代替
     for (int i = 0; i < _multipleArray.count ; i ++) {
@@ -1031,6 +1124,10 @@
             self.analysisView.hidden = YES;
         }
         
+        
+        [self makeUserSetScoreView:self.correctAndMyAnswerView.bottom];
+        [self.tableFootView addSubview:self.userSetScoreBack];
+        
         self.analysisLabel.text = @"解析";
         self.analysisLabel.font = Font(16 * WideEachUnit);
         self.analysisLabel.textColor = [UIColor colorWithHexString:@"#888"];
@@ -1044,7 +1141,7 @@
         
         CGRect labelSize = [self.analysisContentLabel.text boundingRectWithSize:CGSizeMake(MainScreenWidth - 30 * WideEachUnit, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14 * WideEachUnit]} context:nil];
         self.analysisContentLabel.frame = CGRectMake(15 * WideEachUnit,50 * WideEachUnit,MainScreenWidth - 30 * WideEachUnit, labelSize.size.height + 15 * WideEachUnit);
-        self.analysisView.frame = CGRectMake(0, CGRectGetMaxY(self.correctAndMyAnswerView.frame), MainScreenWidth, 50 * WideEachUnit + labelSize.size.height + 15 * WideEachUnit);
+        self.analysisView.frame = CGRectMake(0, CGRectGetMaxY(self.userSetScoreBack.frame), MainScreenWidth, 50 * WideEachUnit + labelSize.size.height + 15 * WideEachUnit);//CGRectGetMaxY(self.correctAndMyAnswerView.frame)
         [self.analysisView addSubview:self.analysisContentLabel];
         analysisHeight = labelSize.size.height + 15 * WideEachUnit;//记录当前的高度
         

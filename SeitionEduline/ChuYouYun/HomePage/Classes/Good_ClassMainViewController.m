@@ -125,6 +125,9 @@
 @property (strong ,nonatomic)NSArray         *subVcArray;
 @property (strong ,nonatomic)UILabel         *priceLabel;
 @property (strong ,nonatomic)UILabel         *ordPrice;
+@property (strong, nonatomic) LBHProgressView *learnProgress;
+@property (strong, nonatomic) UILabel *learnCountLabel;
+@property (strong, nonatomic) UILabel *learnRateLabel;
 
 //配置是否登录能看免费课程
 @property (strong ,nonatomic)NSString        *free_course_opt;
@@ -528,6 +531,34 @@
     priceLabel.hidden = YES;
     [_mainDetailView addSubview:priceLabel];
     _priceLabel = priceLabel;
+    
+    
+    _learnProgress = [[LBHProgressView alloc] initWithFrame:CGRectMake(15, _classTitle.bottom + 17, MainScreenWidth - 30, 7)];
+    _learnProgress.backgroundColor = RGBHex(0xF7F7F7);
+    _learnProgress.progressTintColor = RGBHex(0x67C23A);
+    _learnProgress.trackTintColor = RGBHex(0xF7F7F7);
+    _learnProgress.layer.masksToBounds = YES;
+    _learnProgress.layer.cornerRadius = 4;
+    _learnProgress.progressViewStyle = GGProgressViewStyleAllFillet;
+    _learnProgress.hidden = SWNOTEmptyStr(UserID) ? NO : YES;
+    [_mainDetailView addSubview:_learnProgress];
+    
+    _learnRateLabel = [[UILabel alloc] initWithFrame:CGRectMake(_learnProgress.left, _learnProgress.bottom + 4, 150, 20)];
+    _learnRateLabel.font = SYSTEMFONT(13);
+    _learnRateLabel.textColor = RGBHex(0x909399);
+    _learnRateLabel.text = @"学习进度0%";
+    _learnRateLabel.hidden = SWNOTEmptyStr(UserID) ? NO : YES;
+    [_mainDetailView addSubview:_learnRateLabel];
+    
+    _learnCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(_learnProgress.right - 150, _learnProgress.bottom + 4, 150, 20)];
+    _learnCountLabel.font = SYSTEMFONT(13);
+    _learnCountLabel.textColor = RGBHex(0x909399);
+    _learnCountLabel.text = @"已完成(2/10)";
+    _learnCountLabel.textAlignment = NSTextAlignmentRight;
+    _learnCountLabel.hidden = SWNOTEmptyStr(UserID) ? NO : YES;
+    [_mainDetailView addSubview:_learnCountLabel];
+    
+    [_mainDetailView setHeight:SWNOTEmptyStr(UserID) ? (_learnCountLabel.bottom + 15) : 50];
     
     [_headerView setHeight:_mainDetailView.bottom];
 }
@@ -2229,7 +2260,25 @@
         
         [wekself.classTitle sizeToFit];
         [wekself.classTitle setHeight:_classTitle.height];
-        [_mainDetailView setHeight:_classTitle.bottom + 10];
+        if (SWNOTEmptyStr(UserID)) {
+            [wekself.learnProgress setTop:wekself.classTitle.bottom + 17];
+            [wekself.learnRateLabel setTop:wekself.learnProgress.bottom + 4];
+            [wekself.learnCountLabel setTop:wekself.learnProgress.bottom + 4];
+            NSString *completion_rate = [NSString stringWithFormat:@"%@",wekself.videoDataSource[@"completion_rate"]];
+            wekself.learnProgress.progress = [completion_rate floatValue];
+            wekself.learnRateLabel.text = [NSString stringWithFormat:@"学习进度%@%%",@([completion_rate integerValue])];
+            NSString *finishNum = [NSString stringWithFormat:@"%@",wekself.videoDataSource[@"finishNum"]];
+            NSString *sectionNum = [NSString stringWithFormat:@"%@",wekself.videoDataSource[@"sectionNum"]];
+            wekself.learnCountLabel.text = [NSString stringWithFormat:@"已完成(%@/%@)",finishNum,sectionNum];
+        }
+        _learnProgress.hidden = SWNOTEmptyStr(UserID) ? NO : YES;
+        _learnRateLabel.hidden = SWNOTEmptyStr(UserID) ? NO : YES;
+        _learnCountLabel.hidden = SWNOTEmptyStr(UserID) ? NO : YES;
+        [_mainDetailView setHeight:SWNOTEmptyStr(UserID) ? (_learnCountLabel.bottom + 15) : (_classTitle.bottom + 10)];
+        
+        
+        
+//        [_mainDetailView setHeight:_classTitle.bottom + 10];
         [_teachersHeaderBackView setTop:_mainDetailView.bottom];
         [_headerView setHeight:_teachersHeaderBackView.bottom];
         

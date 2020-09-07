@@ -159,7 +159,7 @@
     
     if ([[_testDict stringValueForKey:@"progress"] integerValue] == 100) {
         if ([[_testDict stringValueForKey:@"status"] integerValue] == 0) {//正在阅卷
-            return;
+//            return;
         }
     }
     
