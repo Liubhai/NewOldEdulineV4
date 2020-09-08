@@ -34,6 +34,7 @@
         _answerTextView.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
         _answerTextView.layer.borderWidth = 1 * WideEachUnit;
         _answerTextView.textColor = [UIColor blackColor];
+        _answerTextView.returnKeyType = UIReturnKeyDone;
     }
     return _answerTextView;
 }

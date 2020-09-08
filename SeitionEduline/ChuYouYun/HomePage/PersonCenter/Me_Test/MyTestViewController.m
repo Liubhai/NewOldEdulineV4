@@ -143,15 +143,15 @@
 
     _testDict = [_dataArray objectAtIndex:indexPath.row];
     
-    if ([[_testDict stringValueForKey:@"progress"] integerValue] == 100) {
-        if ([[_testDict stringValueForKey:@"status"] integerValue] == 0) {//正在阅卷
-            return;
-        }
-    }
-    
     TestResultViewController *vc = [[TestResultViewController alloc] init];
     vc.testDict = _testDict;
     vc.examType = @"2";
+    if ([[_testDict stringValueForKey:@"progress"] integerValue] == 100) {
+        if ([[_testDict stringValueForKey:@"status"] integerValue] == 0) {//正在阅卷
+//            return;
+            vc.examType = @"3";
+        }
+    }
     [self.navigationController pushViewController:vc animated:YES];
 
     //这里写个通知 （目的是最后从出来的时候不会停留在练习记录的地方）

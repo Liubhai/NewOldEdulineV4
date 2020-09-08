@@ -37,6 +37,7 @@
     
     // 定制 解析题分值
     NSInteger essaysScore;
+    BOOL is_review;
 }
 
 //点击暂停以及返回的按钮
@@ -134,7 +135,13 @@
 @property (strong, nonatomic) UIButton *iconBtn1;
 @property (strong, nonatomic) UIButton *iconBtn2;
 @property (strong, nonatomic) UIButton *applyScoreBtn;
+@property (strong, nonatomic) UIButton *submitScoreButton;
+
+
 @property (strong ,nonatomic) NSMutableArray *examTypeScoreArray;//用户的全部答案（接口返回的全部都在这里）
+
+/** 自己评分时候组装数组  */
+@property (strong, nonatomic) NSMutableArray *userScoreBySelfArray;
 
 @end
 
@@ -143,8 +150,16 @@
 #pragma mark --- 懒加载
 
 - (void)makeUserSetScoreView:(CGFloat)yy {
+//    if (whichSubject != 5 || is_review || [_examsType integerValue] != 3) {
+//        _userSetScoreBack = [[UIView alloc] initWithFrame:CGRectMake(0, yy, MainScreenWidth, 0)];
+//        _userSetScoreBack.backgroundColor = [UIColor whiteColor];
+//        _userSetScoreBack.hidden = YES;
+//        return;
+//    }
     
-    if (whichSubject != 5) {
+    if (whichSubject == 5 && ([_examsType integerValue] == 3)) {
+        
+    } else {
         _userSetScoreBack = [[UIView alloc] initWithFrame:CGRectMake(0, yy, MainScreenWidth, 0)];
         _userSetScoreBack.backgroundColor = [UIColor whiteColor];
         _userSetScoreBack.hidden = YES;
@@ -180,6 +195,11 @@
     _fenshuL.centerY = _icon1.centerY;
     _fenshuL.centerX = _icon1.centerX;
     _fenshuL.text = @"0";
+    if (SWNOTEmptyArr(_userScoreBySelfArray)) {
+        if (subjectNumber<_userScoreBySelfArray.count) {
+            _fenshuL.text = [NSString stringWithFormat:@"%@",_userScoreBySelfArray[subjectNumber][@"score"]];
+        }
+    }
     _fenshuL.textAlignment = NSTextAlignmentCenter;
     _fenshuL.textColor = RGBHex(0x606266);
     _fenshuL.font = SYSTEMFONT(14);
@@ -189,14 +209,22 @@
     _applyScoreBtn.layer.masksToBounds = YES;
     _applyScoreBtn.layer.cornerRadius = _applyScoreBtn.height / 2.0;
     _applyScoreBtn.backgroundColor = RGBHex(0x5191FF);
-    [_applyScoreBtn setTitle:@"提交" forState:0];
+    [_applyScoreBtn setTitle:@"确定" forState:0];
     [_applyScoreBtn setTitleColor:[UIColor whiteColor] forState:0];
     _applyScoreBtn.titleLabel.font = SYSTEMFONT(16);
     [_applyScoreBtn addTarget:self action:@selector(setUserScoreButton:) forControlEvents:UIControlEventTouchUpInside];
+    _applyScoreBtn.hidden = is_review;
     [_userSetScoreBack addSubview:_applyScoreBtn];
+    
+    [self dealuserScoreBySelfArray:subjectNumber];
+    
 }
 
 - (void)setUserScoreButton:(UIButton *)sender {
+    if (is_review || ([_examsType integerValue] != 3)) {
+        // 如果是已经自己打分了或者不是观看模式就不再做这些操作了
+        return;
+    }
     if (sender == _iconBtn1) {
         if ([_fenshuL.text integerValue] == 0) {
             return;
@@ -208,8 +236,78 @@
         }
         _fenshuL.text = [NSString stringWithFormat:@"%@",@([_fenshuL.text integerValue] + 1)];
     } else if (sender == _applyScoreBtn) {
-        [self manageAnswer];
+        [self dealuserScoreBySelfArray:subjectNumber];
+    } else if (sender == _submitScoreButton) {
+        [self judgeHasZero];
     }
+}
+
+// MARK: - 先判断是不是有0分或者未打分的情况 并且弹框提醒
+- (void)judgeHasZero {
+    BOOL has = NO;
+    for (int i = 0; i<_userScoreBySelfArray.count; i++) {
+        NSString *questionId = [NSString stringWithFormat:@"%@",_userScoreBySelfArray[i][@"score"]];
+        if ([questionId isEqualToString:@"0"]) {
+            has = YES;
+            break;
+        }
+    }
+    if (has) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"存在题目没有打分或者是0分,确定提交吗？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *commentAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self submitByUserSelf];
+        }];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [alertController addAction:cancelAction];
+        [alertController addAction:commentAction];
+        alertController.modalPresentationStyle = UIModalPresentationFullScreen;
+        [self presentViewController:alertController animated:YES completion:nil];
+    } else {
+        [self submitByUserSelf];
+    }
+}
+
+// MARK: - 自主打分提交
+//paper_id，exams_users_id，question_num，question_id,score
+//试卷ID，考试记录ID，题目序号，试题ID，分数
+- (void)submitByUserSelf {
+    
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    [param setObject:[_dataSource stringValueForKey:@"exams_paper_id"] forKey:@"paper_id"];
+    [param setObject:[_dataSource[@"exams_user_info"] stringValueForKey:@"exams_users_id"] forKey:@"exams_users_id"];
+    [param setObject:_userScoreBySelfArray forKey:@"examiner_data"];
+    
+    NSString *endUrlStr = @"exams.markingPapers";
+    NSString *allUrlStr = [YunKeTang_Api_Tool YunKeTang_GetFullUrl:endUrlStr];
+    
+    NSString *oath_token_Str = nil;
+    if (UserOathToken) {
+        oath_token_Str = [NSString stringWithFormat:@"%@:%@",UserOathToken,UserOathTokenSecret];
+    }
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:allUrlStr]];
+    [request setHTTPMethod:NetWay];
+    NSString *encryptStr = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetEncryptStr:param];
+    [request setValue:encryptStr forHTTPHeaderField:HeaderKey];
+    [request setValue:oath_token_Str forHTTPHeaderField:OAUTH_TOKEN];
+    [TKProgressHUD showMessag:@"保存答案中..." toView:self.view];
+    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        [TKProgressHUD hideAllHUDsForView:self.view animated:YES];
+        NSDictionary *dict = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr_Before:responseObject];
+        if ([[dict stringValueForKey:@"code"] integerValue] == 1) {
+            [TKProgressHUD showError:[dict stringValueForKey:@"msg"] toView:self.view];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self GoOut];
+            });
+        } else {
+            [TKProgressHUD showError:[dict stringValueForKey:@"msg"] toView:self.view];
+        }
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+         [TKProgressHUD hideAllHUDsForView:self.view animated:YES];
+    }];
+    [op start];
 }
 
 //头部视图
@@ -356,6 +454,7 @@
 -(UITextView *)answerTextView {
     if (!_answerTextView) {
         _answerTextView = [[UITextView alloc] initWithFrame:CGRectMake(20 * WideEachUnit, 20 * WideEachUnit, MainScreenWidth - 40 * WideEachUnit, 190 * WideEachUnit)];
+        _answerTextView.returnKeyType = UIReturnKeyDone;
     }
     return _answerTextView;
 }
@@ -406,6 +505,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _examTypeScoreArray = [NSMutableArray new];
+    _userScoreBySelfArray = [NSMutableArray new];
+    
     essaysScore = 0;
     [self interFace];
     [self initialization];//初始化
@@ -472,6 +573,7 @@
     _judgeArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"3"];
     _gapArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"4"];
     _subjectivityArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"5"];
+    
     [_examTypeScoreArray removeAllObjects];
     [_examTypeScoreArray addObjectsFromArray:[[_dataSource objectForKey:@"paper_options"] objectForKey:@"options_type"]];
     for (int i = 0; i<_examTypeScoreArray.count; i++) {
@@ -480,6 +582,43 @@
             essaysScore = [[NSString stringWithFormat:@"%@",_examTypeScoreArray[i][@"score"]] integerValue];
             break;
         }
+    }
+    
+    // 初始化原始打分数据
+    [_userScoreBySelfArray removeAllObjects];
+    if (SWNOTEmptyArr(_subjectivityArray)) {
+        for (int i = 0; i<_subjectivityArray.count; i++) {
+            NSMutableDictionary *temp = [NSMutableDictionary new];
+            [temp setObject:[[_subjectivityArray objectAtIndex:i] stringValueForKey:@"exams_question_id"] forKey:@"question_id"];
+            [temp setObject:@"0" forKey:@"score"];
+            [_userScoreBySelfArray addObject:temp];
+        }
+    }
+    
+    // 根据接口数据修改原始打分数据
+    NSMutableArray *examiner_data_array = [NSMutableArray new];
+    [examiner_data_array addObjectsFromArray:_dataSource[@"exams_user_info"][@"examiner_data"]];
+    if ([_examsType integerValue] == 3) {
+        if (SWNOTEmptyArr(examiner_data_array)) {
+            [_userScoreBySelfArray removeAllObjects];
+            [_userScoreBySelfArray addObjectsFromArray:examiner_data_array];
+        }
+    }
+//    for (int i = 0; i<examiner_data_array.count; i++) {
+//        NSString *question_id = [NSString stringWithFormat:@"%@",examiner_data_array[i][@"question_id"]];
+//        for (int k = 0; k<_userScoreBySelfArray.count; k++) {
+//            NSString *question_id_temp = [NSString stringWithFormat:@"%@",examiner_data_array[i][@"question_id"]];
+//            NSMutableDictionary *temp = [NSMutableDictionary dictionaryWithDictionary:_userScoreBySelfArray[k]];
+//            if ([question_id isEqualToString:question_id_temp]) {
+//                [temp setObject:[NSString stringWithFormat:@"%@",examiner_data_array[i][@"score"]] forKey:@"score"];
+//                [_userScoreBySelfArray replaceObjectAtIndex:k withObject:temp];
+//            }
+//        }
+//    }
+    
+    if (SWNOTEmptyDictionary(_dataSource)) {
+        NSString *isreview = [NSString stringWithFormat:@"%@",_dataSource[@"is_review"]];
+        is_review = [isreview boolValue];
     }
     
     //将每个将要装答案的数据先用其他的数据先代替
@@ -682,6 +821,14 @@
     } else {
         stopAndBeginButton.hidden = NO;
     }
+    
+    _submitScoreButton = [[UIButton alloc] initWithFrame:stopAndBeginButton.frame];
+    [_submitScoreButton setTitle:@"提交" forState:0];
+    [_submitScoreButton setTitleColor:[UIColor whiteColor] forState:0];
+    _submitScoreButton.titleLabel.font = SYSTEMFONT(16);
+    [SYGView addSubview:_submitScoreButton];
+    [_submitScoreButton addTarget:self action:@selector(setUserScoreButton:) forControlEvents:UIControlEventTouchUpInside];
+    _submitScoreButton.hidden = (SWNOTEmptyArr(_userScoreBySelfArray) && !is_review && ([_examsType integerValue] == 3)) ? NO : YES;
     
     UIButton *commitButton = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth - 50, 22+MACRO_UI_STATUSBAR_ADD_HEIGHT, 40, 40)];
     [commitButton setImage:[UIImage imageNamed:@"sheet@3x"] forState:UIControlStateNormal];
@@ -1607,15 +1754,18 @@
 //上一题
 - (void)advButtonButtonCilck:(UIButton *)button {
     //处理答案的一些操作
-    
-    
+    if (whichSubject == 5 && !is_review && ([_examsType integerValue] == 3)) {
+        [self dealuserScoreBySelfArray:subjectNumber];
+    }
     [self uplastDoThing];
     
 }
 //下一题
 - (void)nextButtonButtonCilck:(UIButton *)button {
     //处理答案一些操作
-    
+    if (whichSubject == 5 && !is_review && ([_examsType integerValue] == 3)) {
+        [self dealuserScoreBySelfArray:subjectNumber];
+    }
     [self nextLastDoThing];
 }
 
@@ -1967,7 +2117,6 @@
     } else if (whichSubject == 5) {//当前主观
         if (subjectNumber < _subjectivityArray.count) {//说明还当前的题型中
             [self Next_subjectivityConfig];
-            
         } else if (subjectNumber == _subjectivityArray.count) {//这个应该才是最后一个
             subjectAllNumber --;
             subjectNumber --;
@@ -1986,6 +2135,33 @@
         unwindButtonSele = NO;
     }
     [_chooseTableView reloadData];
+}
+
+// MARK: - 处理自主打分逻辑
+- (void)dealuserScoreBySelfArray:(NSInteger)currentIndex {
+    if (is_review) {
+        // 如果是已经自己打分了就不再做这些操作了
+        return;
+    }
+    NSString *ID = [[_subjectivityArray objectAtIndex:currentIndex] stringValueForKey:@"exams_question_id"];
+    NSMutableDictionary *temp = [NSMutableDictionary new];
+    [temp setObject:ID forKey:@"question_id"];
+    [temp setObject:_fenshuL.text forKey:@"score"];
+    BOOL has = NO;
+    NSInteger k = 0;
+    for (int i = 0; i<_userScoreBySelfArray.count; i++) {
+        NSString *questionId = [NSString stringWithFormat:@"%@",_userScoreBySelfArray[i][@"question_id"]];
+        if ([ID isEqualToString:questionId]) {
+            has = YES;
+            k = i;
+            break;
+        }
+    }
+    if (has) {
+        [_userScoreBySelfArray replaceObjectAtIndex:k withObject:temp];
+    } else {
+        [_userScoreBySelfArray addObject:temp];
+    }
 }
 
 #pragma mark --- 上一题的处理（由于东西太多，所以才剃出来的）
