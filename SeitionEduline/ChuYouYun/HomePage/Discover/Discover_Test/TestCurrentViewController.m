@@ -236,6 +236,7 @@
         }
         _fenshuL.text = [NSString stringWithFormat:@"%@",@([_fenshuL.text integerValue] + 1)];
     } else if (sender == _applyScoreBtn) {
+        [TKProgressHUD showError:@"已保存" toView:self.view];
         [self dealuserScoreBySelfArray:subjectNumber];
     } else if (sender == _submitScoreButton) {
         [self judgeHasZero];
@@ -1842,6 +1843,15 @@
     NSString *textStr = self.answerTextView.text;
     [_subjectivityUserArray replaceObjectAtIndex:subjectNumber withObject:textStr];
 }
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ([text isEqualToString:@"\n"]) {
+        [self.answerTextView resignFirstResponder];
+        return NO;
+    }
+    return YES;
+}
+
 
 //从答题卡传过来的具体哪题
 - (void)TestAnswerSheetGiveButtonTag:(NSNotification *)not {

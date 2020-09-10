@@ -149,6 +149,13 @@
     againButton.layer.borderColor = [UIColor whiteColor].CGColor;
     againButton.layer.borderWidth = 1 * WideEachUnit;
     [againButton addTarget:self action:@selector(againButtonCilck) forControlEvents:UIControlEventTouchUpInside];
+    
+    if ([[_testDict stringValueForKey:@"progress"] integerValue] == 100) {
+        if ([[_testDict stringValueForKey:@"status"] integerValue] == 0) {//正在阅卷
+            againButton.hidden = YES;
+        }
+    }
+    
     [_headerView addSubview:againButton];
     
     
