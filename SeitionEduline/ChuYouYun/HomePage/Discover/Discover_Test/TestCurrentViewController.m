@@ -2335,12 +2335,14 @@
 }
 //主观题的一些配置
 - (void)Next_subjectivityConfig {
-    if ([[_subjectivityUserArray objectAtIndex:subjectNumber] integerValue] == 100) {//说明是没有答案的
-        self.answerTextView.text = nil;
-    } else {//说明之前是答过题的
-        //将之前的答案填写在这里
-        NSString *textStr = [_subjectivityUserArray objectAtIndex:subjectNumber];
-        self.answerTextView.text = textStr;
+    if (SWNOTEmptyArr(_subjectivityUserArray)) {
+        if ([[_subjectivityUserArray objectAtIndex:subjectNumber] integerValue] == 100) {//说明是没有答案的
+            self.answerTextView.text = nil;
+        } else {//说明之前是答过题的
+            //将之前的答案填写在这里
+            NSString *textStr = [_subjectivityUserArray objectAtIndex:subjectNumber];
+            self.answerTextView.text = textStr;
+        }
     }
 }
 
