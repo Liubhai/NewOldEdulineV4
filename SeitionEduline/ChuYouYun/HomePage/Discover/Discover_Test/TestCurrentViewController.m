@@ -34,6 +34,11 @@
     NSInteger timePastting;//记录流逝的时间(记录当前用过的时间)
     NSInteger allTime;//全部的时间（当有时间限制的时候才会有这个东西）
     NSString  *stayWhiceController;//这个字符串是标示 当前用户的界面是停留在当前界面还是后面的答题卡界面（因为交卷的时候需要这个标识符）
+    
+    NSInteger allQuestionCount;// 总题数
+    NSInteger currentQuestionArrayIndex;// 当前题型在 allQuestionArray 数组里面的下标
+    NSInteger currentQuestionIndex;// 当前题目在当前题型数组里面的下标
+    NSString *currentQuestionType;// 当前题型的类型 总共五种类型 单选 radio 多选 multiselect 判断 judge 完形填空 completion 论述 essays
 }
 
 //点击暂停以及返回的按钮
@@ -123,6 +128,21 @@
 
 @property (strong ,nonatomic)NSArray          *allUserAnswerArray;//用户的全部答案（接口返回的全部都在这里）
 
+
+// 尝试修改考试逻辑
+@property (strong, nonatomic) NSMutableArray *allQuestionArray;// 二维数组 装的是问题题型数组
+@property (strong, nonatomic) NSMutableArray *options_type_array;// 题目类型数组
+//{
+//    "exams_question_id" = 725;
+//    "is_right" = 0;
+//    "user_answer" =                 (
+//                            {
+//            "answer_key" = 0;
+//            "answer_value" = "12312321312\Uff0c13213213,13123";
+//        }
+//    );
+//}
+@property (strong, nonatomic) NSMutableArray *user_answer_array;// 题目用户答题的答案(尽量和接口数据保持一样的数据结构)<暂时用mangerAnswerDict来管理>
 
 @end
 
@@ -274,6 +294,7 @@
 -(UITextView *)answerTextView {
     if (!_answerTextView) {
         _answerTextView = [[UITextView alloc] initWithFrame:CGRectMake(20 * WideEachUnit, 20 * WideEachUnit, MainScreenWidth - 40 * WideEachUnit, 190 * WideEachUnit)];
+        _answerTextView.returnKeyType = UIReturnKeyDone;
     }
     return _answerTextView;
 }
@@ -375,6 +396,16 @@
     _gapIDArray = [NSMutableArray array];
     _subjectivityIDArray = [NSMutableArray array];
     
+    // 初始化数据
+    _allQuestionArray = [NSMutableArray new];
+    _options_type_array = [NSMutableArray new];
+    _user_answer_array = [NSMutableArray new];
+    allQuestionCount = 0;
+    subjectNumber = 0;
+    subjectAllNumber = 0;
+    currentQuestionIndex = 0;
+    currentQuestionArrayIndex = 0;
+    currentQuestionType = @"";
     
     //将数据分类
     NSLog(@"---%@",_dataSource);
@@ -383,109 +414,155 @@
         [self backPressed];
         return;
     }
-    _multipleArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"1"];
-    _moreMultipleArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"2"];
-    _judgeArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"3"];
-    _gapArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"4"];
-    _subjectivityArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"5"];
     
-    //将每个将要装答案的数据先用其他的数据先代替
-    for (int i = 0; i < _multipleArray.count ; i ++) {
-        [_multipleUserArray addObject:@"100"];
-        //添加收藏的数组
-        NSString *isCollect = [NSString stringWithFormat:@"%@",[[_multipleArray objectAtIndex:i] stringValueForKey:@"is_collect"]];
-        [self.collectArray addObject:isCollect];
-        
-        //得到单选题的ID
-        NSString *ID = [[_multipleArray objectAtIndex:i] stringValueForKey:@"exams_question_id"];
-        [_multipleIDArray addObject:ID];
-        
-    }
-    for (int i = 0; i < _moreMultipleArray.count ; i ++) {//多选题
-        NSMutableArray *multipleOneArray = [NSMutableArray array];
-        NSArray *sectionArray = [[_moreMultipleArray objectAtIndex:i] arrayValueForKey:@"answer_options"];
-        for (int k = 0 ; k < sectionArray.count; k ++) {
-            [multipleOneArray addObject:@"100"];
-        }
-        [_moreMultipleUserArray addObject:multipleOneArray];
-        NSLog(@"%@",_moreMultipleUserArray);
-        
-        //添加收藏的数组
-        NSString *isCollect = [NSString stringWithFormat:@"%@",[[_moreMultipleArray objectAtIndex:i] stringValueForKey:@"is_collect"]];
-        [self.collectArray addObject:isCollect];
-        
-        
-        //得到多选题的ID
-        NSString *ID = [[_moreMultipleArray objectAtIndex:i] stringValueForKey:@"exams_question_id"];
-        [_moreMultipleIDArray addObject:ID];
-        
-        //判断是否第一题为多选题
-        if (_multipleArray.count == 0) {//那就是第一题为多选题
-            for (int i = 0 ; i < 10; i ++) {
-                [_moreMultipleSeleArray addObject:@"0"];
+    allQuestionCount = [[NSString stringWithFormat:@"%@",_dataSource[@"questions_count"]] integerValue];
+    
+    // 首先把 options_type 字段里面的题目板块儿类型 取出来确定
+    [_options_type_array addObjectsFromArray:_dataSource[@"paper_options"][@"options_type"]];
+    // 通过 options_type_array 题目类型数组的排序 将 options_questions_data 里面的题目 取出来放进 二维数组 allQuestionArray 里面
+    // _options_type_array 按照 单选  多选  判断 填空  论述 这样的顺序排个序
+    
+    NSMutableArray *options_type_array_temp = [NSMutableArray arrayWithArray:_options_type_array];
+    [_options_type_array removeAllObjects];
+    // 遍历5次 确保把5种类型的题目顺序处理正确
+    for (int i = 0; i<5; i++) {
+        for (NSDictionary *dict in options_type_array_temp) {
+            NSString *compare_type = @"radio";
+            if (i == 0) {
+                compare_type = @"radio";
+            } else if (i == 1) {
+                compare_type = @"multiselect";
+            } else if (i == 2) {
+                compare_type = @"judge";
+            } else if (i == 3) {
+                compare_type = @"completion";
+            } else if (i == 4) {
+                compare_type = @"essays";
+            }
+            if ([[dict stringValueForKey:@"question_type_key"] isEqualToString:compare_type]) {
+                [_options_type_array addObject:dict];
             }
         }
-        
     }
-    for (int i = 0; i < _judgeArray.count ; i ++) {
-        [_judgeUserArray addObject:@"100"];
-        //添加收藏的数组
-        NSString *isCollect = [NSString stringWithFormat:@"%@",[[_judgeArray objectAtIndex:i] stringValueForKey:@"is_collect"]];
-        [self.collectArray addObject:isCollect];
-        
-        //得到判断选题的ID
-        NSString *ID = [[_judgeArray objectAtIndex:i] stringValueForKey:@"exams_question_id"];
-        [_judgeIDArray addObject:ID];
-    }
-    for (int i = 0; i < _gapArray.count ; i ++) {//填空题和多选题比较特殊
-        NSMutableArray *gapOneArray = [NSMutableArray array];
-        NSArray *sectionArray = [[_gapArray objectAtIndex:i] arrayValueForKey:@"answer_true_option"];
-        for (int k = 0 ; k < sectionArray.count; k ++) {
-            [gapOneArray addObject:@"100"];
-        }
-        [_gapUserArray addObject:gapOneArray];
-        
-        //添加收藏的数组
-        NSString *isCollect = [NSString stringWithFormat:@"%@",[[_gapArray objectAtIndex:i] stringValueForKey:@"is_collect"]];
-        [self.collectArray addObject:isCollect];
-        
-        //得到题空选题的ID
-        NSString *ID = [[_gapArray objectAtIndex:i] stringValueForKey:@"exams_question_id"];
-        [_gapIDArray addObject:ID];
-    }
-    for (int i = 0; i < _subjectivityArray.count ; i ++) {
-        [_subjectivityUserArray addObject:@"100"];
-        
-        //添加收藏的数组
-        NSString *isCollect = [NSString stringWithFormat:@"%@",[[_subjectivityArray objectAtIndex:i] stringValueForKey:@"is_collect"]];
-        [self.collectArray addObject:isCollect];
-        
-        //得到主观选题的ID
-        NSString *ID = [[_subjectivityArray objectAtIndex:i] stringValueForKey:@"exams_question_id"];
-        [_subjectivityIDArray addObject:ID];
-    }
-    NSLog(@"%@",_moreMultipleUserArray);
     
-    NSLog(@"----%@",_multipleArray);
-    if (_multipleArray.count > 0) {//说明最先是单选题
-        _currentArray = _multipleArray;
-        whichSubject = 1;//设置当前题型为单选
-    } else if (_moreMultipleArray.count > 0) {//多选题
-        _currentArray = _moreMultipleArray;
-        whichSubject = 2;
-    } else if (_judgeArray.count > 0) {//判断题
-        _currentArray = _judgeArray;
-        whichSubject = 3;
-    } else if (_gapArray.count > 0) {//填空题
-        _currentArray = _gapArray;
-        whichSubject = 4;
-    } else if (_subjectivityArray.count > 0) {//主观题
-        _currentArray = _subjectivityArray;
-        whichSubject = 5;
-    } else {//没有数据的时候
-        _currentArray = nil;
-        return;
+    NSMutableArray *indexTemp = [NSMutableArray new];// 记录有类型但是没有该类型的题目的下标
+    for (int i = 0; i<_options_type_array.count; i++) {
+        if ([_dataSource[@"paper_options"][@"options_questions_data"] objectForKey:[NSString stringWithFormat:@"%@",_options_type_array[i][@"question_type"]]]) {
+            [_allQuestionArray addObject:[_dataSource[@"paper_options"][@"options_questions_data"] objectForKey:[NSString stringWithFormat:@"%@",_options_type_array[i][@"question_type"]]]];
+        } else {
+            [indexTemp addObject:@(i)];
+        }
     }
+    for (int i = 0; i<indexTemp.count; i++) {
+        [_options_type_array removeObjectAtIndex:[indexTemp[i] integerValue]];
+    }
+    [_currentArray removeAllObjects];
+    [_currentArray addObjectsFromArray:_allQuestionArray[currentQuestionArrayIndex]];
+    currentQuestionType = [NSString stringWithFormat:@"%@",_options_type_array[currentQuestionArrayIndex][@"question_type_key"]];
+    
+//    _multipleArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"1"];
+//    _moreMultipleArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"2"];
+//    _judgeArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"3"];
+//    _gapArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"4"];
+//    _subjectivityArray = (NSMutableArray *)[[[_dataSource dictionaryValueForKey:@"paper_options"] dictionaryValueForKey:@"options_questions_data"] arrayValueForKey:@"5"];
+//
+//    //将每个将要装答案的数据先用其他的数据先代替
+//    for (int i = 0; i < _multipleArray.count ; i ++) {
+//        [_multipleUserArray addObject:@"100"];
+//        //添加收藏的数组
+//        NSString *isCollect = [NSString stringWithFormat:@"%@",[[_multipleArray objectAtIndex:i] stringValueForKey:@"is_collect"]];
+//        [self.collectArray addObject:isCollect];
+//
+//        //得到单选题的ID
+//        NSString *ID = [[_multipleArray objectAtIndex:i] stringValueForKey:@"exams_question_id"];
+//        [_multipleIDArray addObject:ID];
+//
+//    }
+//    for (int i = 0; i < _moreMultipleArray.count ; i ++) {//多选题
+//        NSMutableArray *multipleOneArray = [NSMutableArray array];
+//        NSArray *sectionArray = [[_moreMultipleArray objectAtIndex:i] arrayValueForKey:@"answer_options"];
+//        for (int k = 0 ; k < sectionArray.count; k ++) {
+//            [multipleOneArray addObject:@"100"];
+//        }
+//        [_moreMultipleUserArray addObject:multipleOneArray];
+//        NSLog(@"%@",_moreMultipleUserArray);
+//
+//        //添加收藏的数组
+//        NSString *isCollect = [NSString stringWithFormat:@"%@",[[_moreMultipleArray objectAtIndex:i] stringValueForKey:@"is_collect"]];
+//        [self.collectArray addObject:isCollect];
+//
+//
+//        //得到多选题的ID
+//        NSString *ID = [[_moreMultipleArray objectAtIndex:i] stringValueForKey:@"exams_question_id"];
+//        [_moreMultipleIDArray addObject:ID];
+//
+//        //判断是否第一题为多选题
+//        if (_multipleArray.count == 0) {//那就是第一题为多选题
+//            for (int i = 0 ; i < 10; i ++) {
+//                [_moreMultipleSeleArray addObject:@"0"];
+//            }
+//        }
+//
+//    }
+//    for (int i = 0; i < _judgeArray.count ; i ++) {
+//        [_judgeUserArray addObject:@"100"];
+//        //添加收藏的数组
+//        NSString *isCollect = [NSString stringWithFormat:@"%@",[[_judgeArray objectAtIndex:i] stringValueForKey:@"is_collect"]];
+//        [self.collectArray addObject:isCollect];
+//
+//        //得到判断选题的ID
+//        NSString *ID = [[_judgeArray objectAtIndex:i] stringValueForKey:@"exams_question_id"];
+//        [_judgeIDArray addObject:ID];
+//    }
+//    for (int i = 0; i < _gapArray.count ; i ++) {//填空题和多选题比较特殊
+//        NSMutableArray *gapOneArray = [NSMutableArray array];
+//        NSArray *sectionArray = [[_gapArray objectAtIndex:i] arrayValueForKey:@"answer_true_option"];
+//        for (int k = 0 ; k < sectionArray.count; k ++) {
+//            [gapOneArray addObject:@"100"];
+//        }
+//        [_gapUserArray addObject:gapOneArray];
+//
+//        //添加收藏的数组
+//        NSString *isCollect = [NSString stringWithFormat:@"%@",[[_gapArray objectAtIndex:i] stringValueForKey:@"is_collect"]];
+//        [self.collectArray addObject:isCollect];
+//
+//        //得到题空选题的ID
+//        NSString *ID = [[_gapArray objectAtIndex:i] stringValueForKey:@"exams_question_id"];
+//        [_gapIDArray addObject:ID];
+//    }
+//    for (int i = 0; i < _subjectivityArray.count ; i ++) {
+//        [_subjectivityUserArray addObject:@"100"];
+//
+//        //添加收藏的数组
+//        NSString *isCollect = [NSString stringWithFormat:@"%@",[[_subjectivityArray objectAtIndex:i] stringValueForKey:@"is_collect"]];
+//        [self.collectArray addObject:isCollect];
+//
+//        //得到主观选题的ID
+//        NSString *ID = [[_subjectivityArray objectAtIndex:i] stringValueForKey:@"exams_question_id"];
+//        [_subjectivityIDArray addObject:ID];
+//    }
+//    NSLog(@"%@",_moreMultipleUserArray);
+//
+//    NSLog(@"----%@",_multipleArray);
+//    if (_multipleArray.count > 0) {//说明最先是单选题
+//        _currentArray = _multipleArray;
+//        whichSubject = 1;//设置当前题型为单选
+//    } else if (_moreMultipleArray.count > 0) {//多选题
+//        _currentArray = _moreMultipleArray;
+//        whichSubject = 2;
+//    } else if (_judgeArray.count > 0) {//判断题
+//        _currentArray = _judgeArray;
+//        whichSubject = 3;
+//    } else if (_gapArray.count > 0) {//填空题
+//        _currentArray = _gapArray;
+//        whichSubject = 4;
+//    } else if (_subjectivityArray.count > 0) {//主观题
+//        _currentArray = _subjectivityArray;
+//        whichSubject = 5;
+//    } else {//没有数据的时候
+//        _currentArray = nil;
+//        return;
+//    }
     if (_currentArray.count == 0) {
         [self backPressed];
         return;
@@ -514,13 +591,13 @@
             
             //这里就要处理之前的答案和之前答题的时间了
             _userOlderAnswerArray = [_dataSource arrayValueForKey:@"user_answer_temp"];//这个是装之前答过的答案
-            [self managerBeforeAnswer];
+//            [self managerBeforeAnswer];
         }
     }
     
     if ([_examsType integerValue] == 3) {//查看模式会得到答案
         [self getUserAnswer];
-        [self check_userAnswer];//得到之前用户上传自己做的答案
+//        [self check_userAnswer];//得到之前用户上传自己做的答案
     }
     
 }
@@ -670,6 +747,10 @@
 - (void)forcedCommitPaper {
     TestAnswerSheetViewController *vc = [[TestAnswerSheetViewController alloc] init];
     vc.dataSource = _dataSource;
+    vc.allQuestionArray = [NSMutableArray arrayWithArray:_allQuestionArray];
+    vc.options_type_array = [NSMutableArray arrayWithArray:_options_type_array];
+    vc.allUserAnswerArray = [NSArray arrayWithArray:_allUserAnswerArray];
+    vc.mangerAnswerDict = [NSMutableDictionary dictionaryWithDictionary:_mangerAnswerDict];
     vc.multipleUserArray = _multipleUserArray;
     vc.moreMultipleUserArray = _moreMultipleUserArray;
     vc.judgeUserArray = _judgeUserArray;
@@ -717,6 +798,18 @@
     return nil;
 }
 
+// MARK: - 处理整个试卷的题目下标
+- (void)dealSubjectAllNumber {
+    subjectAllNumber = 0;
+    if (currentQuestionArrayIndex < _allQuestionArray.count) {
+        for (int i = 0; i<currentQuestionArrayIndex; i++) {
+            subjectAllNumber = subjectAllNumber + [_allQuestionArray[i] count];
+        }
+        // 再加上当前题目的下标
+        subjectAllNumber = subjectAllNumber + subjectNumber;
+    }
+}
+
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 60 * WideEachUnit)];
     if (webViewHight > 0) {
@@ -728,21 +821,22 @@
     UILabel *currentNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 10 * WideEachUnit, 50 * WideEachUnit, 13 * WideEachUnit)];
     currentNumberLabel.text = @"8/89";
     currentNumberLabel.font = Font(14 * WideEachUnit);
-    if ([_errorsFag isEqualToString:@"error"]) {//说明现在的模式是查看模式下面的错题解析模式
-        NSInteger errorAllNumber = _multipleArray.count + _moreMultipleArray.count + _judgeArray.count + _gapArray.count + _subjectivityArray.count;
-         currentNumberLabel.text = [NSString stringWithFormat:@"%ld/%ld",subjectAllNumber + 1,errorAllNumber];
-    } else if ([_errorsFag isEqualToString:@"wrongExams"]){//错题重做的
-        NSInteger errorAllNumber = _multipleArray.count + _moreMultipleArray.count + _judgeArray.count + _gapArray.count + _subjectivityArray.count;
-        currentNumberLabel.text = [NSString stringWithFormat:@"%ld/%ld",subjectAllNumber + 1,errorAllNumber];
-    } else if ([_examsType integerValue] == 3) {//全部解析
-        NSInteger errorAllNumber = _multipleArray.count + _moreMultipleArray.count + _judgeArray.count + _gapArray.count + _subjectivityArray.count;
-        currentNumberLabel.text = [NSString stringWithFormat:@"%ld/%ld",subjectAllNumber + 1,errorAllNumber];
-    } else {
-//        currentNumberLabel.text = [NSString stringWithFormat:@"%ld/%@",subjectAllNumber + 1,[_dataSource stringValueForKey:@"questions_count"]];
-        
-        NSInteger errorAllNumber = _multipleArray.count + _moreMultipleArray.count + _judgeArray.count + _gapArray.count + _subjectivityArray.count;
-        currentNumberLabel.text = [NSString stringWithFormat:@"%ld/%ld",subjectAllNumber + 1,errorAllNumber];
-    }
+    currentNumberLabel.text = [NSString stringWithFormat:@"%ld/%ld",subjectAllNumber + 1,allQuestionCount];
+//    // 获取总体数
+//    if ([_errorsFag isEqualToString:@"error"]) {//说明现在的模式是查看模式下面的错题解析模式
+//         currentNumberLabel.text = [NSString stringWithFormat:@"%ld/%ld",subjectAllNumber + 1,allQuestionCount];
+//    } else if ([_errorsFag isEqualToString:@"wrongExams"]){//错题重做的
+//        NSInteger errorAllNumber = _multipleArray.count + _moreMultipleArray.count + _judgeArray.count + _gapArray.count + _subjectivityArray.count;
+//        currentNumberLabel.text = [NSString stringWithFormat:@"%ld/%ld",subjectAllNumber + 1,errorAllNumber];
+//    } else if ([_examsType integerValue] == 3) {//全部解析
+//        NSInteger errorAllNumber = _multipleArray.count + _moreMultipleArray.count + _judgeArray.count + _gapArray.count + _subjectivityArray.count;
+//        currentNumberLabel.text = [NSString stringWithFormat:@"%ld/%ld",subjectAllNumber + 1,errorAllNumber];
+//    } else {
+////        currentNumberLabel.text = [NSString stringWithFormat:@"%ld/%@",subjectAllNumber + 1,[_dataSource stringValueForKey:@"questions_count"]];
+//
+//        NSInteger errorAllNumber = _multipleArray.count + _moreMultipleArray.count + _judgeArray.count + _gapArray.count + _subjectivityArray.count;
+//        currentNumberLabel.text = [NSString stringWithFormat:@"%ld/%ld",subjectAllNumber + 1,errorAllNumber];
+//    }
     [headerView addSubview:currentNumberLabel];
     
     currentNumberLabel.numberOfLines = 1;
@@ -754,17 +848,28 @@
     
     //添加类型
     UILabel *topicType = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(currentNumberLabel.frame) + 10 * WideEachUnit, 10 * WideEachUnit, 40 * WideEachUnit, 13 * WideEachUnit)];
-    if (whichSubject == 1) {
+    if ([currentQuestionType isEqualToString:@"radio"]) {
         topicType.text = @"单选题";
-    } else if (whichSubject == 2) {
+    } else if ([currentQuestionType isEqualToString:@"multiselect"]) {
         topicType.text = @"多选题";
-    } else if (whichSubject == 3) {
+    } else if ([currentQuestionType isEqualToString:@"judge"]) {
         topicType.text = @"判断题";
-    } else if (whichSubject == 4) {
+    } else if ([currentQuestionType isEqualToString:@"completion"]) {
         topicType.text = @"填空题";
-    } else if (whichSubject == 5) {
+    } else if ([currentQuestionType isEqualToString:@"essays"]) {
         topicType.text = @"主观题";
     }
+//    if (whichSubject == 1) {
+//        topicType.text = @"单选题";
+//    } else if (whichSubject == 2) {
+//        topicType.text = @"多选题";
+//    } else if (whichSubject == 3) {
+//        topicType.text = @"判断题";
+//    } else if (whichSubject == 4) {
+//        topicType.text = @"填空题";
+//    } else if (whichSubject == 5) {
+//        topicType.text = @"主观题";
+//    }
     topicType.textAlignment = NSTextAlignmentCenter;
     topicType.font = Font(10 * WideEachUnit);
     topicType.backgroundColor = [UIColor colorWithHexString:@"#111"];
@@ -829,7 +934,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     if ([_examsType integerValue] == 1) {//练习模式
         if (unwindButtonSele) {//选中（为展开）
-            if (whichSubject == 4) {//填空
+            if ([currentQuestionType isEqualToString:@"completion"]) {//填空
                 return 220 * WideEachUnit + gapTrueHeight + analysisHeight;
             } else {//非填空的时候
                 return 240 * WideEachUnit + analysisHeight;
@@ -840,7 +945,7 @@
     } else if ([_examsType integerValue] == 2) {//考试模式
         return 120 * WideEachUnit;
     } else if ([_examsType integerValue] == 3) {//查看模式
-        if (whichSubject == 4) {//填空题的时候
+        if ([currentQuestionType isEqualToString:@"completion"]) {//填空题的时候
              return 190 * WideEachUnit + gapTrueHeight + analysisHeight;
         } else {//非填空题的时候
              return 210 * WideEachUnit + analysisHeight;
@@ -881,12 +986,11 @@
             self.nextButton.frame = CGRectMake(195 * WideEachUnit, 20 * WideEachUnit, 165 * WideEachUnit, 44 * WideEachUnit);
         }
     } else if ([_errorsFag isEqualToString:@"error"] || [_errorsFag isEqualToString:@"wrongExams"]) {//错题解析或者是错题重做的时候
-        NSInteger errorAllNumber = _multipleArray.count + _moreMultipleArray.count + _judgeArray.count + _gapArray.count + _subjectivityArray.count;
         
         if (subjectAllNumber == 0) {//第一题的时候
             self.advButton.hidden = YES;
             self.nextButton.frame = CGRectMake(15 * WideEachUnit, 20 * WideEachUnit, MainScreenWidth - 30 * WideEachUnit, 44 * WideEachUnit);
-        } else if (subjectAllNumber + 1 == errorAllNumber ){//最后一题
+        } else if (subjectAllNumber + 1 == allQuestionCount ){//最后一题
             self.advButton.hidden = NO;
             self.nextButton.frame = CGRectMake(195 * WideEachUnit, 20 * WideEachUnit, 165 * WideEachUnit, 44 * WideEachUnit);
             [self.nextButton setTitle:@"交卷" forState:UIControlStateNormal];
@@ -929,7 +1033,8 @@
     
     //添加收藏习题的按钮
     [self.collectButton setTitle:@" 收藏习题" forState:UIControlStateNormal];
-    if ([[self.collectArray objectAtIndex:subjectAllNumber] integerValue] == 0) {
+    NSString *collection_status = [NSString stringWithFormat:@"%@",_currentArray[subjectNumber][@"is_collect"]];
+    if ([collection_status integerValue] == 0) {
         [self.collectButton setImage:Image(@"test_uncollect@3x") forState:UIControlStateNormal];
         [self.collectButton setTitle:@" 收藏习题" forState:UIControlStateNormal];
     } else {
@@ -954,9 +1059,9 @@
         self.trueAnswerLabel.font = Font(12 * WideEachUnit);
         self.trueAnswerLabel.textColor = [UIColor colorWithHexString:@"#333"];
         self.trueAnswerLabel.textAlignment = NSTextAlignmentCenter;
-        if (whichSubject == 1 || whichSubject == 2 || whichSubject == 3) {//选择题的时候
+        if ([currentQuestionType isEqualToString:@"radio"] || [currentQuestionType isEqualToString:@"multiselect"] || [currentQuestionType isEqualToString:@"judge"]) {//选择题的时候
             self.trueAnswerLabel.textAlignment = NSTextAlignmentCenter;
-        } else if (whichSubject == 4 || whichSubject == 5) {//填空和主观
+        } else if ([currentQuestionType isEqualToString:@"completion"] || [currentQuestionType isEqualToString:@"essays"]) {//填空和主观
             self.trueAnswerLabel.textAlignment = NSTextAlignmentLeft;
             self.trueAnswerLabel.text = @"  正确答案";
         }
@@ -970,17 +1075,17 @@
         NSString *answer_true_option_str = nil;
         for (int i = 0 ; i < answer_true_option_array.count ; i ++) {
             if (i == 0) {
-                if (whichSubject == 4) {
+                if ([currentQuestionType isEqualToString:@"completion"]) {
                      answer_true_option_str = [NSString stringWithFormat:@"%d、%@",i + 1,[answer_true_option_array objectAtIndex:i]];
                     self.trueAnswer.font = Font(14 * WideEachUnit);
-                } else if (whichSubject == 1 || whichSubject == 2 || whichSubject == 3 || whichSubject == 5) {
+                } else if ([currentQuestionType isEqualToString:@"radio"] || [currentQuestionType isEqualToString:@"multiselect"] || [currentQuestionType isEqualToString:@"judge"] || [currentQuestionType isEqualToString:@"essays"]) {
                      answer_true_option_str = [NSString stringWithFormat:@"%@",[answer_true_option_array objectAtIndex:i]];
                 }
             } else {
-                if (whichSubject == 4) {//填空的时候
+                if ([currentQuestionType isEqualToString:@"completion"]) {//填空的时候
                      answer_true_option_str = [NSString stringWithFormat:@"%@   %d、%@",answer_true_option_str,i + 1,[answer_true_option_array objectAtIndex:i]];
                      self.trueAnswer.font = Font(14 * WideEachUnit);
-                } else if (whichSubject == 1 || whichSubject == 2 || whichSubject == 3 || whichSubject == 5) {
+                } else if ([currentQuestionType isEqualToString:@"radio"] || [currentQuestionType isEqualToString:@"multiselect"] || [currentQuestionType isEqualToString:@"judge"] || [currentQuestionType isEqualToString:@"essays"]) {
                      answer_true_option_str = [NSString stringWithFormat:@"%@%@",answer_true_option_str,[answer_true_option_array objectAtIndex:i]];
                 }
             }
@@ -990,9 +1095,9 @@
         
         
         //在这里来清算是属于哪种类型的题（根据不同的类型显示不同）
-        if (whichSubject == 1 || whichSubject == 2 || whichSubject == 3) {//选择题的时候
+        if ([currentQuestionType isEqualToString:@"radio"] || [currentQuestionType isEqualToString:@"multiselect"] || [currentQuestionType isEqualToString:@"judge"]) {//选择题的时候
             self.trueAnswerLabel.textAlignment = NSTextAlignmentCenter;
-        } else if (whichSubject == 4) {//填空
+        } else if ([currentQuestionType isEqualToString:@"completion"]) {//填空
             self.trueAnswerLabel.textAlignment = NSTextAlignmentLeft;
             self.trueAnswerLabel.text = @"  正确答案";
             self.trueAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1008,7 +1113,7 @@
             self.correctAndMyAnswerView.frame = CGRectMake(15 * WideEachUnit, 120 * WideEachUnit, MainScreenWidth - 30 * WideEachUnit, 50 * WideEachUnit + labelSize.size.height);
             gapTrueHeight = labelSize.size.height;//记录当前的高度
             
-        } else if (whichSubject == 5) {//主观
+        } else if ([currentQuestionType isEqualToString:@"essays"]) {//主观
             self.trueAnswerLabel.textAlignment = NSTextAlignmentLeft;
             self.trueAnswerLabel.text = @"  正确答案";
             //因为主观题不会返回正确答案 所以这里为空的（默认的）
@@ -1050,7 +1155,7 @@
         
         if ([_examsType integerValue] == 3) {//查看模式的一些配置
             
-            if (whichSubject == 5) {//填空题和主观题不需要这样
+            if ([currentQuestionType isEqualToString:@"essays"]) {//填空题和主观题不需要这样
                 self.collectButton.hidden = YES;
                 [self.unwindButton setTitle:@"" forState:UIControlStateNormal];
                 [self.unwindButton setImage:Image(@"") forState:UIControlStateNormal];
@@ -1063,7 +1168,7 @@
                 //设置位置
                 self.correctAndMyAnswerView.frame = CGRectMake(15 * WideEachUnit, 80 * WideEachUnit, MainScreenWidth - 30 * WideEachUnit, 70 * WideEachUnit);
                 
-            } else if (whichSubject == 4) {//填空题
+            } else if ([currentQuestionType isEqualToString:@"completion"]) {//填空题
                 self.collectButton.hidden = YES;
                 [self.unwindButton setTitle:@"" forState:UIControlStateNormal];
                 [self.unwindButton setImage:Image(@"") forState:UIControlStateNormal];
@@ -1103,9 +1208,9 @@
                 self.userAnswer.textAlignment = NSTextAlignmentCenter;
                 
                 //这里需要用户的答案现在出来
-                if (whichSubject == 1) {//单选
+                NSString *currentID = [NSString stringWithFormat:@"%@", [[_currentArray objectAtIndex:subjectNumber] objectForKey:@"exams_question_id"]];
+                if ([currentQuestionType isEqualToString:@"radio"]) {//单选
                     BOOL isHaveCurrent = NO;
-                    NSString *currentID = [NSString stringWithFormat:@"%@", [_multipleIDArray objectAtIndex:subjectNumber]];
                     if (_allUserAnswerArray.count == 0) {
                         self.userAnswer.text = @"未作答";
                     }
@@ -1125,12 +1230,11 @@
                     
                     
                     
-                } else if (whichSubject == 2) {
+                } else if ([currentQuestionType isEqualToString:@"multiselect"]) {
                     BOOL isHaveCurrent = NO;
                     if (_allUserAnswerArray.count == 0) {
                         self.userAnswer.text = @"未作答";
                     }
-                    NSString *currentID = [NSString stringWithFormat:@"%@", [_moreMultipleIDArray objectAtIndex:subjectNumber]];
                     for (int i = 0 ; i < _allUserAnswerArray.count ; i ++) {
                         NSString *ID = [[_allUserAnswerArray objectAtIndex:i] stringValueForKey:@"exams_question_id"];
                         if ([currentID integerValue] == [ID integerValue]) {//说明是同一个试题
@@ -1153,12 +1257,11 @@
                          self.userAnswer.text = @"未作答";
                     }
                     
-                } else if (whichSubject == 3) {
+                } else if ([currentQuestionType isEqualToString:@"judge"]) {
                     BOOL isHaveCurrent = NO;
                     if (_allUserAnswerArray.count == 0) {
                         self.userAnswer.text = @"未作答";
                     }
-                    NSString *currentID = [NSString stringWithFormat:@"%@", [_judgeIDArray objectAtIndex:subjectNumber]];
                     for (int i = 0 ; i < _allUserAnswerArray.count ; i ++) {
                         NSString *ID = [[_allUserAnswerArray objectAtIndex:i] stringValueForKey:@"exams_question_id"];
                         if ([currentID integerValue] == [ID integerValue]) {//说明是同一个试题
@@ -1194,14 +1297,14 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    if (whichSubject == 1 || whichSubject == 2 || whichSubject == 3) {
+    if ([currentQuestionType isEqualToString:@"radio"] || [currentQuestionType isEqualToString:@"multiselect"] || [currentQuestionType isEqualToString:@"judge"]) {
         UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
         return cell.frame.size.height;
-    } else if (whichSubject == 4) {
+    } else if ([currentQuestionType isEqualToString:@"completion"]) {
         return 61 * WideEachUnit;
 //        NSArray *array = [[_gapArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_true_option"];
 //        return 25 + array.count * 61 * WideEachUnit;
-    } else if (whichSubject == 5){
+    } else if ([currentQuestionType isEqualToString:@"essays"]){
         return 230 * WideEachUnit;
     } else {
         return 100 * WideEachUnit;
@@ -1209,6 +1312,19 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    单选 radio 多选 multiselect 判断 judge 完形填空 completion 论述 essays
+    if ([currentQuestionType isEqualToString:@"radio"] || [currentQuestionType isEqualToString:@"multiselect"] || [currentQuestionType isEqualToString:@"judge"]) {
+        NSArray *sectionArray = [[_currentArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_options"];
+        return sectionArray.count;
+    } else if ([currentQuestionType isEqualToString:@"completion"]) {
+        NSArray *array = [[_gapArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_true_option"];
+        return array.count;
+    } else if ([currentQuestionType isEqualToString:@"essays"]) {
+        return 1;
+    } else {
+        return 0;
+    }
+    
     if (whichSubject == 1 || whichSubject == 2 || whichSubject == 3) {
         NSArray *sectionArray = [[_currentArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_options"];
         return sectionArray.count;
@@ -1230,7 +1346,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (whichSubject == 1 || whichSubject == 2 || whichSubject == 3) {
+    //    单选 radio 多选 multiselect 判断 judge 完形填空 completion 论述 essays
+    if ([currentQuestionType isEqualToString:@"radio"] || [currentQuestionType isEqualToString:@"multiselect"] || [currentQuestionType isEqualToString:@"judge"]) {
         static NSString *CellIdentifier = @"culture";
         //自定义cell类
         TestChooseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -1239,45 +1356,65 @@
         }
         
         NSArray *sectionArray = [[_currentArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_options"];
+        NSString *question_id = [[_currentArray objectAtIndex:subjectNumber] stringValueForKey:@"exams_question_id"];
         NSLog(@"---%@",sectionArray);
         NSString *title = nil;
         title = [[sectionArray objectAtIndex:indexPath.row] stringValueForKey:@"answer_value"];
         [cell dataWithTitle:title WithNumber:indexPath.row];
         
         if ([_examsType integerValue] == 1 || [_examsType integerValue] == 2) {//练习或者考试模式
-            if (whichSubject == 1) {
-                [cell cellChangeWithType:whichSubject WithArray:_multipleSeleArray WithNumber:indexPath.row];
-            } else if (whichSubject == 2) {
-                [cell cellChangeWithType:whichSubject WithArray:_moreMultipleSeleArray WithNumber:indexPath.row];
-            } else if (whichSubject == 3) {
-                [cell cellChangeWithType:whichSubject WithArray:_judgeSeleArray WithNumber:indexPath.row];
+            // 单选和判断是装的 字符串 - 多选装的是数组
+            if ([currentQuestionType isEqualToString:@"radio"] || [currentQuestionType isEqualToString:@"judge"]) {
+                if (SWNOTEmptyDictionary(self.mangerAnswerDict)) {
+                    if ([self.mangerAnswerDict objectForKey:question_id]) {
+                        if ([[self.mangerAnswerDict stringValueForKey:question_id] isEqualToString:[[sectionArray objectAtIndex:indexPath.row] stringValueForKey:@"answer_key"]]) {
+                            cell.optionButton.backgroundColor = BasidColor;
+                        } else {
+                            cell.optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+                        }
+                    } else {
+                        cell.optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+                    }
+                } else {
+                    cell.optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+                }
+            } else if ([currentQuestionType isEqualToString:@"multiselect"]) {
+                if (SWNOTEmptyDictionary(self.mangerAnswerDict)) {
+                    if ([self.mangerAnswerDict objectForKey:question_id]) {
+                        if ([[self.mangerAnswerDict objectForKey:question_id] isKindOfClass:[NSArray class]]) {
+                            if ([[self.mangerAnswerDict arrayValueForKey:question_id] containsObject:[[sectionArray objectAtIndex:indexPath.row] stringValueForKey:@"answer_key"]]) {
+                                cell.optionButton.backgroundColor = BasidColor;
+                            } else {
+                                cell.optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+                            }
+                        } else {
+                            cell.optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+                        }
+                    } else {
+                        cell.optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+                    }
+                } else {
+                    cell.optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+                }
             }
         } else if ([_examsType integerValue] == 3) {//查看模式
-            if (whichSubject == 1) {
-                NSArray *answer_true_option_array = [[_currentArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_true_option"];
-                [cell cellChangeWithType:whichSubject WithArray:answer_true_option_array WithNumber:indexPath.row WithType:_examsType];
-            } else if (whichSubject == 2) {
-                NSArray *answer_true_option_array = [[_currentArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_true_option"];
-                [cell cellChangeWithType:whichSubject WithArray:answer_true_option_array WithNumber:indexPath.row WithType:_examsType];
-            } else if (whichSubject == 3) {
-                NSArray *answer_true_option_array = [[_currentArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_true_option"];
-                [cell cellChangeWithType:whichSubject WithArray:answer_true_option_array WithNumber:indexPath.row WithType:_examsType];
-            }
+            NSArray *answer_true_option_array = [[_currentArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_true_option"];
+            [cell cellChangeWithType:currentQuestionType WithArray:answer_true_option_array WithNumber:indexPath.row WithType:_examsType];
         }
         return cell;
-    } else if (whichSubject == 4) {//填空题
+    } else if ([currentQuestionType isEqualToString:@"completion"]) {
         static NSString *CellIdentifier = @"gap";
         //自定义cell类
         TestGapTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[TestGapTableViewCell alloc] initWithReuseIdentifier:CellIdentifier];
         }
-//        NSArray *array = [[_gapArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_true_option"];
-        NSArray *array = [_gapUserArray objectAtIndex:subjectNumber];
-        [cell dataWithArray:array WithNumber:indexPath.row];
+        NSArray *array = [[_currentArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_true_option"];
+        NSString *question_id = [[_currentArray objectAtIndex:subjectNumber] stringValueForKey:@"exams_question_id"];
+        [cell dataWithArray:array WithNumber:indexPath.row question_id:question_id];
         self.answerView = cell.answerView;
         return cell;
-    } else if (whichSubject == 5) {//主观题
+    } else if ([currentQuestionType isEqualToString:@"essays"]) {
         static NSString *CellIdentifier = @"subject";
         //自定义cell类
         TestSubjectivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -1286,19 +1423,110 @@
         }
         self.answerTextView = cell.answerTextView;
         self.answerTextView.delegate = self;
-        
-        if ([_examsType integerValue] == 1 || [_examsType integerValue] == 3) {//查看模式的时候
-            NSString *textStr = [_subjectivityUserArray objectAtIndex:subjectNumber];
-            if ([textStr integerValue] == 100) {//说明是原始答案
-                self.answerTextView.text = nil;
+        NSString *question_id = [[_currentArray objectAtIndex:subjectNumber] stringValueForKey:@"exams_question_id"];
+        if ([_examsType integerValue] == 1 || [_examsType integerValue] == 2) {
+            if (SWNOTEmptyDictionary(self.mangerAnswerDict)) {
+                if ([self.mangerAnswerDict objectForKey:question_id]) {
+                    self.answerTextView.text = [self.mangerAnswerDict stringValueForKey:question_id];
+                } else {
+                    self.answerTextView.text = nil;
+                }
             } else {
-                self.answerTextView.text = textStr;
+                self.answerTextView.text = nil;
+            }
+        } else if ([_examsType integerValue] == 3) {
+            //查看模式的时候
+            BOOL has = NO;
+            NSInteger k = 0;
+            for (int i = 0; i<_allUserAnswerArray.count; i++) {
+                if ([[_allUserAnswerArray[i] stringValueForKey:@"exams_question_id"] isEqualToString:question_id]) {
+                    has = YES;
+                    k = i;
+                    break;
+                }
+            }
+            if (has) {
+                NSString *multAnswerVale = [[[[_allUserAnswerArray objectAtIndex:k] arrayValueForKey:@"user_answer"] objectAtIndex:0] stringValueForKey:@"answer_value"];
+                self.answerTextView.text = multAnswerVale;
+            } else {
+                self.answerTextView.text = nil;
             }
         }
         return cell;
+    } else {
+        return nil;
     }
-
-    return nil;
+    
+    
+//    if (whichSubject == 1 || whichSubject == 2 || whichSubject == 3) {
+//        static NSString *CellIdentifier = @"culture";
+//        //自定义cell类
+//        TestChooseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//        if (cell == nil) {
+//            cell = [[TestChooseTableViewCell alloc] initWithReuseIdentifier:CellIdentifier];
+//        }
+//
+//        NSArray *sectionArray = [[_currentArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_options"];
+//        NSLog(@"---%@",sectionArray);
+//        NSString *title = nil;
+//        title = [[sectionArray objectAtIndex:indexPath.row] stringValueForKey:@"answer_value"];
+//        [cell dataWithTitle:title WithNumber:indexPath.row];
+//
+//        if ([_examsType integerValue] == 1 || [_examsType integerValue] == 2) {//练习或者考试模式
+//            if (whichSubject == 1) {
+//                [cell cellChangeWithType:whichSubject WithArray:_multipleSeleArray WithNumber:indexPath.row];
+//            } else if (whichSubject == 2) {
+//                [cell cellChangeWithType:whichSubject WithArray:_moreMultipleSeleArray WithNumber:indexPath.row];
+//            } else if (whichSubject == 3) {
+//                [cell cellChangeWithType:whichSubject WithArray:_judgeSeleArray WithNumber:indexPath.row];
+//            }
+//        } else if ([_examsType integerValue] == 3) {//查看模式
+//            if (whichSubject == 1) {
+//                NSArray *answer_true_option_array = [[_currentArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_true_option"];
+//                [cell cellChangeWithType:whichSubject WithArray:answer_true_option_array WithNumber:indexPath.row WithType:_examsType];
+//            } else if (whichSubject == 2) {
+//                NSArray *answer_true_option_array = [[_currentArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_true_option"];
+//                [cell cellChangeWithType:whichSubject WithArray:answer_true_option_array WithNumber:indexPath.row WithType:_examsType];
+//            } else if (whichSubject == 3) {
+//                NSArray *answer_true_option_array = [[_currentArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_true_option"];
+//                [cell cellChangeWithType:whichSubject WithArray:answer_true_option_array WithNumber:indexPath.row WithType:_examsType];
+//            }
+//        }
+//        return cell;
+//    } else if (whichSubject == 4) {//填空题
+//        static NSString *CellIdentifier = @"gap";
+//        //自定义cell类
+//        TestGapTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//        if (cell == nil) {
+//            cell = [[TestGapTableViewCell alloc] initWithReuseIdentifier:CellIdentifier];
+//        }
+////        NSArray *array = [[_gapArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_true_option"];
+//        NSArray *array = [_gapUserArray objectAtIndex:subjectNumber];
+//        [cell dataWithArray:array WithNumber:indexPath.row];
+//        self.answerView = cell.answerView;
+//        return cell;
+//    } else if (whichSubject == 5) {//主观题
+//        static NSString *CellIdentifier = @"subject";
+//        //自定义cell类
+//        TestSubjectivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//        if (cell == nil) {
+//            cell = [[TestSubjectivityTableViewCell alloc] initWithReuseIdentifier:CellIdentifier];
+//        }
+//        self.answerTextView = cell.answerTextView;
+//        self.answerTextView.delegate = self;
+//
+//        if ([_examsType integerValue] == 1 || [_examsType integerValue] == 3) {//查看模式的时候
+//            NSString *textStr = [_subjectivityUserArray objectAtIndex:subjectNumber];
+//            if ([textStr integerValue] == 100) {//说明是原始答案
+//                self.answerTextView.text = nil;
+//            } else {
+//                self.answerTextView.text = textStr;
+//            }
+//        }
+//        return cell;
+//    }
+//
+//    return nil;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -1306,6 +1534,74 @@
     if ([_examsType integerValue] == 3) {//查看模式
         return;
     }
+    
+    if (tableView == _chooseTableView) {
+        NSString *question_id = [_currentArray[subjectNumber] stringValueForKey:@"exams_question_id"];
+        NSArray *answer_array = [NSArray arrayWithArray:[_currentArray[subjectNumber] arrayValueForKey:@"answer_options"]];
+        NSString *question_user_answer = [answer_array[indexPath.row] stringValueForKey:@"answer_key"];
+        if ([currentQuestionType isEqualToString:@"radio"]) {
+            // 单选存字符串
+            if (SWNOTEmptyDictionary(_mangerAnswerDict)) {
+                if ([[_mangerAnswerDict allKeys] containsObject:question_id]) {
+                    if ([[_mangerAnswerDict stringValueForKey:question_id] isEqualToString:question_user_answer]) {
+                        [_mangerAnswerDict setObject:question_user_answer forKey:question_id];
+                        [_mangerAnswerDict removeObjectForKey:question_id];
+                    } else {
+                       [_mangerAnswerDict setObject:question_user_answer forKey:question_id];
+                    }
+                } else {
+                    [_mangerAnswerDict setObject:question_user_answer forKey:question_id];
+                }
+            } else {
+                [_mangerAnswerDict setObject:question_user_answer forKey:question_id];
+            }
+        } else if ([currentQuestionType isEqualToString:@"multiselect"]) {
+            // 多选存数组
+            if (SWNOTEmptyDictionary(_mangerAnswerDict)) {
+                if ([[_mangerAnswerDict allKeys] containsObject:question_id]) {
+                    if ([[_mangerAnswerDict objectForKey:question_id] isKindOfClass:[NSArray class]]) {
+                        NSMutableArray *temp = [NSMutableArray arrayWithArray:[_mangerAnswerDict objectForKey:question_id]];
+                        if ([temp containsObject:question_user_answer]) {
+                            [temp removeObject:question_user_answer];
+                        } else {
+                            [temp addObject:question_user_answer];
+                        }
+                        if (SWNOTEmptyArr(temp)) {
+                            [_mangerAnswerDict setObject:[NSArray arrayWithArray:temp] forKey:question_id];
+                        } else {
+                            [_mangerAnswerDict removeObjectForKey:question_id];
+                        }
+                    }
+                } else {
+                    NSMutableArray *temp = [NSMutableArray new];
+                    [temp addObject:question_user_answer];
+                    [_mangerAnswerDict setObject:[NSArray arrayWithArray:temp] forKey:question_id];
+                }
+            } else {
+                NSMutableArray *temp = [NSMutableArray new];
+                [temp addObject:question_user_answer];
+                [_mangerAnswerDict setObject:[NSArray arrayWithArray:temp] forKey:question_id];
+            }
+        } else if ([currentQuestionType isEqualToString:@"judge"]) {
+            // 单选存字符串
+            if (SWNOTEmptyDictionary(_mangerAnswerDict)) {
+                if ([[_mangerAnswerDict allKeys] containsObject:question_id]) {
+                    if ([[_mangerAnswerDict stringValueForKey:question_id] isEqualToString:question_user_answer]) {
+                        [_mangerAnswerDict setObject:question_user_answer forKey:question_id];
+                        [_mangerAnswerDict removeObjectForKey:question_id];
+                    } else {
+                       [_mangerAnswerDict setObject:question_user_answer forKey:question_id];
+                    }
+                } else {
+                    [_mangerAnswerDict setObject:question_user_answer forKey:question_id];
+                }
+            } else {
+                 [_mangerAnswerDict setObject:question_user_answer forKey:question_id];
+            }
+        }
+        [_chooseTableView reloadData];
+    }
+    return;
     if (_chooseTableView == tableView) {
         if (whichSubject == 1) {//单选
             [_multipleSeleArray removeAllObjects];
@@ -1478,6 +1774,10 @@
 - (void)commitButtonCilck {
     TestAnswerSheetViewController *vc = [[TestAnswerSheetViewController alloc] init];
     vc.dataSource = _dataSource;
+    vc.allQuestionArray = [NSMutableArray arrayWithArray:_allQuestionArray];
+    vc.options_type_array = [NSMutableArray arrayWithArray:_options_type_array];
+    vc.allUserAnswerArray = [NSArray arrayWithArray:_allUserAnswerArray];
+    vc.mangerAnswerDict = [NSMutableDictionary dictionaryWithDictionary:_mangerAnswerDict];
     vc.multipleUserArray = _multipleUserArray;
     vc.moreMultipleUserArray = _moreMultipleUserArray;
     vc.judgeUserArray = _judgeUserArray;
@@ -1579,58 +1879,95 @@
     NSLog(@"OBJ---%@",not.object);
     NSInteger Number = [[not.object stringValueForKey:@"number"] integerValue];
     NSString *textStr = [not.object stringValueForKey:@"text"];
-    
-    NSMutableArray *indexArray = [_gapUserArray objectAtIndex:subjectNumber];
-    if (Number >= indexArray.count) {
-        return;
+    NSString *question_id = [not.object stringValueForKey:@"question_id"];
+    if (SWNOTEmptyStr(textStr)) {
+        [self.mangerAnswerDict setObject:textStr forKey:question_id];
+    } else {
+        [self.mangerAnswerDict removeObjectForKey:question_id];
     }
-    [indexArray replaceObjectAtIndex:Number withObject:textStr];
-    NSLog(@"=----%ld",Number);
-    [_gapUserArray replaceObjectAtIndex:subjectNumber withObject:indexArray];
     
-    NSLog(@"%@",_gapUserArray);
+//    NSMutableArray *indexArray = [_gapUserArray objectAtIndex:subjectNumber];
+//    if (Number >= indexArray.count) {
+//        return;
+//    }
+//    [indexArray replaceObjectAtIndex:Number withObject:textStr];
+//    NSLog(@"=----%ld",Number);
+//    [_gapUserArray replaceObjectAtIndex:subjectNumber withObject:indexArray];
+//
+//    NSLog(@"%@",_gapUserArray);
 }
 
 - (void)answerTextViewTextChange:(NSNotification *)not {
     NSString *textStr = self.answerTextView.text;
-    [_subjectivityUserArray replaceObjectAtIndex:subjectNumber withObject:textStr];
+    NSString *question_id = [[_currentArray objectAtIndex:subjectNumber] stringValueForKey:@"exams_question_id"];
+    if (SWNOTEmptyStr(textStr)) {
+        [self.mangerAnswerDict setObject:textStr forKey:question_id];
+    } else {
+        [self.mangerAnswerDict removeObjectForKey:question_id];
+    }
+//    [_subjectivityUserArray replaceObjectAtIndex:subjectNumber withObject:textStr];
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ([text isEqualToString:@"\n"]) {
+        [self.answerTextView resignFirstResponder];
+        return NO;
+    }
+    return YES;
 }
 
 //从答题卡传过来的具体哪题
 - (void)TestAnswerSheetGiveButtonTag:(NSNotification *)not {
+    
     NSLog(@"%@",not.object);
     NSString *tagStr = not.object;
     NSInteger tag = [tagStr integerValue];
-    whichSubject = tag / 100;
+    currentQuestionArrayIndex = tag / 100 - 1;
+    currentQuestionIndex = tag % 100;
     subjectNumber = tag % 100;
-    if (whichSubject == 1) {
-        _currentArray = _multipleArray;
-        subjectAllNumber = subjectNumber;
-        [_multipleSeleArray removeAllObjects];
-        [self Next_multipleConfig];
-    } else if (whichSubject == 2) {
-        _currentArray = _moreMultipleArray;
-        subjectAllNumber = subjectNumber + _multipleArray.count;
-        [self Next_moreMultipleConfig];
-    } else if (whichSubject == 3) {
-        _currentArray = _judgeArray;
-        subjectAllNumber = subjectNumber + _multipleArray.count + _moreMultipleArray.count;
-        [self Next_judgeConfig];
-    } else if (whichSubject == 4) {
-        _currentArray = _gapArray;
-        subjectAllNumber = subjectNumber + _multipleArray.count + _moreMultipleArray.count + _judgeArray.count;
-        [self Next_gapConfig];
-    } else if (whichSubject == 5) {
-        _currentArray = _subjectivityArray;
-        subjectAllNumber = subjectNumber + _multipleArray.count + _moreMultipleArray.count + _judgeArray.count + _gapArray.count;
-        [self Next_subjectivityConfig];
-    }
+    [self dealSubjectAllNumber];
+    [_currentArray removeAllObjects];
+    [_currentArray addObjectsFromArray:_allQuestionArray[currentQuestionArrayIndex]];
+    currentQuestionType = [NSString stringWithFormat:@"%@",_options_type_array[currentQuestionArrayIndex][@"question_type_key"]];
     
     [_chooseTableView reloadData];
 }
 
 #pragma mark --- 点上一题的时候吧必要的事情 （最后需要处理的事情都放在这个方法里面）
 - (void)uplastDoThing {
+    
+    
+    // 上一题的时候要处理的事情
+    subjectNumber--;
+    if (subjectNumber >= 0) {
+        // 正常
+        [self dealSubjectAllNumber];
+        currentQuestionType = [NSString stringWithFormat:@"%@",_options_type_array[currentQuestionArrayIndex][@"question_type_key"]];
+    } else {
+        currentQuestionArrayIndex--;
+        if (currentQuestionArrayIndex >= 0) {
+            // 正常
+            subjectNumber = [_allQuestionArray[currentQuestionArrayIndex] count] - 1;
+            // 正常
+            [self dealSubjectAllNumber];
+            currentQuestionType = [NSString stringWithFormat:@"%@",_options_type_array[currentQuestionArrayIndex][@"question_type_key"]];
+            [_currentArray removeAllObjects];
+            [_currentArray addObjectsFromArray:_allQuestionArray[currentQuestionArrayIndex]];
+        } else {
+            currentQuestionArrayIndex = 0;
+            subjectNumber = 0;
+            [TKProgressHUD showError:@"已是第一题" toView:self.view];
+            return;
+        }
+    }
+    
+    //有些刷新需要的 就在刷新之前给重置了
+    if ([_examsType integerValue] == 1) {//如果是练习模式，就在点击上一题的时候收上去
+        unwindButtonSele = NO;
+    }
+    [_chooseTableView reloadData];
+    return;
+    
     subjectAllNumber --;
     subjectNumber --;
     if (whichSubject == 1) {//当前单选
@@ -1749,6 +2086,42 @@
 
 #pragma mark --- 点下一题的时候吧必要的事情（最后需要处理的事情都放在这个方法里面）
 - (void)nextLastDoThing {
+    
+    subjectNumber++;
+    // 处理当前题型类型 以及 相关下标
+    if (subjectNumber < _currentArray.count) {
+        //正常
+        [self dealSubjectAllNumber];
+        currentQuestionType = [NSString stringWithFormat:@"%@",_options_type_array[currentQuestionArrayIndex][@"question_type_key"]];
+        // currentQuestionArrayIndex 不变
+    } else {
+        //重置当前题目在当前题型板块儿中的下标
+        subjectNumber = 0;
+        // 当前题型板块儿 下标 增加 1
+        currentQuestionArrayIndex++;
+        if (currentQuestionArrayIndex < _allQuestionArray.count) {
+            // 正常
+            [self dealSubjectAllNumber];
+            currentQuestionType = [NSString stringWithFormat:@"%@",_options_type_array[currentQuestionArrayIndex][@"question_type_key"]];
+            [_currentArray removeAllObjects];
+            [_currentArray addObjectsFromArray:_allQuestionArray[currentQuestionArrayIndex]];
+        } else {
+            // 已经是最后一题了 应该是提交试卷或者退出
+            if ([_examsType integerValue] == 1 || [_examsType integerValue] == 2) {//练习或者考试模式
+                [self handIn];
+            } else if ([_examsType integerValue] == 3) {//查看模式
+                [self GoOut];
+            }
+            return;
+        }
+    }
+    
+    if ([_examsType integerValue] == 1) {//如果是练习模式，就在点击下一题的时候收上去
+        unwindButtonSele = NO;
+    }
+    [_chooseTableView reloadData];
+    return;
+    
     subjectAllNumber ++;
     subjectNumber ++;
     if (whichSubject == 1) {//当前单选

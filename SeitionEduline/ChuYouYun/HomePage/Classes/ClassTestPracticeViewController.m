@@ -743,13 +743,13 @@
         title = [[sectionArray objectAtIndex:indexPath.row] stringValueForKey:@"answer_value"];
         [cell dataWithTitle:title WithNumber:indexPath.row];
         
-        if (whichSubject == 1) {
-            [cell cellChangeWithType:whichSubject WithArray:_multipleSeleArray WithNumber:indexPath.row];
-        } else if (whichSubject == 2) {
-            [cell cellChangeWithType:whichSubject WithArray:_moreMultipleSeleArray WithNumber:indexPath.row];
-        } else if (whichSubject == 3) {
-            [cell cellChangeWithType:whichSubject WithArray:_judgeSeleArray WithNumber:indexPath.row];
-        }
+//        if (whichSubject == 1) {
+//            [cell cellChangeWithType:whichSubject WithArray:_multipleSeleArray WithNumber:indexPath.row];
+//        } else if (whichSubject == 2) {
+//            [cell cellChangeWithType:whichSubject WithArray:_moreMultipleSeleArray WithNumber:indexPath.row];
+//        } else if (whichSubject == 3) {
+//            [cell cellChangeWithType:whichSubject WithArray:_judgeSeleArray WithNumber:indexPath.row];
+//        }
         return cell;
     } else if (whichSubject == 4) {//填空题
         static NSString *CellIdentifier = @"gap";
@@ -760,7 +760,7 @@
         }
         //        NSArray *array = [[_gapArray objectAtIndex:subjectNumber] arrayValueForKey:@"answer_true_option"];
         NSArray *array = [_gapUserArray objectAtIndex:subjectNumber];
-        [cell dataWithArray:array WithNumber:indexPath.row];
+//        [cell dataWithArray:array WithNumber:indexPath.row];
         self.answerView = cell.answerView;
         return cell;
     } else if (whichSubject == 5) {//主观题

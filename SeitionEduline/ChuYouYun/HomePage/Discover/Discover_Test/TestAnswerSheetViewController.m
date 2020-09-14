@@ -19,7 +19,15 @@
 #define oneAndLastSpace 20 * WideEachUnit
 #define space 39 * WideEachUnit
 
-@interface TestAnswerSheetViewController ()
+@interface TestAnswerSheetViewController () {
+    NSInteger subjectNumber;//考试的题目 （在该类型中的序列号）
+    NSInteger subjectAllNumber;//所有考试里面当前题的排序
+    
+    NSInteger allQuestionCount;// 总题数
+    NSInteger currentQuestionArrayIndex;// 当前题型在 allQuestionArray 数组里面的下标
+    NSInteger currentQuestionIndex;// 当前题目在当前题型数组里面的下标
+    NSString *currentQuestionType;// 当前题型的类型 总共五种类型 单选 radio 多选 multiselect 判断 judge 完形填空 completion 论述 essays
+}
 
 @property (strong ,nonatomic)UIScrollView *scrollView;
 @property (strong ,nonatomic) STTableView  *tableView;
@@ -37,7 +45,6 @@
 @property (strong ,nonatomic)NSMutableArray   *judgeArray;//判断
 @property (strong ,nonatomic)NSMutableArray   *subjectivityArray;//主观
 
-@property (strong ,nonatomic)NSMutableDictionary *mangerAnswerDict;//处理答案
 
 //单选视图
 @property (strong ,nonatomic)UIView       *multipleView;
@@ -137,17 +144,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    allQuestionCount = 0;
+    subjectNumber = 0;
+    subjectAllNumber = 0;
+    currentQuestionIndex = 0;
+    currentQuestionArrayIndex = 0;
+    currentQuestionType = @"";
+    
     [self interFace];
     [self initialization];//初始化
     [self addNav];
 //    [self addScrollView];
     //    [self addTableHeaderView];
     [self addScrollView];
-    [self addMultipleView];
-    [self addMoreMultipleView];
-    [self addJudgeView];
-    [self addGapView];
-    [self addSubjectivityView];
+//    [self addMultipleView];
+//    [self addMoreMultipleView];
+//    [self addJudgeView];
+//    [self addGapView];
+//    [self addSubjectivityView];
+    [self dealExamQuestionUI];
     [self addCommitButton];
     [self timeManger];
     
@@ -327,12 +343,93 @@
 #pragma mark --- 添加全局的滚动试图
 - (void)addScrollView {
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 80 * WideEachUnit)];
+    if ([_examType integerValue] == 3) {//查看模式的时候
+        _scrollView.frame = CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - MACRO_UI_SAFEAREA);
+    }
     _scrollView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_scrollView];
 
 }
 
 #pragma mark --- 添加各种视图
+// MARK: - 统一处理各种视图
+- (void)dealExamQuestionUI {
+    if (SWNOTEmptyArr(_allQuestionArray)) {
+        CGFloat outXX = 0.0;
+        CGFloat outYY = 0.0;
+        for (int i = 0; i<_allQuestionArray.count; i++) {
+            NSArray *outTemp = [NSArray arrayWithArray:_allQuestionArray[i]];
+            UIView *outBackView = [[UIView alloc] initWithFrame:CGRectMake(outXX, outYY, MainScreenWidth, (outTemp.count % 5 == 0) ? (40 * WideEachUnit + outTemp.count / 5 * 56 * WideEachUnit) : (40 * WideEachUnit + (outTemp.count / 5 + 1) * 56 * WideEachUnit))];
+            outYY = outBackView.bottom + 5;
+            outBackView.backgroundColor = [UIColor whiteColor];
+            [_scrollView addSubview:outBackView];
+            
+            // 当前布局的板块儿的题型
+            NSString *question_type = [NSString stringWithFormat:@"%@",_options_type_array[i][@"question_type_key"]];
+            //添加标题
+            UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 20 * WideEachUnit)];
+            NSString *type = [NSString stringWithFormat:@"%@",_options_type_array[i][@"type_info"][@"question_type_title"]];
+            title.text = type;
+            title.font = Font(12 * WideEachUnit);
+            title.backgroundColor = [UIColor colorWithHexString:@"#f5f5f5"];
+            [outBackView addSubview:title];
+            
+            for (int k = 0; k < outTemp.count ; k ++ ) {
+                UIButton *indexButton = [[UIButton alloc] initWithFrame:CGRectMake(oneAndLastSpace + (k % 5) * (buttonW + space),20 * WideEachUnit + oneAndLastSpace + (k / 5) * (buttonH + oneAndLastSpace), buttonW, buttonH)];
+                indexButton.layer.cornerRadius = buttonW / 2;
+                indexButton.layer.masksToBounds = YES;
+                
+                if ([_examType integerValue] == 3) {
+                    if (SWNOTEmptyArr(_allUserAnswerArray)) {
+                        BOOL has = NO;
+                        for (int j = 0; j<_allUserAnswerArray.count; j++) {
+                            if ([[_allUserAnswerArray[j] stringValueForKey:@"exams_question_id"] isEqualToString:[outTemp[k] stringValueForKey:@"exams_question_id"]]) {
+                                has = YES;
+                                break;
+                            }
+                        }
+                        indexButton.backgroundColor = has ? BasidColor : [UIColor colorWithHexString:@"#e1e1e6"];
+                    } else {
+                        indexButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+                    }
+                } else {
+                    if (SWNOTEmptyDictionary(_mangerAnswerDict)) {
+                        if ([_mangerAnswerDict objectForKey:[outTemp[k] stringValueForKey:@"exams_question_id"]]) {
+                            if ([question_type isEqualToString:@"multiselect"]) {
+                                if ([[_mangerAnswerDict objectForKey:[outTemp[k] stringValueForKey:@"exams_question_id"]] isKindOfClass:[NSArray class]]) {
+                                    if (SWNOTEmptyArr((NSArray *)[_mangerAnswerDict objectForKey:[outTemp[k] stringValueForKey:@"exams_question_id"]])) {
+                                        indexButton.backgroundColor = BasidColor;
+                                    } else {
+                                        indexButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+                                    }
+                                } else {
+                                    indexButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+                                }
+                            } else {
+                                if (SWNOTEmptyStr([_mangerAnswerDict objectForKey:[outTemp[k] stringValueForKey:@"exams_question_id"]])) {
+                                    indexButton.backgroundColor = BasidColor;
+                                } else {
+                                    indexButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+                                }
+                            }
+                        } else {
+                            indexButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+                        }
+                    } else {
+                        indexButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+                    }
+                }
+                
+                [indexButton setTitle:[NSString stringWithFormat:@"%d",k + 1] forState:UIControlStateNormal];
+                // 每一百个开始赋值tag
+                indexButton.tag = 100 * (i + 1) + k;
+                [indexButton addTarget:self action:@selector(indexButtonCilck:) forControlEvents:UIControlEventTouchUpInside];
+                [outBackView addSubview:indexButton];
+            }
+        }
+        _scrollView.contentSize = CGSizeMake(MainScreenWidth, outYY);
+    }
+}
 
 - (void)addMultipleView {
     

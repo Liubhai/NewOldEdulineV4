@@ -21,6 +21,12 @@
 @property (strong ,nonatomic)NSString             *againStr;//这个字符串标示是否是再次挑战
 @property (strong ,nonatomic)NSString             *classTestType;//主要是从课程进入的考试
 
+// 尝试修改考试逻辑
+@property (strong ,nonatomic) NSArray          *allUserAnswerArray;//用户的全部答案（接口返回的全部都在这里）
+@property (strong, nonatomic) NSMutableArray *allQuestionArray;// 二维数组 装的是问题题型数组
+@property (strong, nonatomic) NSMutableArray *options_type_array;// 题目类型数组
+
+@property (strong ,nonatomic)NSMutableDictionary *mangerAnswerDict;//处理答案
 
 //用户的答案
 @property (strong ,nonatomic)NSMutableArray   *multipleUserArray;//用户的答案（单选）

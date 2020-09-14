@@ -14,8 +14,9 @@
 @property (strong ,nonatomic)UILabel     *numberLabel;
 @property (strong ,nonatomic)UIView      *answerView;
 @property (assign ,nonatomic)NSInteger   indexPath;
+@property (strong, nonatomic) NSString *question_id;
 
 -(id)initWithReuseIdentifier:(NSString*)reuseIdentifier;
-- (void)dataWithArray:(NSArray *)array WithNumber:(NSInteger)indexPath;
+- (void)dataWithArray:(NSArray *)array WithNumber:(NSInteger)indexPath question_id:(NSString *)question_id;
 
 @end

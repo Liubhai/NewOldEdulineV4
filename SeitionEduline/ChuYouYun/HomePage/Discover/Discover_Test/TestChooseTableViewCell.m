@@ -120,23 +120,24 @@
 
 
 //最先答题的时候的选中
-- (void)cellChangeWithType:(NSInteger)whichSubject WithArray:(NSArray *)array WithNumber:(NSInteger)indexPathRow {
+- (void)cellChangeWithType:(NSString *)whichSubject WithArray:(NSArray *)array WithNumber:(NSInteger)indexPathRow {
     if (array.count == 0) {
         return;
     }
-    if (whichSubject == 1) {//单选
+    //    单选 radio 多选 multiselect 判断 judge 完形填空 completion 论述 essays
+    if ([whichSubject isEqualToString:@"radio"]) {//单选
         if ([[array objectAtIndex:indexPathRow] integerValue] == 1) {
             _optionButton.backgroundColor = BasidColor;
         } else {
             _optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
         }
-    } else if (whichSubject == 2) {//多选
+    } else if ([whichSubject isEqualToString:@"multiselect"]) {//多选
         if ([[array objectAtIndex:indexPathRow] integerValue] == 1) {
             _optionButton.backgroundColor = BasidColor;
         } else {
             _optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
         }
-    } else if (whichSubject == 3) {
+    } else if ([whichSubject isEqualToString:@"judge"]) {
         if ([[array objectAtIndex:indexPathRow] integerValue] == 1) {
             _optionButton.backgroundColor = BasidColor;
         } else {
@@ -147,7 +148,7 @@
 }
 
 //后面解析的时候
-- (void)cellChangeWithType:(NSInteger)whichSubject WithArray:(NSArray *)array WithNumber:(NSInteger)indexPathRow WithType:(NSString *)examType {
+- (void)cellChangeWithType:(NSString *)whichSubject WithArray:(NSArray *)array WithNumber:(NSInteger)indexPathRow WithType:(NSString *)examType {
     if (array.count == 0) {
         return;
     }
@@ -155,7 +156,7 @@
     //作为参照物
     NSArray *optionsArray = @[@"A",@"B",@"C",@"D",@"E",@"F"];
     
-    if (whichSubject == 1) {//单选
+    if ([whichSubject isEqualToString:@"radio"]) {//单选
         NSInteger index = 100;
         for (int i = 0 ; i < optionsArray.count ; i ++) {
             NSString *optionStr = [optionsArray objectAtIndex:i];
@@ -169,7 +170,7 @@
         } else {
             _optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
         }
-    } else if (whichSubject == 2) {//多选
+    } else if ([whichSubject isEqualToString:@"multiselect"]) {//多选
         
         NSMutableArray *indexArray = [NSMutableArray array];
         
@@ -193,7 +194,7 @@
         }
 
         
-    } else if (whichSubject == 3) {//判断
+    } else if ([whichSubject isEqualToString:@"judge"]) {//判断
         NSInteger index = 100;
         for (int i = 0 ; i < optionsArray.count ; i ++) {
             NSString *optionStr = [optionsArray objectAtIndex:i];
@@ -209,6 +210,97 @@
         }
     }
 }
+
+////最先答题的时候的选中
+//- (void)cellChangeWithType:(NSInteger)whichSubject WithArray:(NSArray *)array WithNumber:(NSInteger)indexPathRow {
+//    if (array.count == 0) {
+//        return;
+//    }
+//    if (whichSubject == 1) {//单选
+//        if ([[array objectAtIndex:indexPathRow] integerValue] == 1) {
+//            _optionButton.backgroundColor = BasidColor;
+//        } else {
+//            _optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+//        }
+//    } else if (whichSubject == 2) {//多选
+//        if ([[array objectAtIndex:indexPathRow] integerValue] == 1) {
+//            _optionButton.backgroundColor = BasidColor;
+//        } else {
+//            _optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+//        }
+//    } else if (whichSubject == 3) {
+//        if ([[array objectAtIndex:indexPathRow] integerValue] == 1) {
+//            _optionButton.backgroundColor = BasidColor;
+//        } else {
+//            _optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+//        }
+//    }
+//
+//}
+//
+////后面解析的时候
+//- (void)cellChangeWithType:(NSInteger)whichSubject WithArray:(NSArray *)array WithNumber:(NSInteger)indexPathRow WithType:(NSString *)examType {
+//    if (array.count == 0) {
+//        return;
+//    }
+//
+//    //作为参照物
+//    NSArray *optionsArray = @[@"A",@"B",@"C",@"D",@"E",@"F"];
+//
+//    if (whichSubject == 1) {//单选
+//        NSInteger index = 100;
+//        for (int i = 0 ; i < optionsArray.count ; i ++) {
+//            NSString *optionStr = [optionsArray objectAtIndex:i];
+//            if ([[array objectAtIndex:0] isEqualToString:optionStr]) {
+//                index = i;
+//            }
+//        }
+//
+//        if (indexPathRow == index) {//说明是同一个
+//            _optionButton.backgroundColor = [UIColor colorWithHexString:@"#6bbc7c"];
+//        } else {
+//            _optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+//        }
+//    } else if (whichSubject == 2) {//多选
+//
+//        NSMutableArray *indexArray = [NSMutableArray array];
+//
+//        for (int i = 0 ; i < array.count ; i ++) {
+//            NSString *trustStr = [array objectAtIndex:i];
+//            for (int k = 0 ; k < optionsArray.count ; k ++) {
+//                NSString *referStr = [optionsArray objectAtIndex:k];
+//                if ([trustStr isEqualToString:referStr]) {
+//                    [indexArray addObject:[NSString stringWithFormat:@"%d",k]];
+//                    continue;
+//                }
+//            }
+//        }
+//
+//        _optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+//        for (int i = 0 ; i < indexArray.count ; i ++) {
+//            NSInteger index = [[indexArray objectAtIndex:i] integerValue];
+//            if (indexPathRow == index) {
+//                _optionButton.backgroundColor = [UIColor colorWithHexString:@"#6bbc7c"];
+//            }
+//        }
+//
+//
+//    } else if (whichSubject == 3) {//判断
+//        NSInteger index = 100;
+//        for (int i = 0 ; i < optionsArray.count ; i ++) {
+//            NSString *optionStr = [optionsArray objectAtIndex:i];
+//            if ([[array objectAtIndex:0] isEqualToString:optionStr]) {
+//                index = i;
+//            }
+//        }
+//
+//        if (indexPathRow == index) {//说明是同一个
+//            _optionButton.backgroundColor = [UIColor colorWithHexString:@"#6bbc7c"];
+//        } else {
+//            _optionButton.backgroundColor = [UIColor colorWithHexString:@"#e1e1e6"];
+//        }
+//    }
+//}
 
 #pragma mark --- 手势
 

@@ -60,6 +60,7 @@
         _answerTextField.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
         _answerTextField.layer.borderWidth = 1 * WideEachUnit;
         _answerTextField.textColor = [UIColor blackColor];
+        _answerTextField.returnKeyType = UIReturnKeyDone;
     }
     return _answerTextField;
 }
@@ -83,7 +84,8 @@
 }
 
 #pragma mark --- 由外面传进来的数组决定显示添加多少个输入框
-- (void)dataWithArray:(NSArray *)array WithNumber:(NSInteger)indexPath {
+- (void)dataWithArray:(NSArray *)array WithNumber:(NSInteger)indexPath question_id:(NSString *)question_id {
+    _question_id = question_id;
     //先要移除子视图
 //    [self.answerView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
 
@@ -111,10 +113,19 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:_answerTextField.text forKey:@"text"];
     [dict setObject:[NSString stringWithFormat:@"%ld",_indexPath] forKey:@"number"];
+    [dict setObject:_question_id forKey:@"question_id"];
     NSLog(@"%@",dict);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TestGapTableViewCellGetAnswerAndNumber" object:dict];
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if ([string isEqualToString:@"\n"]) {
+        [textField resignFirstResponder];
+        return NO;
+    } else {
+        return YES;
+    }
+}
 
 #pragma mark --- 通知
 

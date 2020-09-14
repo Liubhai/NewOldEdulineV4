@@ -24,7 +24,9 @@
 -(id)initWithReuseIdentifier:(NSString*)reuseIdentifier;
 -(void)setIntroductionText:(NSString*)text;
 - (void)dataWithTitle:(NSString *)title WithNumber:(NSInteger)number;
-- (void)cellChangeWithType:(NSInteger)whichSubject WithArray:(NSArray *)array WithNumber:(NSInteger)indexPathRow;
-- (void)cellChangeWithType:(NSInteger)whichSubject WithArray:(NSArray *)array WithNumber:(NSInteger)indexPathRow WithType:(NSString *)examType;
+- (void)cellChangeWithType:(NSString *)whichSubject WithArray:(NSArray *)array WithNumber:(NSInteger)indexPathRow;
+- (void)cellChangeWithType:(NSString *)whichSubject WithArray:(NSArray *)array WithNumber:(NSInteger)indexPathRow WithType:(NSString *)examType;
+//- (void)cellChangeWithType:(NSInteger)whichSubject WithArray:(NSArray *)array WithNumber:(NSInteger)indexPathRow;
+//- (void)cellChangeWithType:(NSInteger)whichSubject WithArray:(NSArray *)array WithNumber:(NSInteger)indexPathRow WithType:(NSString *)examType;
 
 @end
