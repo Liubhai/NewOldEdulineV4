@@ -442,7 +442,7 @@
     _exchangViewUp.showsHorizontalScrollIndicator = NO;
     _exchangViewUp.showsVerticalScrollIndicator = NO;
     _exchangViewUp.alwaysBounceVertical = NO;
-    _exchangViewUp.pagingEnabled = NO;
+    _exchangViewUp.pagingEnabled = YES;
     //同时单方向滚动
     _exchangViewUp.directionalLockEnabled = YES;
     _exchangViewUp.contentOffset = CGPointMake(0, 0);
@@ -494,6 +494,9 @@
         if (i == [upTypeStr integerValue]) {
             [_exchangButtonUp setTitleColor:ffbbcolor forState:UIControlStateNormal];
         }
+        if (i == (_exchangArray.count - 1)) {
+            _exchangViewUp.contentSize = CGSizeMake(_exchangButtonUp.right, 0);
+        }
         [marr addObject:_exchangButtonUp];
     }
     
@@ -535,7 +538,7 @@
     _exchangViewMight.showsHorizontalScrollIndicator = NO;
     _exchangViewMight.showsVerticalScrollIndicator = NO;
     _exchangViewMight.alwaysBounceVertical = NO;
-    _exchangViewMight.pagingEnabled = NO;
+    _exchangViewMight.pagingEnabled = YES;
     //同时单方向滚动
     _exchangViewMight.directionalLockEnabled = YES;
     _exchangViewMight.contentOffset = CGPointMake(0, 0);
@@ -556,7 +559,7 @@
     _exchangViewMight.showsHorizontalScrollIndicator = NO;
     _exchangViewMight.showsVerticalScrollIndicator = NO;
     _exchangViewMight.alwaysBounceVertical = NO;
-    _exchangViewMight.pagingEnabled = NO;
+    _exchangViewMight.pagingEnabled = YES;
     //同时单方向滚动
     _exchangViewMight.directionalLockEnabled = YES;
     _exchangViewMight.contentOffset = CGPointMake(0, 0);
@@ -598,6 +601,9 @@
             allButtonXMight = labelSize.size.width + _exchangButtonMight.frame.origin.x;
         }
         
+        if (i == (childArray.count - 1)) {
+            _exchangViewMight.contentSize = CGSizeMake(_exchangButtonMight.right, 0);
+        }
         
         [_exchangButtonMight addTarget:self action:@selector(changeMight:) forControlEvents:UIControlEventTouchUpInside];
         if (i == [mightTypeStr integerValue]) {
@@ -607,7 +613,19 @@
     }
     
     _exchangMightButtonsArray = marr;
-
+    for (int i = 0; i<_exchangMightButtonsArray.count; i++) {
+        if (((UIButton *)_exchangMightButtonsArray[i]).tag == [mightTypeStr integerValue]) {
+            
+            CGPoint btnPoint = [_exchangViewMight convertPoint:CGPointMake(((UIButton *)_exchangMightButtonsArray[i]).x, ((UIButton *)_exchangMightButtonsArray[i]).y) toView:_exchangeView];
+            if ((btnPoint.x + ((UIButton *)_exchangMightButtonsArray[i]).width) > MainScreenWidth) {
+                [_exchangViewMight setContentOffset:CGPointMake((btnPoint.x + ((UIButton *)_exchangMightButtonsArray[i]).width) - MainScreenWidth, 0)];
+            }
+            if (btnPoint.x < 0) {
+                [_exchangViewMight setContentOffset:CGPointMake(_exchangViewMight.contentOffset.x + btnPoint.x, 0)];
+            }
+            break;
+        }
+    }
 }
 
 - (void)addExchangViewDown {
@@ -621,7 +639,7 @@
     _exchangViewDown.showsHorizontalScrollIndicator = NO;
     _exchangViewDown.showsVerticalScrollIndicator = NO;
     _exchangViewDown.alwaysBounceVertical = NO;
-    _exchangViewDown.pagingEnabled = NO;
+    _exchangViewDown.pagingEnabled = YES;
     //同时单方向滚动
     _exchangViewDown.directionalLockEnabled = YES;
     _exchangViewDown.contentOffset = CGPointMake(0, 0);
@@ -760,9 +778,24 @@
             _exchangButtonDown.backgroundColor = [UIColor colorWithRed:67.f / 255 green:78.f / 255 blue:87.f / 255 alpha:1];
         }
         [marr addObject:_exchangButtonDown];
+        if (i == (childArray.count - 1)) {
+            _exchangViewDown.contentSize = CGSizeMake(_exchangButtonDown.right, 0);
+        }
     }
     _exchangDownButtonsArray = marr;
-    
+    for (int i = 0; i<_exchangDownButtonsArray.count; i++) {
+        if (((UIButton *)_exchangDownButtonsArray[i]).tag == [downTypeStr integerValue]) {
+            
+            CGPoint btnPoint = [_exchangViewDown convertPoint:CGPointMake(((UIButton *)_exchangDownButtonsArray[i]).x, ((UIButton *)_exchangDownButtonsArray[i]).y) toView:_exchangeView];
+            if ((btnPoint.x + ((UIButton *)_exchangDownButtonsArray[i]).width) > MainScreenWidth) {
+                [_exchangViewDown setContentOffset:CGPointMake((btnPoint.x + ((UIButton *)_exchangDownButtonsArray[i]).width) - MainScreenWidth, 0)];
+            }
+            if (btnPoint.x < 0) {
+                [_exchangViewDown setContentOffset:CGPointMake(_exchangViewDown.contentOffset.x + btnPoint.x, 0)];
+            }
+            break;
+        }
+    }
 }
 
 
