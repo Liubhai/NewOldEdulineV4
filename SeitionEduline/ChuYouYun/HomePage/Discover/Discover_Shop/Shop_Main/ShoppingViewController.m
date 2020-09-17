@@ -454,7 +454,7 @@
     allButtonXUp = 0;
     for (int i = 0; i < _exchangArray.count ; i ++) {
         _exchangButtonUp = [[UIButton alloc] init];
-        _exchangButtonUp.frame = CGRectMake(buttonXUp, 0, (MainScreenWidth - 62) / 5, 40);
+        _exchangButtonUp.frame = CGRectMake(buttonXUp, 0, (MainScreenWidth - 62) / 5, 62);
         _exchangButtonUp.centerY = _exchangViewUp.height/2.0;
         [_exchangButtonUp setTitle:[[_exchangArray objectAtIndex:i] stringValueForKey:@"title"] forState:UIControlStateNormal];
         [_exchangViewUp addSubview:_exchangButtonUp];
@@ -475,16 +475,16 @@
         }
         
         //按钮的自适应
-        CGRect labelSize = [_exchangButtonUp.titleLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 40) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:16]} context:nil];
+        CGRect labelSize = [_exchangButtonUp.titleLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 62) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:16]} context:nil];
         if (labelSize.size.width < (MainScreenWidth - 62) / 5 ) {
             labelSize.size.width = (MainScreenWidth - 62) / 5;
         }
         
         if (_exchangArray.count <= 5) {
             CGFloat ButtonW = (MainScreenWidth - 62) / _exchangArray.count;
-            _exchangButtonUp.frame = CGRectMake(ButtonW * i, 0, ButtonW, 40);
+            _exchangButtonUp.frame = CGRectMake(ButtonW * i, 0, ButtonW, 62);
         } else {
-            _exchangButtonUp.frame = CGRectMake(_exchangButtonUp.frame.origin.x, _exchangButtonUp.frame.origin.y,labelSize.size.width, 40);
+            _exchangButtonUp.frame = CGRectMake(_exchangButtonUp.frame.origin.x, _exchangButtonUp.frame.origin.y,labelSize.size.width, 62);
             buttonXUp = labelSize.size.width + _exchangButtonUp.frame.origin.x;
             allButtonXUp = labelSize.size.width + _exchangButtonUp.frame.origin.x;
         }
@@ -500,14 +500,23 @@
     _exchangUpButtonsArray = [marr copy];
     int tempNum;
     tempNum = (int)_dataArray.count;
-    _exchangViewUp.contentSize = CGSizeMake(buttonXUp + 2, 40);
+    _exchangViewUp.contentSize = CGSizeMake(buttonXUp + 2, 62);
     for (int i = 0; i<_exchangUpButtonsArray.count; i++) {
         if (((UIButton *)_exchangUpButtonsArray[i]).tag == [upTypeStr integerValue]) {
-            if ((((UIButton *)_exchangUpButtonsArray[i]).left + (MainScreenWidth - 62)) > _exchangViewUp.contentSize.width) {
-                _exchangViewUp.contentOffset = CGPointMake(_exchangViewUp.contentSize.width - (MainScreenWidth - 62), 0);
-            } else {
-                _exchangViewUp.contentOffset = CGPointMake(((UIButton *)_exchangUpButtonsArray[i]).left, 0);
+            
+            CGPoint btnPoint = [_exchangViewUp convertPoint:CGPointMake(((UIButton *)_exchangUpButtonsArray[i]).x, ((UIButton *)_exchangUpButtonsArray[i]).y) toView:_exchangeView];
+            if ((btnPoint.x + ((UIButton *)_exchangUpButtonsArray[i]).width) > MainScreenWidth) {
+                [_exchangViewUp setContentOffset:CGPointMake((btnPoint.x + ((UIButton *)_exchangUpButtonsArray[i]).width) - MainScreenWidth, 0)];
             }
+            if (btnPoint.x < 0) {
+                [_exchangViewUp setContentOffset:CGPointMake(_exchangViewUp.contentOffset.x + btnPoint.x, 0)];
+            }
+            
+//            if ((((UIButton *)_exchangUpButtonsArray[i]).left + (MainScreenWidth - 62)) > _exchangViewUp.contentSize.width) {
+//                _exchangViewUp.contentOffset = CGPointMake(_exchangViewUp.contentSize.width - (MainScreenWidth - 62), 0);
+//            } else {
+//                _exchangViewUp.contentOffset = CGPointMake(((UIButton *)_exchangUpButtonsArray[i]).left, 0);
+//            }
             break;
         }
     }
