@@ -41,10 +41,10 @@
     
     //作答
     _questionStem = [[UILabel alloc] initWithFrame:CGRectMake(65 * WideEachUnit, 25 * WideEachUnit,MainScreenWidth - 80 * WideEachUnit, 25 * WideEachUnit)];
-    _questionStem.text = @"梅雨节节，引起一片欧陆";
+//    _questionStem.text = @"梅雨节节，引起一片欧陆";
     _questionStem.font = [UIFont systemFontOfSize:15 * WideEachUnit];
     _questionStem.textColor = [UIColor colorWithHexString:@"#888"];
-    [self setIntroductionText:@"梅雨节节，引起一片欧陆"];
+//    [self setIntroductionText:@"梅雨节节，引起一片欧陆"];
     [self addSubview:_questionStem];
     
     
@@ -58,9 +58,14 @@
 }
 
 
--(void)setIntroductionText:(NSString*)text{
+-(void)setIntroductionText:(NSString *)text{
     //文本赋值
-    _questionStem.text = text;
+    NSLog(@"次数 = %@",text);
+    if ([text isKindOfClass:[NSString class]]) {
+        _questionStem.text = text;
+    } else {
+//        _questionStem.attributedText = text;
+    }
     //设置label的最大行数
     _questionStem.numberOfLines = 0;
     
@@ -83,8 +88,8 @@
     NSArray *optionsArray = @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K"];
     [_optionButton setTitle:optionsArray[number] forState:UIControlStateNormal];
     
-    NSString *text = [Passport filterHTML:title];
-    [self setIntroductionText:text];
+    NSString *text = [Passport filterHTML:[Passport htmlEntityDecode:title]];
+    [self setIntroductionText:text];//[Passport dealHTML:title]
     
     if ([title rangeOfString:@"img"].location != NSNotFound) {
         _headerImageView.hidden = NO;

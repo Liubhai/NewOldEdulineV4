@@ -355,7 +355,6 @@
 
 + (NSString *)filterHTML:(NSString *)html
 {
-    
     NSScanner * scanner = [NSScanner scannerWithString:html];
     NSString * text = nil;
     while([scanner isAtEnd]==NO)
@@ -364,20 +363,38 @@
         [scanner scanUpToString:@"<" intoString:nil];
         //找到标签的结束位置
         [scanner scanUpToString:@">" intoString:&text];
-        
+
         //        //找到标签的起始位置
         //        [scanner scanUpToString:@"<" intoString:nil];
         //        //找到标签的结束位置
         //        [scanner scanUpToString:@">" intoString:&text];
-        
+
         //替换字符
         html = [html stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@>",text] withString:@""];
-        
+
         html = [html stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@""];
-        
-        
+
+
     }
     return html;
+}
+
+
++ (NSString *)htmlEntityDecode:(NSString *)string
+{
+    string = [string stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
+    string = [string stringByReplacingOccurrencesOfString:@"&#39;" withString:@"'"];
+    string = [string stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+    string = [string stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
+    string = [string stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"]; // Do this last so that, e.g. @"&amp;lt;" goes to @"&lt;" not @"<"
+    
+    return string;
+}
+
++ (NSAttributedString *)dealHTML:(NSString *)html {
+    NSString * htmlString = html;
+    NSAttributedString * attrStr = [[NSAttributedString alloc] initWithData:[htmlString dataUsingEncoding:NSUnicodeStringEncoding] options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSFontAttributeName : SYSTEMFONT(15)} documentAttributes:nil error:nil];
+    return attrStr;
 }
 
 

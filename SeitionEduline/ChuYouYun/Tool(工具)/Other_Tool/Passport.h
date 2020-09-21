@@ -31,6 +31,8 @@
 
 + (NSArray *)filterImage:(NSString *)html;
 + (NSString *)filterHTML:(NSString *)html;
++ (NSAttributedString *)dealHTML:(NSString *)html;
++ (NSString *)htmlEntityDecode:(NSString *)string;
 + (NSString *)getZZwithString:(NSString *)html;
 
 + (NSString *)getHexByDecimal:(NSInteger)decimal;
