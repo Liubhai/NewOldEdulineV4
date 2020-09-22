@@ -253,19 +253,19 @@
         headBtn.tag = 2;
         headBtn.clipsToBounds = YES;
         headBtn.layer.cornerRadius = 20;
-        [cell addSubview:headBtn];
+        [cell.contentView addSubview:headBtn];
         
         UIImageView * buddleImageView =[[UIImageView alloc]init];
         buddleImageView.tag=5;
-        [cell addSubview:buddleImageView];
+        [cell.contentView addSubview:buddleImageView];
         
         UILabel * textLbl =[[UILabel alloc]init];
         textLbl.tag=10;
-        [cell addSubview:textLbl];
+        [cell.contentView addSubview:textLbl];
         
         UILabel *dateLbl = [[UILabel alloc]init];
         dateLbl.tag = 7;
-        [cell addSubview:dateLbl];
+        [cell.contentView addSubview:dateLbl];
     }
     NSString *fromStr = [self.fromArr objectAtIndex:indexPath.row];
     

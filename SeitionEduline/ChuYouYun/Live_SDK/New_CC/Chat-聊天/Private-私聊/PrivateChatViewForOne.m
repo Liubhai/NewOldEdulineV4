@@ -428,7 +428,7 @@
 //        make.edges.equalTo(head);
 //    }];
 //    //设置头像的图片-----end
-//    [cell addSubview:head];
+//    [cell.contentView addSubview:head];
 //    if(fromSelf) {//消息方是自己,头像居右
 //        [head mas_makeConstraints:^(MASConstraintMaker *make) {
 //            make.right.mas_equalTo(cell).offset(-CCGetRealFromPt(30));
@@ -481,7 +481,7 @@
 //    
 //    //设置气泡
 //    UIButton *bgButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [cell addSubview:bgButton];
+//    [cell.contentView addSubview:bgButton];
 //    
 //    //判断是否有图片
 //    BOOL haveImg = [dialog.msg containsString:@"[img_"];

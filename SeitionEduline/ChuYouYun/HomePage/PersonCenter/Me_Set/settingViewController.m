@@ -255,8 +255,8 @@
             NSString *imgUrl = [NSString stringWithFormat:@"%@",[_allDic stringValueForKey:@"avatar_middle"]];
             _lbl.text = [_allDic stringValueForKey:@"uname"];
             [_btn sd_setBackgroundImageWithURL:[NSURL URLWithString:imgUrl] forState:0 placeholderImage:nil];
-            [cell addSubview:_btn];
-            [cell addSubview:_lbl];
+            [cell.contentView addSubview:_btn];
+            [cell.contentView addSubview:_lbl];
             return cell;
         } else if (indexPath.row == 1) {
             static NSString *identifier = @"Cell";
@@ -283,9 +283,9 @@
                 numberLbl.textAlignment = NSTextAlignmentRight;
                 numberLbl.textColor = [UIColor grayColor];
                 
-                [cell addSubview:btn];
-                [cell addSubview:lbl];
-                [cell addSubview:numberLbl];
+                [cell.contentView addSubview:btn];
+                [cell.contentView addSubview:lbl];
+                [cell.contentView addSubview:numberLbl];
             }
             return cell;
         } else {
@@ -314,7 +314,7 @@
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 UILabel *numberLbl = [[UILabel alloc]initWithFrame:CGRectMake(17, 0, MainScreenWidth-30, 60)];
                 numberLbl.text = array[0];
-                [cell addSubview:numberLbl];
+                [cell.contentView addSubview:numberLbl];
             }else{
                 //初始化开关控件，CGRectMake(x坐标，y坐标，宽，高)
                 UISwitch *mySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(MainScreenWidth - 60, 10, 150, 40)];
@@ -337,8 +337,8 @@
                 //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 UILabel *numberLbl = [[UILabel alloc]initWithFrame:CGRectMake(17, 0, MainScreenWidth-30,60)];
                 numberLbl.text = array[1];
-                [cell addSubview:numberLbl];
-                [cell addSubview:mySwitch];
+                [cell.contentView addSubview:numberLbl];
+                [cell.contentView addSubview:mySwitch];
                 [mySwitch setSize:mySwitch.size];
                 mySwitch.center = CGPointMake(MainScreenWidth - 20 - mySwitch.width / 2.0, 60 / 2.0);
                 
@@ -358,7 +358,7 @@
                 [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
                 UILabel *numberLbl = [[UILabel alloc]initWithFrame:CGRectMake(17, 12, MainScreenWidth-30, 21)];
                 numberLbl.text = array[indexPath.row];
-                [cell addSubview:numberLbl];
+                [cell.contentView addSubview:numberLbl];
                 
             }else if  (indexPath.row == 1){
                 
@@ -366,7 +366,7 @@
                 [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
                 UILabel *numberLbl = [[UILabel alloc]initWithFrame:CGRectMake(17, 12, 125, 21)];
                 numberLbl.text = array[indexPath.row];
-                [cell addSubview:numberLbl];
+                [cell.contentView addSubview:numberLbl];
                 
                 //添加缓存大小的按钮
                 
@@ -380,14 +380,14 @@
                 }
                 
                 _sizeLabel.textAlignment = NSTextAlignmentRight;
-                [cell addSubview:_sizeLabel];
+                [cell.contentView addSubview:_sizeLabel];
             } else if (indexPath.row == 2) {
                 cell = [[UITableViewCell alloc]initWithStyle:0 reuseIdentifier:identifier];
                 [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
                 UILabel *numberLbl = [[UILabel alloc]initWithFrame:CGRectMake(17, 12, MainScreenWidth-30, 21)];
                 numberLbl.text = array[indexPath.row];
                 numberLbl.textColor = [UIColor redColor];
-                [cell addSubview:numberLbl];
+                [cell.contentView addSubview:numberLbl];
             }
             
         }
@@ -403,7 +403,7 @@
             UILabel *numberLbl = [[UILabel alloc]initWithFrame:CGRectMake((self.view.frame.size.width-100)/2+20, (60-21)/2, 100, 21)];
             numberLbl.textColor = [UIColor whiteColor];
             numberLbl.text = @"退出账号";
-            [cell addSubview:numberLbl];
+            [cell.contentView addSubview:numberLbl];
         }
         return cell;
     }

@@ -167,7 +167,7 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     for (int i=0; i<[_cateGorryArr[indexPath.section][@"child"] count]; i++) {
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake((i%3)*_tableView.frame.size.width/3,30*(i/3),_tableView.frame.size.width/3,30)];
-        [cell addSubview:btn];
+        [cell.contentView addSubview:btn];
         btn.titleLabel.font = Font(12);
         [btn setTitle:_cateGorryArr[indexPath.section][@"child"][i][@"title"] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];

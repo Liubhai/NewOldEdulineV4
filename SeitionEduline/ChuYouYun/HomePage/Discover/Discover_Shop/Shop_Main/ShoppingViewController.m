@@ -929,7 +929,7 @@
         
         UIView *cellView = [[UIView alloc] initWithFrame:CGRectMake(SpaceBaside + (i % 2) * (cellW + SpaceBaside), SpaceBaside + (i / 2) * (cellH + SpaceBaside), cellW, cellH)];
         cellView.backgroundColor = [UIColor whiteColor];
-        [cell addSubview:cellView];
+        [cell.contentView addSubview:cellView];
         
         //添加图片
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cellW, cellH - 55)];
@@ -975,7 +975,7 @@
     if (_dataArray.count == 0) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight)];
         imageView.image = Image(@"云课堂_空数据");
-        [cell addSubview:imageView];
+        [cell.contentView addSubview:imageView];
         if (iPhoneX) {
             imageView.frame = CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - 200);
         }

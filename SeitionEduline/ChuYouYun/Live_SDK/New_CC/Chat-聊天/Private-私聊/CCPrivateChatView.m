@@ -350,7 +350,7 @@
 -(void)initCell:(UITableViewCell *)cell WithModel:(Dialogue *)privateDialogue{
     //添加头像
     UIImageView *headImage = [self createHeadImage:privateDialogue.fromuserrole tag:1];
-    [cell addSubview:headImage];
+    [cell.contentView addSubview:headImage];
     [headImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(cell).offset(CCGetRealFromPt(30));
         make.centerY.mas_equalTo(cell);
@@ -358,7 +358,7 @@
     }];
     //添加nameLabel
     UILabel *nameLabel = [self createNameLabel:privateDialogue tag:2];
-    [cell addSubview:nameLabel];
+    [cell.contentView addSubview:nameLabel];
     [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(headImage.mas_right).offset(CCGetRealFromPt(30));
         make.top.mas_equalTo(cell);
@@ -366,7 +366,7 @@
     }];
     //添加消息Label
     UILabel *msgLabel = [self createMsgLabel:privateDialogue tag:3];
-    [cell addSubview:msgLabel];
+    [cell.contentView addSubview:msgLabel];
     [msgLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(nameLabel);
         make.right.mas_equalTo(cell).offset(-CCGetRealFromPt(50));
@@ -375,7 +375,7 @@
     }];
     //添加timeLabel
     UILabel *timeLabel = [self createTimeLabel:privateDialogue tag:4];
-    [cell addSubview:timeLabel];
+    [cell.contentView addSubview:timeLabel];
     [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(cell.mas_right).offset(-CCGetRealFromPt(125));
         make.right.mas_equalTo(cell);
@@ -387,7 +387,7 @@
     footView.backgroundColor = CCRGBColor(238,238,238);
     footView.userInteractionEnabled = NO;
     footView.tag = 5;
-    [cell addSubview:footView];
+    [cell.contentView addSubview:footView];
     [footView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(cell);
         make.height.mas_equalTo(1);
@@ -397,7 +397,7 @@
     //设置新消息标识
     UIImageView *idot = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatHead_newMessage"]];
     idot.contentMode = UIViewContentModeScaleAspectFit;
-    [cell addSubview:idot];
+    [cell.contentView addSubview:idot];
     [idot mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.and.right.mas_equalTo(headImage);
         make.size.mas_equalTo(CGSizeMake(CCGetRealFromPt(20), CCGetRealFromPt(20)));

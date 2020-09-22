@@ -78,7 +78,7 @@
     _downButton.layer.borderWidth = 1;
     _downButton.layer.cornerRadius = 3;
     _downButton.layer.borderColor = [UIColor colorWithHexString:@"#e5e5e5"].CGColor;
-    [self addSubview:_downButton];
+    [self.contentView addSubview:_downButton];
     
 }
 
