@@ -39,6 +39,7 @@
     NSInteger currentQuestionArrayIndex;// 当前题型在 allQuestionArray 数组里面的下标
     NSInteger currentQuestionIndex;// 当前题目在当前题型数组里面的下标
     NSString *currentQuestionType;// 当前题型的类型 总共五种类型 单选 radio 多选 multiselect 判断 judge 完形填空 completion 论述 essays
+    BOOL lockStatus;// 开关锁 辅助 refreshNumber (保证在table刷新的时候header拉取的是准确的高度)
 }
 
 //点击暂停以及返回的按钮
@@ -789,7 +790,11 @@
     if (webViewHight == 0) {
         return 100 * WideEachUnit;
     } else {
-        return webViewHight + 40 * WideEachUnit;
+        if (refreshNumber == 0) {
+            return webViewHight + 40 * WideEachUnit;
+        } else {
+            return 100 * WideEachUnit;
+        }
     }
 }
 
@@ -812,7 +817,7 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 60 * WideEachUnit)];
-    if (webViewHight > 0) {
+    if (webViewHight > 0 && lockStatus) {
         headerView.frame = CGRectMake(0, 0, MainScreenWidth, 40 * WideEachUnit + webViewHight);
     }
     headerView.backgroundColor = [UIColor colorWithHexString:@"#f5f5f5"];
@@ -879,9 +884,12 @@
     
     //添加提干（这里需要用到webView "因为可能会有图片的原因"）
     self.chooseHeaderWebView.frame = CGRectMake(10 * WideEachUnit, 30 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit, 30 * WideEachUnit);
-    if (webViewHight > 0) {
+    if (webViewHight > 0 && lockStatus) {
         self.chooseHeaderWebView.frame = CGRectMake(10 * WideEachUnit, 30 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit, webViewHight);
         self.chooseHeaderWebViewButton.frame = CGRectMake(0, 0, MainScreenWidth - 20 * WideEachUnit, webViewHight);
+    } else {
+        self.chooseHeaderWebView.frame = CGRectMake(10 * WideEachUnit, 30 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit, 30 * WideEachUnit);
+        self.chooseHeaderWebViewButton.frame = CGRectMake(0, 0, MainScreenWidth - 20 * WideEachUnit, 30 * WideEachUnit);
     }
     self.chooseHeaderWebView.backgroundColor = [UIColor whiteColor];
     [headerView addSubview:self.chooseHeaderWebView];
@@ -1646,27 +1654,28 @@
 #pragma mark --- UIWebViewDelegate
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    CGRect frame = self.chooseHeaderWebView.frame;
-    frame.size.width = MainScreenWidth - 20 * WideEachUnit;
-    frame.size.height = 1 * WideEachUnit;
-    //    webView.scrollView.scrollEnabled = NO;
-    webView.frame = frame;
-    frame.size.height = webView.scrollView.contentSize.height;
-    NSLog(@"frame = %@", [NSValue valueWithCGRect:frame]);
-    webView.frame = frame;
-    webViewHight = frame.size.height;
-
-
-
-    //    self.chooseHeaderWebView.frame = CGRectMake(10 * WideEachUnit, 30 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit, 30 * WideEachUnit);
-    if (refreshNumber == 0) {
-        [_chooseTableView reloadData];
-        refreshNumber = 1;
-    } else {
-        refreshNumber = 0;
-    }
+//    CGRect frame = self.chooseHeaderWebView.frame;
+//    frame.size.width = MainScreenWidth - 20 * WideEachUnit;
+//    frame.size.height = 1 * WideEachUnit;
+//    //    webView.scrollView.scrollEnabled = NO;
+//    webView.frame = frame;
+//    frame.size.height = webView.scrollView.contentSize.height;
+//    NSLog(@"frame = %@", [NSValue valueWithCGRect:frame]);
+//    webView.frame = frame;
+//    webViewHight = frame.size.height;
+    
+    [webView evaluateJavaScript:@"document.body.offsetHeight;" completionHandler:^(NSString *height, NSError * _Nullable error) {
+        webViewHight = [height floatValue] + 20;
+        if (refreshNumber == 0) {
+            lockStatus = YES;
+            [_chooseTableView reloadData];
+            refreshNumber = 1;
+        } else {
+            refreshNumber = 0;
+            lockStatus = NO;
+        }
+    }];
 }
-
 
 #pragma mark --- 事件处理
 
