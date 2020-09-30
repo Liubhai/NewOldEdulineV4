@@ -484,14 +484,16 @@
     [TKProgressHUD showMessag:@"请稍等..." toView:self.view];
     WS(weakSelf)
     _iapManager.controlLoadingBlock = ^(BOOL status, NSString *message) {
-        [TKProgressHUD hideHUDForView:weakSelf.view];
-        if (status) {
-            /// 更新用户积分
-            [weakSelf getUsersCount];
-            [TKProgressHUD showSuccess:message toView:weakSelf.view];
-        } else {
-            [TKProgressHUD showError:message toView:weakSelf.view];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [TKProgressHUD hideHUDForView:weakSelf.view];
+            if (status) {
+                /// 更新用户积分
+                [weakSelf getUsersCount];
+                [TKProgressHUD showSuccess:message toView:weakSelf.view];
+            } else {
+                [TKProgressHUD showError:message toView:weakSelf.view];
+            }
+        });
     };
 
     [_iapManager startPurchWithID:_productID completeHandle:^(SIAPPurchType type,NSData *data) {

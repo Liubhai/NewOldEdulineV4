@@ -196,6 +196,10 @@ static bool hasAddObersver = NO;
     if([product count] <= 0){
         [self addLog:@"didReceiveResponse 没有商品"];
         NSLog(@"--------------没有商品------------------");
+        if (self.controlLoadingBlock) {
+            self.controlLoadingBlock(NO, @"没有商品");
+        }
+
         return;
     }
     
