@@ -28,6 +28,8 @@
 @interface OfflineDetailViewController ()<UIScrollViewDelegate> {
     NSString  *shareUrl;
     UIImageView *shareImageView;
+    
+    BOOL shouldPop; //课程禁用时候返回上一级页面
 }
 
 @property (strong ,nonatomic)UIView       *headerView;
@@ -986,6 +988,21 @@
                 _dict = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject];
             }
         }
+        
+        if (!SWNOTEmptyDictionary(_dict)) {
+            if (shouldPop) {
+                return;
+            } else {
+                shouldPop = YES;
+            }
+            // 课程数据不对 返回上一级页面
+            [self showHudInView:self.view showHint:@"课程已不存在"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            return;
+        }
+        
         _collectStr = [_dict stringValueForKey:@"is_collect"];
         if ([_collectStr integerValue] == 1) {//已经收藏
             [_collectButton setImage:Image(@"ic_collect_press@3x") forState:UIControlStateNormal];

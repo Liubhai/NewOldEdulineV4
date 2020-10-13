@@ -81,6 +81,8 @@
     NSInteger eventTime;
     NSTimer *eventTimer;
     BaseClass *base;
+    
+    BOOL shouldPop; //课程禁用时候返回上一级页面
 }
 
 @property (strong ,nonatomic)UIView   *navigationView;
@@ -2221,6 +2223,19 @@
             } else {
                 wekself.videoDataSource = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject];
             }
+        }
+        if (!SWNOTEmptyDictionary(wekself.videoDataSource)) {
+            if (shouldPop) {
+                return;
+            } else {
+                shouldPop = YES;
+            }
+            // 课程数据不对 返回上一级页面
+            [self showHudInView:self.view showHint:@"课程已不存在"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            return;
         }
         wekself.schoolInfo = [NSDictionary dictionaryWithDictionary:[wekself.videoDataSource objectForKey:@"school_info"]];
         wekself.imageUrl = [wekself.videoDataSource stringValueForKey:@"cover"];

@@ -378,6 +378,16 @@
                 _originDict = [NSDictionary dictionaryWithDictionary:[YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStrFromData:responseObject]];
             }
         }
+        
+        if (!SWNOTEmptyDictionary(_originDict)) {
+            // 课程数据不对 返回上一级页面
+            [self showHudInView:self.view showHint:@"课程已不存在"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            return;
+        }
+        
         [self makeHeaderView];
         [_tableView headerEndRefreshing];
         [_tableView reloadData];
