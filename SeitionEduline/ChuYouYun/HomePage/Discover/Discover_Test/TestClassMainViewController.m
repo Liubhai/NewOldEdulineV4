@@ -672,6 +672,10 @@
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         [TKProgressHUD hideAllHUDsForView:[UIApplication sharedApplication].keyWindow animated:YES];
         _dataSource = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject];
+        if ([[_dataSource objectForKey:@"code"] integerValue] == 0) {
+            [TKProgressHUD showError:[_dataSource objectForKey:@"msg"] toView:self.view];
+            return;
+        }
         if ([_dataSource dictionaryValueForKey:@"paper_options"].allKeys.count == 0) {
             [TKProgressHUD showError:@"考试数据为空" toView:self.view];
             return ;
