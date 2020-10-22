@@ -868,7 +868,7 @@ static NSString *cellID = @"cell";
             if (!cell) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
             }
-            [cell removeAllSubviews];
+            [cell.contentView removeAllSubviews];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.backgroundColor = [UIColor whiteColor];
             CGFloat TeaViewWidth = 115;
@@ -932,7 +932,7 @@ static NSString *cellID = @"cell";
             if (!cell) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
             }
-            [cell removeAllSubviews];
+            [cell.contentView removeAllSubviews];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.backgroundColor = [UIColor whiteColor];
             
