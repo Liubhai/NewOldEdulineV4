@@ -51,6 +51,7 @@
     _JTLabel.font = [UIFont systemFontOfSize:14 * WideEachUnit];
     _JTLabel.textColor = [UIColor colorWithHexString:@"#656565"];
     _JTLabel.backgroundColor = [UIColor whiteColor];
+    _JTLabel.numberOfLines = 0;
     [self addSubview:_JTLabel];
     
     
@@ -96,7 +97,17 @@
 //    _JTLabel.text =  [emotionjiexi jiexienmojconent:[dict stringValueForKey:@"description"] font:[UIFont systemFontOfSize:15]];
 //    _kinsLabel.text = @"155点赞.88评论";
     _JTLabel.text = [dict stringValueForKey:@"description"];
+    _JTLabel.numberOfLines = 0;
+    _JTLabel.frame = CGRectMake(15 * WideEachUnit, CGRectGetMaxY(_HeadImage.frame) + 10 * WideEachUnit, MainScreenWidth - 30 * WideEachUnit, 30 * WideEachUnit);
+    [_JTLabel sizeToFit];
+    if (_JTLabel.height < 30 *WideEachUnit) {
+        _JTLabel.frame = CGRectMake(15 * WideEachUnit, CGRectGetMaxY(_HeadImage.frame) + 10 * WideEachUnit, MainScreenWidth - 30 * WideEachUnit, 30 * WideEachUnit);
+    } else {
+        _JTLabel.frame = CGRectMake(15 * WideEachUnit, CGRectGetMaxY(_HeadImage.frame) + 10 * WideEachUnit, MainScreenWidth - 30 * WideEachUnit, _JTLabel.height);
+    }
     _kinsLabel.text = [NSString stringWithFormat:@"%@点赞.%@评论",[dict stringValueForKey:@"help_count"],[dict stringValueForKey:@"comment_count"]];
+    
+    [self setHeight:_TimeLabel.bottom + 3];
 }
 
 
