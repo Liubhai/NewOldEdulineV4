@@ -405,10 +405,10 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 120 * WideEachUnit;
-//    UITableViewCell *cell = [self tableView:self.tableView cellForRowAtIndexPath:indexPath];
-//    return cell.frame.size.height;
+    UITableViewCell *cell = [self tableView:self.tableView cellForRowAtIndexPath:indexPath];
+    return cell.frame.size.height;
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString * cellStr = @"WDTableViewCell";
