@@ -797,7 +797,6 @@
 #pragma mark --- 网络请求
 //考试交卷
 - (void)netWorkExamsSubmitExams {
-    [self manageAnswer];
     NSString *endUrlStr = YunKeTang_Exams_exams_submitExams;
     NSString *allUrlStr = [YunKeTang_Api_Tool YunKeTang_GetFullUrl:endUrlStr];
     
