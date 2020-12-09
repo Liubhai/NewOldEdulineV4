@@ -13,7 +13,7 @@
 #import "BigWindCar.h"
 #import "YKTWebView.h"
 
-@interface ClassInfoDetailVC ()<ZLPhotoPickerBrowserViewControllerDelegate,ZLPhotoPickerBrowserViewControllerDataSource, WKNavigationDelegate> {
+@interface ClassInfoDetailVC ()<ZLPhotoPickerBrowserViewControllerDelegate,ZLPhotoPickerBrowserViewControllerDataSource, WKNavigationDelegate,WKUIDelegate> {
     NSMutableArray* _webImageUrlStrArray;
     BOOL isClassImageTap;
     NSString *_imageBigUrl;
@@ -63,6 +63,8 @@
     _ClassIntroWeb.scrollView.scrollEnabled = NO;
     _ClassIntroWeb.scrollView.showsVerticalScrollIndicator = NO;
     _ClassIntroWeb.scrollView.showsHorizontalScrollIndicator = NO;
+    _ClassIntroWeb.navigationDelegate = self;
+    _ClassIntroWeb.UIDelegate = self;
     [_mainScroll addSubview:_ClassIntroWeb];
     if (@available(iOS 11.0, *)) {
         _mainScroll.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
@@ -101,6 +103,10 @@
         if (!SWNOTEmptyStr([_originDict objectForKey:@"album_intro"])) {
             content = @"";
         }
+    }
+    if ([content containsString:@"<p>"]) {
+        content = [content stringByReplacingOccurrencesOfString:@"<p>" withString:@""];
+        content = [content stringByReplacingOccurrencesOfString:@"</p>" withString:@""];
     }
     
     NSString *str = [NSString stringWithFormat:@"<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><meta name=\"viewport\" content=\"width=device-width,height=device-height,font-size:15px, user-scalable=no,initial-scale=1, minimum-scale=1, maximum-scale=1,target-densitydpi=device-dpi \"></head>"
