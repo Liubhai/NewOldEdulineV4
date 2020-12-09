@@ -35,6 +35,7 @@
     BOOL isClass;
     BOOL isMore;
     UIImage *faceImage;
+    NSInteger pageCount;
 }
 
 
@@ -113,6 +114,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _dataArray = [NSMutableArray new];
+    pageCount = 1;
+    
     [self interFace];
     [self addNav];
     [self addHeaderView];
@@ -228,6 +233,9 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.rowHeight = 75 * WideEachUnit;
+    [_tableView addHeaderWithTarget:self action:@selector(netWorkExamsGetPaperList)];
+    [_tableView addFooterWithTarget:self action:@selector(netWorkExamsGetPaperListMore)];
+    _tableView.mj_footer.hidden = YES;
     [self.view addSubview:_tableView];
     
     //iOS 11 适配
@@ -594,6 +602,7 @@
 #pragma mark --- 网络请求
 //考试试题的列表
 - (void)netWorkExamsGetPaperList {
+    pageCount = 1;
     NSString *endUrlStr = YunKeTang_Exams_exams_getPaperList;
     NSString *allUrlStr = [YunKeTang_Api_Tool YunKeTang_GetFullUrl:endUrlStr];
     
@@ -608,6 +617,8 @@
     } else {
         [mutabDict setObject:_moreTypeID forKey:@"level"];
     }
+    [mutabDict setObject:@(pageCount) forKey:@"page"];
+    [mutabDict setObject:@"20" forKey:@"count"];
     
     NSString *oath_token_Str = nil;
     if (UserOathToken) {
@@ -622,12 +633,16 @@
     
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        if (_tableView.mj_header.isRefreshing) {
+            [_tableView.mj_header endRefreshing];
+        }
         NSDictionary *dict =  [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr_Before:responseObject];
         if ([[dict stringValueForKey:@"code"] integerValue] == 1) {
+            [_dataArray removeAllObjects];
             if ([[dict arrayValueForKey:@"data"] isKindOfClass:[NSArray class]]) {
-                _dataArray = (NSMutableArray *) [dict arrayValueForKey:@"data"];
+                [_dataArray addObjectsFromArray:[dict arrayValueForKey:@"data"]];
             } else {
-                _dataArray = (NSMutableArray *) [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject];
+                [_dataArray addObjectsFromArray:(NSMutableArray *) [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject]];
             }
         }
         [_tableView reloadData];
@@ -637,7 +652,82 @@
             self.imageView.hidden = YES;
         }
         
+        if (_dataArray.count<20) {
+            _tableView.mj_footer.hidden = YES;
+        } else {
+            [_tableView.mj_footer setState:MJRefreshStateIdle];
+            _tableView.mj_footer.hidden = NO;
+        }
+        
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        if (_tableView.mj_header.isRefreshing) {
+            [_tableView.mj_header endRefreshing];
+        }
+    }];
+    [op start];
+}
+
+//考试试题的列表
+- (void)netWorkExamsGetPaperListMore {
+    pageCount = pageCount + 1;
+    NSString *endUrlStr = YunKeTang_Exams_exams_getPaperList;
+    NSString *allUrlStr = [YunKeTang_Api_Tool YunKeTang_GetFullUrl:endUrlStr];
+    
+    NSMutableDictionary *mutabDict = [NSMutableDictionary dictionaryWithCapacity:0];
+    [mutabDict setObject:_moduleID forKey:@"module_id"];
+    
+    if (_typeID) {
+         [mutabDict setObject:_typeID forKey:@"subject_id"];
+    }
+    if (_moreTypeID == nil) {
+        [mutabDict setObject:@"0" forKey:@"level"];
+    } else {
+        [mutabDict setObject:_moreTypeID forKey:@"level"];
+    }
+    [mutabDict setObject:@(pageCount) forKey:@"page"];
+    [mutabDict setObject:@"20" forKey:@"count"];
+    
+    NSString *oath_token_Str = nil;
+    if (UserOathToken) {
+        oath_token_Str = [NSString stringWithFormat:@"%@:%@",UserOathToken,UserOathTokenSecret];
+    }
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:allUrlStr]];
+    [request setHTTPMethod:NetWay];
+    NSString *encryptStr = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetEncryptStr:mutabDict];
+    [request setValue:encryptStr forHTTPHeaderField:HeaderKey];
+    [request setValue:oath_token_Str forHTTPHeaderField:OAUTH_TOKEN];
+    
+    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        if (_tableView.mj_footer.isRefreshing) {
+            [_tableView.mj_footer endRefreshing];
+        }
+        NSDictionary *dict =  [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr_Before:responseObject];
+        NSMutableArray *pass = [NSMutableArray new];
+        if ([[dict stringValueForKey:@"code"] integerValue] == 1) {
+            if ([[dict arrayValueForKey:@"data"] isKindOfClass:[NSArray class]]) {
+                [pass addObjectsFromArray:(NSMutableArray *) [dict arrayValueForKey:@"data"]];
+            } else {
+                [pass addObjectsFromArray:(NSMutableArray *) [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject]];
+            }
+        }
+        [_dataArray addObjectsFromArray:pass];
+        [_tableView reloadData];
+        if (pass.count<20) {
+            [_tableView.mj_footer resetNoMoreData];
+        }
+        if (_dataArray.count == 0) {
+            self.imageView.hidden = NO;
+        } else {
+            self.imageView.hidden = YES;
+        }
+        
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+        pageCount--;
+        if (_tableView.mj_footer.isRefreshing) {
+            [_tableView.mj_footer endRefreshing];
+        }
     }];
     [op start];
 }
