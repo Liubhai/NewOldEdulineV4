@@ -23,9 +23,10 @@
 #import <UMCommon/UMCommon.h>
 #import <UMShare/UMShare.h>
 #import <UShareUI/UShareUI.h>
+#import "YKTWebView.h"
 
 
-@interface OfflineDetailViewController ()<UIScrollViewDelegate> {
+@interface OfflineDetailViewController ()<UIScrollViewDelegate,WKNavigationDelegate,WKUIDelegate> {
     NSString  *shareUrl;
     UIImageView *shareImageView;
 }
@@ -77,6 +78,10 @@
 @property (strong ,nonatomic)UIButton     *buyButton;
 @property (strong ,nonatomic)NSString     *schoolID;//分享链接的时候要用到
 @property (strong ,nonatomic)NSString     *line_switch;
+
+
+
+@property (strong ,nonatomic) YKTWebView *ClassIntroWeb;
 
 
 
@@ -342,7 +347,15 @@
     _detail.textColor = [UIColor blackColor];
     _detail.backgroundColor = [UIColor whiteColor];
     _detail.font = Font(13);
-    [detailView addSubview:_detail];
+//    [detailView addSubview:_detail];
+    
+    _ClassIntroWeb = [[YKTWebView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 1)];
+    _ClassIntroWeb.scrollView.scrollEnabled = NO;
+    _ClassIntroWeb.scrollView.showsVerticalScrollIndicator = NO;
+    _ClassIntroWeb.scrollView.showsHorizontalScrollIndicator = NO;
+    _ClassIntroWeb.navigationDelegate = self;
+    _ClassIntroWeb.UIDelegate = self;
+    [detailView addSubview:_ClassIntroWeb];
     
 }
 
@@ -616,13 +629,14 @@
         if (iPhone6) {
             _imageView.frame = CGRectMake(0, 550, MainScreenWidth,MainScreenHeight / 2);
         }
+        [_imageView setTop:_twoView.top + 40];
         _imageView.image = Image(@"云课堂_空数据 （小）");
         [_allScrollView addSubview:_imageView];
         _imageView.backgroundColor = [UIColor whiteColor];
         [_allScrollView bringSubviewToFront:_imageView];
         _imageView.hidden = YES;
         if ([_line_switch integerValue] == 1) {//关闭评论
-            _imageView.frame = CGRectMake(0, 300, MainScreenWidth,MainScreenHeight / 2);
+            _imageView.frame = CGRectMake(0, _twoView.top + 40, MainScreenWidth,MainScreenHeight / 2);
             _commentView.frame = CGRectMake(MainScreenWidth, 0, MainScreenWidth,300 * WideEachUnit);
             _detailAndCommentScrollView.frame = CGRectMake(0, 40 * WideEachUnit, MainScreenWidth, 40 * WideEachUnit + 300 * WideEachUnit);
             _commentHight = 300 * WideEachUnit + 220 * WideEachUnit;
@@ -833,7 +847,7 @@
     _detailAndCommentScrollView.contentOffset = CGPointMake(0, 0);
     _detailButton.selected = YES;
     _commentButton.selected = NO;
-    _twoView.frame = CGRectMake(0, CGRectGetMaxY(_oneView.frame) + 10 * WideEachUnit, MainScreenWidth, 50 * WideEachUnit + _detailHight + 10 * WideEachUnit);
+    _twoView.frame = CGRectMake(0, CGRectGetMaxY(_oneView.frame) + 10 * WideEachUnit, MainScreenWidth, 50 * WideEachUnit + _ClassIntroWeb.height + 10 + 10 * WideEachUnit);
     _allScrollView.contentSize = CGSizeMake(MainScreenWidth, CGRectGetMaxY(_twoView.frame) + 10 * WideEachUnit);
     _imageView.hidden = YES;
 }
@@ -927,8 +941,8 @@
         _detailButton.selected = YES;
         _commentButton.selected = NO;
         _imageView.hidden = YES;
-        _detailAndCommentScrollView.frame = CGRectMake(0, 40 * WideEachUnit, MainScreenWidth,50 * WideEachUnit + _detailHight + 100 * WideEachUnit);
-        _twoView.frame = CGRectMake(0, CGRectGetMaxY(_oneView.frame) + 10 * WideEachUnit, MainScreenWidth, 50 * WideEachUnit + _detailHight);
+        _detailAndCommentScrollView.frame = CGRectMake(0, 40 * WideEachUnit, MainScreenWidth,50 * WideEachUnit + _ClassIntroWeb.height + 100 * WideEachUnit);
+        _twoView.frame = CGRectMake(0, CGRectGetMaxY(_oneView.frame) + 10 * WideEachUnit, MainScreenWidth, 50 * WideEachUnit + _ClassIntroWeb.height + 100 * WideEachUnit);
         _allScrollView.contentSize = CGSizeMake(MainScreenWidth, CGRectGetMaxY(_twoView.frame) + 10 * WideEachUnit + 100 * WideEachUnit);
     }
     
@@ -994,7 +1008,8 @@
         }
         [self addShareImageView];
         [self oneViewGet];
-        [self twoViewGet];
+//        [self twoViewGet];
+        [self loadClassWebView];
         [self addDownView];
         if ([[_dict stringValueForKey:@"is_buy"] integerValue] == 1) {
             [_buyButton setTitle:@"已解锁" forState:UIControlStateNormal];
@@ -1237,6 +1252,79 @@
 - (void)getHight:(NSNotification *)not {
     _cellHight = [not.object floatValue];
     [_tableView reloadData];
+}
+
+- (void)loadClassWebView {
+    NSString *allStr = [NSString stringWithFormat:@"%@",_dict[@"course_intro"]];
+    NSString *replaceStr = [NSString stringWithFormat:@"<img src=\"%@/data/upload",EncryptHeaderUrl];
+    NSString *textStr = [allStr stringByReplacingOccurrencesOfString:@"<img src=\"/data/upload" withString:replaceStr];
+    NSString *content = [NSString stringWithFormat:@"%@",textStr];
+    if (!SWNOTEmptyDictionary(_dict)) {
+        content = @"";
+    } else {
+        if (!SWNOTEmptyStr([_dict objectForKey:@"course_intro"])) {
+            content = @"";
+        }
+    }
+    if ([content containsString:@"<p>"]) {
+        content = [content stringByReplacingOccurrencesOfString:@"<p>" withString:@""];
+        content = [content stringByReplacingOccurrencesOfString:@"</p>" withString:@""];
+    }
+    
+    NSString *str = [NSString stringWithFormat:@"<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><meta name=\"viewport\" content=\"width=device-width,height=device-height,font-size:15px, user-scalable=no,initial-scale=1, minimum-scale=1, maximum-scale=1,target-densitydpi=device-dpi \"></head>"
+                     "<body>"
+                     "<script type='text/javascript'>"
+                     "window.onload = function(){\n"
+                     "var $img = document.getElementsByTagName('img');\n"
+                     "for(var p in  $img){\n"
+                     " $img[p].style.width = '100%%';\n"
+                     "$img[p].style.height ='auto'\n"
+                     "}\n"
+                     "}"
+                     "</script>%@"
+                     "</body>"
+                     "</html>",content];
+    [self.ClassIntroWeb loadHTMLString:str baseURL:nil];
+}
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    if (webView == _ClassIntroWeb) {
+        // 获取图片的JS
+        static  NSString * const jsGetImages =
+        @"function getImages(){\
+        var objs = document.getElementsByTagName(\"img\");\
+        var imgScr = '';\
+        for(var i=0;i<objs.length;i++){\
+        if(objs[i].class != 'emot')\
+        imgScr = imgScr + objs[i].src + '+';\
+        };\
+        return imgScr;\
+        };";
+        
+        // 获取原图的JS
+        static  NSString * const jsGetOriginalImages =
+        @"function getOriginalImages(){\
+        var objs = document.getElementsByTagName(\"img\");\
+        var imgScr = '';\
+        for(var i=0;i<objs.length;i++){\
+        if(objs[i].class != 'emot')\
+        imgScr = imgScr + objs[i].getAttribute('_src') + '+';\
+        };\
+        return imgScr;\
+        };";
+        
+        
+        [webView evaluateJavaScript:jsGetImages completionHandler:^(id info, NSError * _Nullable error) {
+            
+        }];
+        [webView evaluateJavaScript:jsGetOriginalImages completionHandler:^(id info, NSError * _Nullable error) {
+            
+        }];
+        [webView evaluateJavaScript:@"document.body.offsetHeight;" completionHandler:^(NSString *height, NSError * _Nullable error) {
+            [_ClassIntroWeb setHeight:[height floatValue] + 20];
+//            _mainScroll.contentSize = CGSizeMake(MainScreenWidth, _ClassIntroWeb.bottom > _tableHeight ? _ClassIntroWeb.bottom : (_tableHeight + 10));
+        }];
+    }
 }
 
 @end
