@@ -42,9 +42,9 @@
     [self addSubview:_name];
     
     //具体内容
-    _content = [[UILabel alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 52 * WideEachUnit , MainScreenWidth - 120 * WideEachUnit, 14 * WideEachUnit)];
+    _content = [[UILabel alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 52 * WideEachUnit , MainScreenWidth - 30, 14 * WideEachUnit)];
     [self addSubview:_content];
-    _content.numberOfLines = 1;
+    _content.numberOfLines = 0;
     _content.text = @"老师讲的好";
     _content.textColor = [UIColor colorWithHexString:@"#333"];
     _content.font = Font(14 * WideEachUnit);
@@ -91,6 +91,17 @@
         [_praiseButton setTitle:[dict stringValueForKey:@"qst_help_count"] forState:UIControlStateNormal];
         [_commentsButton setTitle:[dict stringValueForKey:@"qst_comment_count"] forState:UIControlStateNormal];
     }
+    
+    _content.frame = CGRectMake(15 * WideEachUnit, 52 * WideEachUnit , MainScreenWidth - 30, 14 * WideEachUnit);
+    _content.numberOfLines = 0;
+    [_content sizeToFit];
+    _content.frame = CGRectMake(15 * WideEachUnit, 52 * WideEachUnit , MainScreenWidth - 30, _content.height);
+    
+    [_time setTop:CGRectGetMaxY(_content.frame) + 10 * WideEachUnit];
+    [_praiseButton setTop:CGRectGetMaxY(_content.frame) + 10 * WideEachUnit];
+    [_commentsButton setTop:CGRectGetMaxY(_content.frame) + 10 * WideEachUnit];
+    
+    [self setHeight:_praiseButton.bottom + 5];
 }
 
 
