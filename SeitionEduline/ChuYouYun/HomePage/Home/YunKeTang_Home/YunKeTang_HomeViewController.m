@@ -200,7 +200,7 @@ static NSString *cellID = @"cell";
     _imageScrollView.pagingEnabled = YES;
     _imageScrollView.showsHorizontalScrollIndicator = NO;
     _imageScrollView.showsVerticalScrollIndicator = NO;
-    _imageScrollView.contentSize = CGSizeMake(MainScreenWidth * 3, MainScreenWidth * 2 / 5);
+    _imageScrollView.contentSize = CGSizeMake(MainScreenWidth, MainScreenWidth * 2 / 5);
     
     // 网络加载 --- 创建自定义图片的pageControlDot的图片轮播器
     SDCycleScrollView *cycleScrollView3 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenWidth * 2 / 5) delegate:self placeholderImage:[UIImage imageNamed:@"站位图"]];
