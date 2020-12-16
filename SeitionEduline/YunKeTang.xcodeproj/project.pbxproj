@@ -25972,6 +25972,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 2VGCGZZ87Y;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
@@ -26082,7 +26083,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = XXJKP34A4A;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = N5623JY89Q;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -26175,7 +26177,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiangrenonline.com;
 				PRODUCT_NAME = "匠人网校";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = jiangrenjiaoyuAppstoreDis;
+				PROVISIONING_PROFILE_SPECIFIER = jiangrenonlineAppStoreDis;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7s armv7 arm64";
