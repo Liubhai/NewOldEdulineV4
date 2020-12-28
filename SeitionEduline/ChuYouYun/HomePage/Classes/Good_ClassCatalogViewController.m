@@ -454,7 +454,7 @@
                     if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 6) {
                         [self addRecode];
                     } else {
-                        self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                        self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                         [self.timer fire];
                     }
                 } else {
@@ -472,7 +472,7 @@
                 if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 6) {
                     [self addRecode];
                 } else {
-                    self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                    self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                     [self.timer fire];
                 }
             }
@@ -495,7 +495,7 @@
                             if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 5) {
                                 [self addRecode];
                             } else {
-                                self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                                self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                                 [self.timer fire];
                             }
                         } else {
@@ -508,7 +508,7 @@
                         if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 6) {
                             [self addRecode];
                         } else {
-                            self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                            self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                             [self.timer fire];
                         }
                     }
@@ -591,7 +591,7 @@
                             if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 6) {
                                 [self addRecode];
                             } else {
-                                self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                                self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                                 [self.timer fire];
                             }
                         } else {
@@ -609,7 +609,7 @@
                         if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 6) {
                             [self addRecode];
                         } else {
-                            self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                            self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                             [self.timer fire];
                         }
                     }
@@ -632,7 +632,7 @@
                                     if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 5) {
                                         [self addRecode];
                                     } else {
-                                        self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                                        self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                                         [self.timer fire];
                                     }
                                 } else {
@@ -645,7 +645,7 @@
                                 if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 6) {
                                     [self addRecode];
                                 } else {
-                                    self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                                    self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                                     [self.timer fire];
                                 }
                             }
@@ -710,7 +710,7 @@
                     if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 6) {
                         [self addRecode];
                     } else {
-                        self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                        self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                         [self.timer fire];
                     }
                 } else {
@@ -728,7 +728,7 @@
                 if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 6) {
                     [self addRecode];
                 } else {
-                    self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                    self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                     [self.timer fire];
                 }
             }
@@ -751,7 +751,7 @@
                             if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 5) {
                                 [self addRecode];
                             } else {
-                                self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                                self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                                 [self.timer fire];
                             }
                         } else {
@@ -764,7 +764,7 @@
                         if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 6) {
                             [self addRecode];
                         } else {
-                            self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                            self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                             [self.timer fire];
                         }
                     }
@@ -825,7 +825,7 @@
                             if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 6) {
                                 [self addRecode];
                             } else {
-                                self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                                self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                                 [self.timer fire];
                             }
                         } else {
@@ -843,7 +843,7 @@
                         if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 6) {
                             [self addRecode];
                         } else {
-                            self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                            self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                             [self.timer fire];
                         }
                     }
@@ -866,7 +866,7 @@
                                     if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 5) {
                                         [self addRecode];
                                     } else {
-                                        self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                                        self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                                         [self.timer fire];
                                     }
                                 } else {
@@ -879,7 +879,7 @@
                                 if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 6) {
                                     [self addRecode];
                                 } else {
-                                    self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                                    self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                                     [self.timer fire];
                                 }
                             }
@@ -1116,8 +1116,7 @@
 
 #pragma mark --- 添加记录
 - (void)addRecode {
-    recodeNum ++;
-    recodeNum ++;
+    recodeNum = recodeNum + 10;
     [self netWorkUserAddRecord];
 }
 
@@ -1376,7 +1375,7 @@
                 if ([[_cellDict stringValueForKey:@"type"] integerValue] == 3 || [[_cellDict stringValueForKey:@"type"] integerValue] == 4 || [[_cellDict stringValueForKey:@"type"] integerValue] == 5) {
                     [self addRecode];
                 } else {
-                    self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                    self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                     [self.timer fire];
                 }
             } else {
@@ -1832,7 +1831,7 @@
                 if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 5) {
                     [self addRecode];
                 } else {
-                    self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                    self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                     [self.timer fire];
                 }
             } else {
@@ -1845,7 +1844,7 @@
             if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 5) {
                 [self addRecode];
             } else {
-                self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                 [self.timer fire];
             }
         }
@@ -1863,7 +1862,7 @@
                         if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 5) {
                             [self addRecode];
                         } else {
-                            self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                            self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                             [self.timer fire];
                         }
                     } else {
@@ -1876,7 +1875,7 @@
                     if ([[cellDict stringValueForKey:@"type"] integerValue] == 3 || [[cellDict stringValueForKey:@"type"] integerValue] == 4 || [[cellDict stringValueForKey:@"type"] integerValue] == 5) {
                         [self addRecode];
                     } else {
-                        self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
+                        self.timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(addRecode) userInfo:nil repeats:YES];
                         [self.timer fire];
                     }
                 }
