@@ -26057,7 +26057,7 @@
 					"$(PROJECT_DIR)/ChuYouYun/Library/Umeng/share/share_ios_6.9.8/SocialLibraries/QQ",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 3.3;
+				MARKETING_VERSION = 3.4;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -26080,11 +26080,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 2VGCGZZ87Y;
+				DEVELOPMENT_TEAM = N5623JY89Q;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -26168,7 +26168,7 @@
 					"$(PROJECT_DIR)/ChuYouYun/Library/Umeng/share/share_ios_6.9.8/SocialLibraries/QQ",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 3.3;
+				MARKETING_VERSION = 3.4;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -26177,7 +26177,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiangrenonline.com;
 				PRODUCT_NAME = "匠人网校";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = appTongYongDis;
+				PROVISIONING_PROFILE_SPECIFIER = jiangrenonlineAppStoreDis;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7s armv7 arm64";

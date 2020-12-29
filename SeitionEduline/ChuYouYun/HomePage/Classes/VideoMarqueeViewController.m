@@ -34,7 +34,7 @@
         _marqueeLabel.backgroundColor = [UIColor clearColor];
         _marqueeLabel.text = [_dict stringValueForKey:@"content"];
         _marqueeLabel.textColor = [UIColor redColor];
-        _marqueeLabel.font = Font(12);
+        _marqueeLabel.font = Font(11);
         [self.view addSubview:_marqueeLabel];
     }    _dict = dict;
     return self;
@@ -74,7 +74,7 @@
         return;
     }
     
-    CGRect labelSize = [_marqueeLabel.text boundingRectWithSize:CGSizeMake(MainScreenWidth - 20 * WideEachUnit, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:12 * WideEachUnit]} context:nil];
+    CGRect labelSize = [_marqueeLabel.text boundingRectWithSize:CGSizeMake(MainScreenWidth - 20 * WideEachUnit, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:11 * WideEachUnit]} context:nil];
     _labelSize = labelSize;
 }
 
