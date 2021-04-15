@@ -723,7 +723,7 @@ typedef enum : NSUInteger {
         NSDictionary *dict = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr_Before:responseObject];
         if ([[dict stringValueForKey:@"code"] integerValue] == 1) {
             NSDictionary *pass = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject];
-            NSString *url = pass[@"video_address"];
+            NSString *url = SWNOTEmptyStr([pass objectForKey:@"downCcUrl"]) ? [pass objectForKey:@"downCcUrl"] : [pass objectForKey:@"video_address"];
             if (delete) {
                 [[ZBLM3u8Manager shareInstance] removeDownLoadFileUrlPath:url];
                 [self deleteVideoReloadData];

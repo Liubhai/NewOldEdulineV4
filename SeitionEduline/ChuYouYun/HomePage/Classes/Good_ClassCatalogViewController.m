@@ -554,7 +554,8 @@
             if ([[dict stringValueForKey:@"code"] integerValue] == 1) {
                 NSDictionary *pass = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject];
                 NSMutableDictionary *pass1 = [NSMutableDictionary dictionaryWithDictionary:_cellDict];
-                [pass1 setObject:[pass objectForKey:@"video_address"] forKey:@"video_address"];
+                
+                [pass1 setObject:SWNOTEmptyStr([pass objectForKey:@"downCcUrl"]) ? [pass objectForKey:@"downCcUrl"] : [pass objectForKey:@"video_address"] forKey:@"video_address"];
                 _cellDict = [NSDictionary dictionaryWithDictionary:pass1];
                 //点击了
                 //    self.didSele(@"didSele");
@@ -810,7 +811,7 @@
             if ([[dict stringValueForKey:@"code"] integerValue] == 1) {
                 NSDictionary *pass = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject];
                 NSMutableDictionary *pass1 = [NSMutableDictionary dictionaryWithDictionary:_cellDict];
-                [pass1 setObject:[pass objectForKey:@"video_address"] forKey:@"video_address"];
+                [pass1 setObject:SWNOTEmptyStr([pass objectForKey:@"downCcUrl"]) ? [pass objectForKey:@"downCcUrl"] : [pass objectForKey:@"video_address"] forKey:@"video_address"];
                 _cellDict = [NSDictionary dictionaryWithDictionary:pass1];
                 
                 // 判断流程
