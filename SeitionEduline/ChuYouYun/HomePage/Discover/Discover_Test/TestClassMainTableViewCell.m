@@ -29,18 +29,18 @@
     _titleLabel.text = @"2014物业管理师考试参考答案";
     _titleLabel.font = Font(15 * WideEachUnit);
     _titleLabel.textColor = [UIColor colorWithHexString:@"#333"];
-    [self addSubview:_titleLabel];
+    [self.contentView addSubview:_titleLabel];
     
     //时间
     _personLabel = [[UILabel alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 46 * WideEachUnit, 120 * WideEachUnit, 13 * WideEachUnit)];
-    [self addSubview:_personLabel];
+    [self.contentView addSubview:_personLabel];
     _personLabel.text = @"更新时间：2016-10-10";
     _personLabel.font = Font(13 * WideEachUnit);
     _personLabel.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
     
     
     _subjectLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_personLabel.frame) + 50 * WideEachUnit, 46 * WideEachUnit,120 *  WideEachUnit, 13 * WideEachUnit)];
-    [self addSubview:_subjectLabel];
+    [self.contentView addSubview:_subjectLabel];
     _subjectLabel.text = @"更新时间：2016-10-10";
     _subjectLabel.font = Font(13 * WideEachUnit);
     _subjectLabel.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
@@ -92,23 +92,23 @@
     _typeLabel.layer.cornerRadius = 2;
     _typeLabel.font = SYSTEMFONT(10);
     _typeLabel.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_typeLabel];
+    [self.contentView addSubview:_typeLabel];
     
     //标题
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(_typeLabel.right + 2, 15, MainScreenWidth - 15 - 88 - (_typeLabel.right + 2), 18)];
     _titleLabel.text = @"2014物业管理师考试参考答案";
     _titleLabel.font = Font(17);
     _titleLabel.textColor = [UIColor colorWithHexString:@"#333"];
-    [self addSubview:_titleLabel];
+    [self.contentView addSubview:_titleLabel];
     _typeLabel.centerY = _titleLabel.centerY;
     
     _personIcon = [[UIImageView alloc] initWithFrame:CGRectMake(_typeLabel.left, 0, 17, 17)];
     _personIcon.image = Image(@"人数icon");
-    [self addSubview:_personIcon];
+    [self.contentView addSubview:_personIcon];
     
     //时间
     _personLabel = [[UILabel alloc] initWithFrame:CGRectMake(_personIcon.right + 1, _titleLabel.bottom + 12, 120, 14)];
-    [self addSubview:_personLabel];
+    [self.contentView addSubview:_personLabel];
     _personLabel.text = @"更新时间：2016-10-10";
     _personLabel.font = Font(14);
     _personLabel.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
@@ -117,10 +117,10 @@
     _subjectIcon = [[UIImageView alloc] initWithFrame:CGRectMake(_personLabel.right + 20, 0, 17, 17)];
     _subjectIcon.image = Image(@"考题 icon");
     _subjectIcon.centerY = _personIcon.centerY;
-    [self addSubview:_subjectIcon];
+    [self.contentView addSubview:_subjectIcon];
     
     _subjectLabel = [[UILabel alloc] initWithFrame:CGRectMake(_subjectIcon.right + 1, _personLabel.top,120 *  WideEachUnit, 14)];
-    [self addSubview:_subjectLabel];
+    [self.contentView addSubview:_subjectLabel];
     _subjectLabel.text = @"更新时间：2016-10-10";
     _subjectLabel.font = Font(14);
     _subjectLabel.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
@@ -131,7 +131,7 @@
     _doBackImage.contentMode = UIViewContentModeScaleAspectFill;
     _doBackImage.layer.masksToBounds = YES;
     _doBackImage.layer.cornerRadius = 41 / 2.0;
-    [self addSubview:_doBackImage];
+    [self.contentView addSubview:_doBackImage];
     
     _doButton = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth - 15 - 88, 15, 88, 27)];
     [_doButton setTitleColor:[UIColor whiteColor] forState:0];
@@ -143,7 +143,7 @@
     [_doButton addTarget:self action:@selector(testAction:) forControlEvents:UIControlEventTouchUpInside];
     _doButton.centerY = 75 * HigtEachUnit / 2.0;
     _doBackImage.center = _doButton.center;
-    [self addSubview:_doButton];
+    [self.contentView addSubview:_doButton];
 }
 
 - (void)testAction:(UIButton *)sender {
