@@ -12,13 +12,13 @@
 @interface Good_ClassCommentViewController : UIViewController
 
 @property (assign, nonatomic) CGFloat tabelHeight;
-@property (strong, nonatomic) Good_ClassMainViewController *vc;
+@property (weak, nonatomic) Good_ClassMainViewController *vc;
 @property (assign, nonatomic) BOOL cellTabelCanScroll;
 @property (assign, nonatomic) BOOL isNewClass;
 
 @property (strong ,nonatomic) STTableView     *tableView;
 
-@property (strong ,nonatomic)void(^vcHight)(CGFloat hight);
+@property (weak ,nonatomic)void(^vcHight)(CGFloat hight);
 -(instancetype)initWithNumID:(NSString *)ID;
 
 @end

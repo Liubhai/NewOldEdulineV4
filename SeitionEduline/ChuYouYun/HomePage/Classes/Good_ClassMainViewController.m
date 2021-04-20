@@ -2826,6 +2826,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    __weak Good_ClassMainViewController *weakself = self;
     if (_bg == nil) {
         _bg = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, sectionHeight)];
         _bg.backgroundColor = [UIColor whiteColor];
@@ -2900,80 +2901,80 @@
         }
 
         if (_activityWeb == nil) {
-            _activityWeb = [[ZhiboDetailIntroVC alloc] initWithNumID:_ID];
+            _activityWeb = [[ZhiboDetailIntroVC alloc] initWithNumID:weakself.ID];
             _activityWeb.isZhibo = NO;
             _activityWeb.tabelHeight = sectionHeight - 46.5 * HigtEachUnit;
-            _activityWeb.cellTabelCanScroll = !_canScrollAfterVideoPlay;
-            _activityWeb.mainVC = self;
+            _activityWeb.cellTabelCanScroll = !weakself.canScrollAfterVideoPlay;
+            _activityWeb.mainVC = weakself;
             _activityWeb.view.frame = CGRectMake(0,0, MainScreenWidth, sectionHeight - 46.5 * HigtEachUnit);
-            [self.mainScroll addSubview:_activityWeb.view];
-            [self addChildViewController:_activityWeb];
+            [weakself.mainScroll addSubview:weakself.activityWeb.view];
+            [weakself addChildViewController:weakself.activityWeb];
         } else {
             _activityWeb.tabelHeight = sectionHeight - 46.5 * HigtEachUnit;
-            _activityWeb.cellTabelCanScroll = !_canScrollAfterVideoPlay;
+            _activityWeb.cellTabelCanScroll = !weakself.canScrollAfterVideoPlay;
             _activityWeb.view.frame = CGRectMake(0,0, MainScreenWidth, sectionHeight - 46.5 * HigtEachUnit);
             [_activityWeb changeMainScrollViewHeight:sectionHeight - 46.5 * HigtEachUnit];
         }
         
         if (_activityCommentList == nil) {
             _activityCommentList = [[Good_ClassCatalogViewController alloc] initWithNumID:_ID];
-            _activityCommentList.isClassCourse = _isClassNew;
-            _activityCommentList.sid = _sid;
+            _activityCommentList.isClassCourse = weakself.isClassNew;
+            _activityCommentList.sid = weakself.sid;
             _activityCommentList.tabelHeight = sectionHeight - 46.5 * HigtEachUnit;
-            _activityCommentList.vc = self;
-            _activityCommentList.cellTabelCanScroll = !_canScrollAfterVideoPlay;
-            _activityCommentList.videoInfoDict = _videoDataSource;
+            _activityCommentList.vc = weakself;
+            _activityCommentList.cellTabelCanScroll = !weakself.canScrollAfterVideoPlay;
+            _activityCommentList.videoInfoDict = weakself.videoDataSource;
             _activityCommentList.view.frame = CGRectMake(MainScreenWidth,0, MainScreenWidth, sectionHeight - 46.5 * HigtEachUnit);
-            [self.mainScroll addSubview:_activityCommentList.view];
-            [self addChildViewController:_activityCommentList];
-            [self addBlockCategory:_activityCommentList];
+            [weakself.mainScroll addSubview:weakself.activityCommentList.view];
+            [weakself addChildViewController:weakself.activityCommentList];
+            [weakself addBlockCategory:weakself.activityCommentList];
         } else {
-            _activityCommentList.cellTabelCanScroll = !_canScrollAfterVideoPlay;
+            _activityCommentList.cellTabelCanScroll = !weakself.canScrollAfterVideoPlay;
             _activityCommentList.view.frame = CGRectMake(MainScreenWidth,0, MainScreenWidth, sectionHeight - 46.5 * HigtEachUnit);
             _activityCommentList.tableView.frame = CGRectMake(0, 0, MainScreenWidth, sectionHeight - 46.5 * HigtEachUnit);
         }
         
         if (_activityQuestionList == nil) {
-            _activityQuestionList = [[Good_ClassCommentViewController alloc] initWithNumID:_ID];
+            _activityQuestionList = [[Good_ClassCommentViewController alloc] initWithNumID:weakself.ID];
             _activityQuestionList.tabelHeight = sectionHeight - 46.5 * HigtEachUnit;
-            _activityQuestionList.vc = self;
-            _activityQuestionList.isNewClass = _isClassNew;
-            _activityQuestionList.cellTabelCanScroll = !_canScrollAfterVideoPlay;
+            _activityQuestionList.vc = weakself;
+            _activityQuestionList.isNewClass = weakself.isClassNew;
+            _activityQuestionList.cellTabelCanScroll = !weakself.canScrollAfterVideoPlay;
             _activityQuestionList.view.frame = CGRectMake(MainScreenWidth*2,0, MainScreenWidth, sectionHeight - 46.5 * HigtEachUnit);
-            [self.mainScroll addSubview:_activityQuestionList.view];
-            [self addChildViewController:_activityQuestionList];
+            [weakself.mainScroll addSubview:weakself.activityQuestionList.view];
+            [weakself addChildViewController:weakself.activityQuestionList];
         } else {
-            _activityQuestionList.cellTabelCanScroll = !_canScrollAfterVideoPlay;
+            _activityQuestionList.cellTabelCanScroll = !weakself.canScrollAfterVideoPlay;
             _activityQuestionList.view.frame = CGRectMake(MainScreenWidth*2,0, MainScreenWidth, sectionHeight - 46.5 * HigtEachUnit);
             _activityQuestionList.tableView.frame = CGRectMake(0, 0, MainScreenWidth, sectionHeight - 46.5 * HigtEachUnit);
         }
 
         if (_notesList == nil) {
-            _notesList = [[Good_ClassNotesViewController alloc] initWithNumID:_ID];
+            _notesList = [[Good_ClassNotesViewController alloc] initWithNumID:weakself.ID];
             _notesList.tabelHeight = sectionHeight - 46.5 * HigtEachUnit;
-            _notesList.vc = self;
-            _notesList.isNewClass = _isClassNew;
-            _notesList.cellTabelCanScroll = !_canScrollAfterVideoPlay;
+            _notesList.vc = weakself;
+            _notesList.isNewClass = weakself.isClassNew;
+            _notesList.cellTabelCanScroll = !weakself.canScrollAfterVideoPlay;
             _notesList.view.frame = CGRectMake(MainScreenWidth*3,0, MainScreenWidth, sectionHeight - 46.5 * HigtEachUnit);
-            [self.mainScroll addSubview:_notesList.view];
-            [self addChildViewController:_notesList];
+            [weakself.mainScroll addSubview:weakself.notesList.view];
+            [weakself addChildViewController:weakself.notesList];
         } else {
-            _notesList.cellTabelCanScroll = !_canScrollAfterVideoPlay;
+            _notesList.cellTabelCanScroll = !weakself.canScrollAfterVideoPlay;
             _notesList.view.frame = CGRectMake(MainScreenWidth*3,0, MainScreenWidth, sectionHeight - 46.5 * HigtEachUnit);
             _notesList.tableView.frame = CGRectMake(0, 0, MainScreenWidth, sectionHeight - 46.5 * HigtEachUnit);
         }
 
         if (_questionList == nil) {
-            _questionList = [[Good_ClassAskQuestionsViewController alloc] initWithNumID:_ID];
+            _questionList = [[Good_ClassAskQuestionsViewController alloc] initWithNumID:weakself.ID];
             _questionList.tabelHeight = sectionHeight - 46.5 * HigtEachUnit;
-            _questionList.vc = self;
-            _questionList.isNewClass = _isClassNew;
-            _questionList.cellTabelCanScroll = !_canScrollAfterVideoPlay;
+            _questionList.vc = weakself;
+            _questionList.isNewClass = weakself.isClassNew;
+            _questionList.cellTabelCanScroll = !weakself.canScrollAfterVideoPlay;
             _questionList.view.frame = CGRectMake(MainScreenWidth*4,0, MainScreenWidth, sectionHeight - 46.5 * HigtEachUnit);
-            [self.mainScroll addSubview:_questionList.view];
-            [self addChildViewController:_questionList];
+            [weakself.mainScroll addSubview:weakself.questionList.view];
+            [weakself addChildViewController:weakself.questionList];
         } else {
-            _questionList.cellTabelCanScroll = !_canScrollAfterVideoPlay;
+            _questionList.cellTabelCanScroll = !weakself.canScrollAfterVideoPlay;
             _questionList.view.frame = CGRectMake(MainScreenWidth*4,0, MainScreenWidth, sectionHeight - 46.5 * HigtEachUnit);
             _questionList.tableView.frame = CGRectMake(0, 0, MainScreenWidth, sectionHeight - 46.5 * HigtEachUnit);
         }

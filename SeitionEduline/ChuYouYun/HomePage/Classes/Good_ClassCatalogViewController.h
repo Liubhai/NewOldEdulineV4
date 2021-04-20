@@ -14,7 +14,7 @@
 @property (assign, nonatomic) BOOL isClassCourse;// 是否是班级课列表
 
 @property (assign, nonatomic) CGFloat tabelHeight;
-@property (strong, nonatomic) Good_ClassMainViewController *vc;
+@property (weak, nonatomic) Good_ClassMainViewController *vc;
 @property (assign, nonatomic) BOOL cellTabelCanScroll;
 @property (strong ,nonatomic)NSDictionary    *videoInfoDict;//这个课程的详情
 
@@ -23,9 +23,9 @@
 @property (strong, nonatomic)NSString *sid;
 @property (assign, nonatomic) BOOL canPlayRecordVideo;
 
-@property (strong ,nonatomic)void (^vcHight)(CGFloat hight);
-@property (strong ,nonatomic)void (^didSele)(NSString *seleStr);
-@property (strong ,nonatomic)void (^videoDataSource)(NSDictionary *videoDataSource);
+@property (weak ,nonatomic)void (^vcHight)(CGFloat hight);
+@property (weak ,nonatomic)void (^didSele)(NSString *seleStr);
+@property (weak ,nonatomic)void (^videoDataSource)(NSDictionary *videoDataSource);
 -(instancetype)initWithNumID:(NSString *)ID;
 
 @end
