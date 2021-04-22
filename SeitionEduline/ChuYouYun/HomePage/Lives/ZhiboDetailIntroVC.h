@@ -14,8 +14,8 @@
 
 @property (strong, nonatomic) UIScrollView *mainScroll;
 @property (assign, nonatomic) CGFloat tabelHeight;
-@property (strong, nonatomic) ZhiBoMainViewController *vc;
-@property (strong, nonatomic) Good_ClassMainViewController *mainVC;
+@property (weak, nonatomic) ZhiBoMainViewController *vc;
+@property (weak, nonatomic) Good_ClassMainViewController *mainVC;
 @property (assign, nonatomic) BOOL cellTabelCanScroll;
 @property (assign, nonatomic) BOOL isZhibo;
 
