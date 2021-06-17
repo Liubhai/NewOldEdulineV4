@@ -128,9 +128,9 @@ static NSString *cellID = @"cell";
     _titleArray = [NSMutableArray array];
     _timeArray = [NSMutableArray array];
     if ([MoreOrSingle integerValue] == 1) {//单机构
-        _tableTitleArray = @[@"最近直播",@"精选课程",@"最新课程",@"预约课程",@"名师推荐"];
+        _tableTitleArray = @[@"最近直播",@"精选课程",@"最新课程",@"预约课程",@"师资推荐"];
     } else if ([MoreOrSingle integerValue] == 2) {//多机构
-        _tableTitleArray = @[@"最近直播",@"精选课程",@"最新课程",@"预约课程",@"名师推荐",@"机构推荐"];
+        _tableTitleArray = @[@"最近直播",@"精选课程",@"最新课程",@"预约课程",@"师资推荐",@"机构推荐"];
     }
     //定时器
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(NetWorkAgain) userInfo:nil repeats:YES];
