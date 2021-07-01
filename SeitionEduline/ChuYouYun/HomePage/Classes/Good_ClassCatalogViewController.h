@@ -25,7 +25,7 @@
 
 @property (weak ,nonatomic)void (^vcHight)(CGFloat hight);
 @property (weak ,nonatomic)void (^didSele)(NSString *seleStr);
-@property (weak ,nonatomic)void (^videoDataSource)(NSDictionary *videoDataSource);
+@property (strong ,nonatomic)void (^videoDataSource)(NSDictionary *videoDataSource);
 -(instancetype)initWithNumID:(NSString *)ID;
 
 @end
