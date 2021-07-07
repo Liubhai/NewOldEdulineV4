@@ -290,6 +290,11 @@
 
 - (void)loadMoreData {
     NSString *endUrlStr = YunKeTang_User_video_getMyList;
+    if ([_typeString isEqualToString:@"newClass"]) {
+        endUrlStr = classes_getMyList;
+    } else if ([_typeString isEqualToString:@"combo"]) {
+        endUrlStr = album_getMyList;
+    }
     NSString *allUrlStr = [YunKeTang_Api_Tool YunKeTang_GetFullUrl:endUrlStr];
     
     NSMutableDictionary *mutabDict = [NSMutableDictionary dictionaryWithCapacity:0];
