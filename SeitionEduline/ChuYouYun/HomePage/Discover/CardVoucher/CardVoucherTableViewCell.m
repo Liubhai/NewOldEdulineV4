@@ -29,7 +29,7 @@
     //添加线
     _backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 15 * WideEachUnit,MainScreenWidth - 30 * WideEachUnit, 106 * WideEachUnit)];
     _backImageView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_backImageView];
+    [self.contentView addSubview:_backImageView];
     
     //头像
     _receiveImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 15 * WideEachUnit, 44 * WideEachUnit, 44 * WideEachUnit)];
@@ -75,7 +75,7 @@
     _time.textColor = [UIColor colorWithHexString:@"#656565"];
     _time.backgroundColor = [UIColor whiteColor];
     _time.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_time];
+    [self.contentView addSubview:_time];
     
     
 }

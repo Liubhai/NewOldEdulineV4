@@ -26,20 +26,20 @@
 -(void)initLayuot{
     
     _groupImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SpaceBaside, SpaceBaside, 60, 60)];
-    [self addSubview:_groupImageView];
+    [self.contentView addSubview:_groupImageView];
     _groupImageView.backgroundColor = [UIColor whiteColor];
     _groupImageView.layer.cornerRadius = 30;
     _groupImageView.layer.masksToBounds = YES;
     
     _groupName = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_groupImageView.frame) + SpaceBaside, SpaceBaside, 200, 30)];
-    [self addSubview:_groupName];
+    [self.contentView addSubview:_groupName];
     _groupName.text = @"学习小组";
     _groupName.font = Font(16);
     _groupName.backgroundColor = [UIColor whiteColor];
     
     
     _numberRefresh = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_groupName.frame) + SpaceBaside + SpaceBaside / 2, SpaceBaside, 90, 20)];
-    [self addSubview:_numberRefresh];
+    [self.contentView addSubview:_numberRefresh];
     _numberRefresh.layer.cornerRadius = 10;
     _numberRefresh.layer.masksToBounds = YES;
     _numberRefresh.text = @"  99更新";
@@ -48,7 +48,7 @@
     
     
     _allNumberPerson = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_groupImageView.frame) + SpaceBaside,40,MainScreenWidth - 150, 30)];
-    [self addSubview:_allNumberPerson];
+    [self.contentView addSubview:_allNumberPerson];
     _allNumberPerson.text = @"总人数 123456";
     _allNumberPerson.font = Font(12);
     _allNumberPerson.textColor = [UIColor grayColor];
@@ -58,7 +58,7 @@
     [_actionButton setTitle:@". . ." forState:UIControlStateNormal];
     _actionButton.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [_actionButton setTitleColor:[UIColor brownColor] forState:UIControlStateNormal];
-    [self addSubview:_actionButton];
+    [self.contentView addSubview:_actionButton];
     
 }
 

@@ -30,7 +30,7 @@
     _palyImage = [[UIImageView alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 15 * WideEachUnit, 20 * WideEachUnit, 20 * WideEachUnit)];
     _palyImage.backgroundColor = [UIColor whiteColor];
     _palyImage.image = Image(@"ico_video@3x");
-    [self addSubview:_palyImage];
+    [self.contentView addSubview:_palyImage];
     _palyImage.hidden = YES;
     
     //标题
@@ -39,11 +39,11 @@
     _title.textColor = [UIColor colorWithHexString:@"#333"];
     _title.text = @"人与自然";
     _title.backgroundColor = [UIColor redColor];
-    [self addSubview:_title];
+    [self.contentView addSubview:_title];
     
     //时间
     _time = [[UILabel alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 30 * WideEachUnit , MainScreenWidth - 120 * WideEachUnit, 10 * WideEachUnit)];
-    [self addSubview:_time];
+    [self.contentView addSubview:_time];
     _time.numberOfLines = 1;
     _time.text = @"50分钟";
     _time.textColor = [UIColor grayColor];
@@ -55,7 +55,7 @@
     [_isLookButton setTitle:@"可试看" forState:UIControlStateNormal];
     [_isLookButton setTitleColor:[UIColor colorWithHexString:@"#25b882"] forState:UIControlStateNormal];
     _isLookButton.titleLabel.font = Font(12 * WideEachUnit);
-    [self addSubview:_isLookButton];
+    [self.contentView addSubview:_isLookButton];
     
     
 }

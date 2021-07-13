@@ -27,7 +27,7 @@
     
     //内容
     _contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(SpaceBaside * 1.5, SpaceBaside , MainScreenWidth - 40, 30)];
-    [self addSubview:_contentLabel];
+    [self.contentView addSubview:_contentLabel];
     _contentLabel.numberOfLines = 2;
     _contentLabel.textColor = [UIColor grayColor];
     _contentLabel.font = Font(15);

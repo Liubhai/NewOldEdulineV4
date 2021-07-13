@@ -28,27 +28,27 @@
     //图像
     _headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10 * WideEachUnit , 15 * WideEachUnit, 50 * WideEachUnit, 50 * WideEachUnit)];
     _headerImageView.backgroundColor = [UIColor redColor];
-    [self addSubview:_headerImageView];
+    [self.contentView addSubview:_headerImageView];
     
     
     //介绍
     _name = [[UILabel alloc] initWithFrame:CGRectMake(70 * WideEachUnit, 15 * WideEachUnit, MainScreenWidth - 160 * WideEachUnit, 16 * WideEachUnit)];
     _name.font = [UIFont systemFontOfSize:16 * WideEachUnit];
     _name.textColor = [UIColor colorWithHexString:@"#333"];
-    [self addSubview:_name];
+    [self.contentView addSubview:_name];
     
     
     //日期
     _time = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - 90 * WideEachUnit, 15 * WideEachUnit, 80 * WideEachUnit, 15 * WideEachUnit)];
     _time.textColor = [UIColor colorWithHexString:@"#666"];
     _time.font = [UIFont systemFontOfSize:12 * WideEachUnit];
-    [self addSubview:_time];
+    [self.contentView addSubview:_time];
     
     //内容
      _content = [[UILabel alloc] initWithFrame:CGRectMake(70 * WideEachUnit, 41 * WideEachUnit, MainScreenWidth - 80 * WideEachUnit, 15 * WideEachUnit)];
     _content.textColor = [UIColor colorWithHexString:@"#666"];
     _content.font = [UIFont systemFontOfSize:14 * WideEachUnit];
-    [self addSubview:_content];
+    [self.contentView addSubview:_content];
 }
 
 - (void)dataWithDict:(NSDictionary *)dict {

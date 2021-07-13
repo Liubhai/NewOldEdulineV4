@@ -28,7 +28,7 @@
 - (void)makeUI {
     _faceImageView = [[UIImageView alloc] initWithFrame:CGRectMake(singleLeftSpace, topSpace, MainScreenWidth/2.0 - singleRightSpace - singleLeftSpace, faceImageHeight)];
     _faceImageView.image = Image(@"站位图");
-    [self addSubview:_faceImageView];
+    [self.contentView addSubview:_faceImageView];
     
     UIRectCorner rectCorner = UIRectCornerTopLeft | UIRectCornerTopRight;
     UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRoundedRect:_faceImageView.bounds byRoundingCorners:rectCorner cornerRadii:CGSizeMake(6, 6)];
@@ -41,7 +41,7 @@
     _themeLabel.font = [UIFont systemFontOfSize:13];
     _themeLabel.textColor = RGBHex(0x434748);
     _themeLabel.text = @"MG动画设计实战班";
-    [self addSubview:_themeLabel];
+    [self.contentView addSubview:_themeLabel];
     
     _pricelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth / 2.0 - singleLeftSpace - singleRightSpace - 4, 15)];
     _pricelabel.textColor = RGBHex(0xFF0036);
@@ -49,31 +49,31 @@
     _pricelabel.font = [UIFont systemFontOfSize:13];
     _pricelabel.centerY = _themeLabel.centerY;
     _pricelabel.text = @"20育币";
-    [self addSubview:_pricelabel];
+    [self.contentView addSubview:_pricelabel];
     
     _scanIcon = [[UIImageView alloc] initWithFrame:CGRectMake(_themeLabel.left, 0, 15, 15)];
     _scanIcon.centerY = _themeLabel.bottom + 10 + 15 / 2.0;
     _scanIcon.image = Image(@"scan");
-    [self addSubview:_scanIcon];
+    [self.contentView addSubview:_scanIcon];
     
     _scanCountlabel = [[UILabel alloc] initWithFrame:CGRectMake(_scanIcon.right + 4, 0, MainScreenWidth / 4.0, 15)];
     _scanCountlabel.centerY = _scanIcon.centerY;
     _scanCountlabel.textColor = RGBHex(0xADACB4);
     _scanCountlabel.font = SYSTEMFONT(9);
     _scanCountlabel.text = @"(22人浏览)";
-    [self addSubview:_scanCountlabel];
+    [self.contentView addSubview:_scanCountlabel];
     
     _studyCountlabel = [[UILabel alloc] initWithFrame:CGRectMake(_faceImageView.right - 4 - 47, 0, 47, 15)];
     _studyCountlabel.centerY = _scanIcon.centerY;
     _studyCountlabel.textColor = RGBHex(0xADACB4);
     _studyCountlabel.font = SYSTEMFONT(9);
     _studyCountlabel.text = @"(1人在学习)";
-    [self addSubview:_studyCountlabel];
+    [self.contentView addSubview:_studyCountlabel];
     
     _studyIcon = [[UIImageView alloc] initWithFrame:CGRectMake(_studyCountlabel.left - 4 - 15, 0, 15, 15)];
     _studyIcon.centerY = _scanIcon.centerY;
     _studyIcon.image = Image(@"study_count");
-    [self addSubview:_studyIcon];
+    [self.contentView addSubview:_studyIcon];
 }
 
 - (void)setClassMainInfo:(NSDictionary *)dict cellIndex:(NSIndexPath *)index {

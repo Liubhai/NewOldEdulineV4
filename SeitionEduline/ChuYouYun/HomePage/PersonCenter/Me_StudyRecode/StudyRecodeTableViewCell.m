@@ -27,7 +27,7 @@
     _editingButton.selected = NO;
     _editingButton.hidden = YES;
     
-    [self addSubview:_editingButton];
+    [self.contentView addSubview:_editingButton];
     
     _faceImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 5, 118, 67)];
     _faceImageView.clipsToBounds = YES;
@@ -35,30 +35,30 @@
     _faceImageView.layer.masksToBounds = YES;
     _faceImageView.layer.cornerRadius = 3;
     _faceImageView.image = Image(@"站位图");
-    [self addSubview:_faceImageView];
+    [self.contentView addSubview:_faceImageView];
     
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(_faceImageView.right + 15, _faceImageView.top, MainScreenWidth - _faceImageView.right - 15, 15)];
     _titleLabel.textColor = RGBHex(0x333333);
     _titleLabel.font = SYSTEMFONT(13);
     _titleLabel.text = @"测试数据你懂的请不要说话";
-    [self addSubview:_titleLabel];
+    [self.contentView addSubview:_titleLabel];
     
     _courseLabel = [[UILabel alloc] initWithFrame:CGRectMake(_titleLabel.left, _titleLabel.bottom + 10, _titleLabel.width, 14)];
     _courseLabel.font = SYSTEMFONT(12);
     _courseLabel.textColor = RGBHex(0x808080);
     _courseLabel.text = @"第一章 | 第五课时";
-    [self addSubview:_courseLabel];
+    [self.contentView addSubview:_courseLabel];
     
     _timeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(_titleLabel.left, _faceImageView.bottom - 12, 12, 12)];
     _timeIcon.image = Image(@"history");
-    [self addSubview:_timeIcon];
+    [self.contentView addSubview:_timeIcon];
     
     _studyTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(_timeIcon.right + 5, 0, MainScreenWidth - _timeIcon.right - 5 - 15, 12)];
     _studyTimeLabel.textColor = RGBHex(0x808080);
     _studyTimeLabel.font = SYSTEMFONT(10);
     _studyTimeLabel.text = @"学习至00:43:22";
     _studyTimeLabel.centerY = _timeIcon.centerY;
-    [self addSubview:_studyTimeLabel];
+    [self.contentView addSubview:_studyTimeLabel];
 }
 
 - (void)setStudyRecodeInfo:(NSDictionary *)studyInfo editing:(BOOL)editing selected:(BOOL)selected {

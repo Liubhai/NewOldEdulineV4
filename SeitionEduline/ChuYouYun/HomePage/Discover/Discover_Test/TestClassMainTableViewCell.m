@@ -29,18 +29,18 @@
     _titleLabel.text = @"2014物业管理师考试参考答案";
     _titleLabel.font = Font(15 * WideEachUnit);
     _titleLabel.textColor = [UIColor colorWithHexString:@"#333"];
-    [self addSubview:_titleLabel];
+    [self.contentView addSubview:_titleLabel];
     
     //时间
     _personLabel = [[UILabel alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 46 * WideEachUnit, 120 * WideEachUnit, 13 * WideEachUnit)];
-    [self addSubview:_personLabel];
+    [self.contentView addSubview:_personLabel];
     _personLabel.text = @"更新时间：2016-10-10";
     _personLabel.font = Font(13 * WideEachUnit);
     _personLabel.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
     
     
     _subjectLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_personLabel.frame) + 50 * WideEachUnit, 46 * WideEachUnit,120 *  WideEachUnit, 13 * WideEachUnit)];
-    [self addSubview:_subjectLabel];
+    [self.contentView addSubview:_subjectLabel];
     _subjectLabel.text = @"更新时间：2016-10-10";
     _subjectLabel.font = Font(13 * WideEachUnit);
     _subjectLabel.textColor = [UIColor colorWithHexString:@"#9e9e9e"];

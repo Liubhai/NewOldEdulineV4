@@ -33,18 +33,18 @@
     _headImageView.layer.cornerRadius = 25 * WideEachUnit;
     _headImageView.layer.masksToBounds = YES;
     _headImageView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self addSubview:_headImageView];
+    [self.contentView addSubview:_headImageView];
     
     //标题
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_headImageView.frame) + 10, 15 * WideEachUnit,MainScreenWidth - 2 * SpaceBaside - CGRectGetWidth(_headImageView.frame) - 70 * WideEachUnit, 20 * WideEachUnit)];
     _titleLabel.text = @"2014物业管理师考试参考答案";
     _titleLabel.font = Font(16);
     _titleLabel.textColor = BlackNotColor;
-    [self addSubview:_titleLabel];
+    [self.contentView addSubview:_titleLabel];
     
     //时间
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_headImageView.frame) + 10, 38 * WideEachUnit, MainScreenWidth - 2 * SpaceBaside, 20 * WideEachUnit)];
-    [self addSubview:_timeLabel];
+    [self.contentView addSubview:_timeLabel];
     _timeLabel.text = @"2016-10-10";
     _timeLabel.font = Font(14);
     _timeLabel.textColor = [UIColor grayColor];
@@ -58,7 +58,7 @@
 //
    // 文件类型
     _typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_headImageView.frame) + 10, 65,MainScreenWidth - 80, 15)];
-    [self addSubview:_typeLabel];
+    [self.contentView addSubview:_typeLabel];
     _typeLabel.text = @"文件格式：pdf";
     _typeLabel.textColor = [UIColor grayColor];
     _typeLabel.font = Font(12);
@@ -78,7 +78,7 @@
     _downButton.layer.borderWidth = 1;
     _downButton.layer.cornerRadius = 3;
     _downButton.layer.borderColor = [UIColor colorWithHexString:@"#e5e5e5"].CGColor;
-    [self addSubview:_downButton];
+    [self.contentView addSubview:_downButton];
     
 }
 

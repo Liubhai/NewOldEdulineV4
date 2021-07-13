@@ -30,11 +30,11 @@
     
     //机构图像
     _schoolImage = [[UIImageView alloc] initWithFrame:CGRectMake(SpaceBaside, SpaceBaside, 20, 20)];
-    [self addSubview:_schoolImage];
+    [self.contentView addSubview:_schoolImage];
     
     //机构
     _schoolName = [[UILabel alloc] initWithFrame:CGRectMake(40, SpaceBaside, 200, 20)];
-    [self addSubview:_schoolName];
+    [self.contentView addSubview:_schoolName];
     _schoolName.text = @"";
     _schoolName.font = Font(12);
     _schoolName.backgroundColor = [UIColor whiteColor];
@@ -43,19 +43,19 @@
     _rightButton = [[UIButton alloc] initWithFrame:CGRectMake(130, 12.5, 15, 15)];
     _rightButton.backgroundColor = [UIColor whiteColor];
     [_rightButton setBackgroundImage:Image(@"ic_more@3x") forState:UIControlStateNormal];
-    [self addSubview:_rightButton];
+    [self.contentView addSubview:_rightButton];
     _rightButton.hidden = YES;
     
     
     //机构按钮
     _schoolButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth / 2, 35)];
     _schoolButton.backgroundColor = [UIColor clearColor];
-    [self addSubview:_schoolButton];
+    [self.contentView addSubview:_schoolButton];
     
     
     //状态
     _status = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - 100, SpaceBaside, 90, 20)];
-    [self addSubview:_status];
+    [self.contentView addSubview:_status];
     _status.text = @"付款";
     _status.font = Font(13);
     _status.textAlignment = NSTextAlignmentRight;
@@ -68,7 +68,7 @@
     //添加背景色
     UIView *midView = [[UIView alloc] initWithFrame:CGRectMake(0, 40, MainScreenWidth, 90)];
     midView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:midView];
+    [self.contentView addSubview:midView];
     
     
     //添加横线
@@ -80,11 +80,11 @@
     //图片
     _headerImage = [[UIImageView alloc] initWithFrame:CGRectMake(SpaceBaside, 50, 100, 70)];
     _headerImage.image = Image(@"你好");
-    [self addSubview:_headerImage];
+    [self.contentView addSubview:_headerImage];
     
     //标题
     _name = [[UILabel alloc] initWithFrame:CGRectMake(120,50,MainScreenWidth - 130, 38)];
-    [self addSubview:_name];
+    [self.contentView addSubview:_name];
     _name.text = @"使用一应";
     _name.font = Font(14);
     _name.numberOfLines = 2;
@@ -92,7 +92,7 @@
     
     //名字
     _content = [[UILabel alloc] initWithFrame:CGRectMake(80, 70,MainScreenWidth - 90, 30)];
-    [self addSubview:_content];
+    [self.contentView addSubview:_content];
     _content.font = Font(12);
     _content.numberOfLines = 2;
     _content.textColor = [UIColor grayColor];
@@ -101,7 +101,7 @@
     
     //价格
     _price = [[UILabel alloc] initWithFrame:CGRectMake(120, 90,MainScreenWidth - 140, 30)];
-    [self addSubview:_price];
+    [self.contentView addSubview:_price];
     _price.font = Font(12);
 //    _price.textAlignment = NSTextAlignmentRight;
     _price.textColor = [UIColor grayColor];
@@ -110,17 +110,17 @@
     //添加横线
     UIButton *lineButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 130, MainScreenWidth, 1)];
     lineButton.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self addSubview:lineButton];
+    [self.contentView addSubview:lineButton];
     
     //添加实际价格
     UILabel *real = [[UILabel alloc] initWithFrame:CGRectMake(SpaceBaside, 140,50, 30)];
-    [self addSubview:real];
+    [self.contentView addSubview:real];
     real.font = Font(12);
     real.textColor = [UIColor colorWithHexString:@"#888"];
     real.text = @"实付款：";
     
     _realPrice = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(real.frame), 140,MainScreenWidth / 2 -CGRectGetMaxX(real.frame) - 10 , 30)];
-    [self addSubview:_realPrice];
+    [self.contentView addSubview:_realPrice];
     _realPrice.font = Font(14);
     _realPrice.textColor = BasidColor;
     _realPrice.text = @"实付款：";
@@ -135,7 +135,7 @@
     _cancelButton.titleLabel.font = Font(15);
     _cancelButton.layer.borderColor = BasidColor.CGColor;
     [_cancelButton setTitleColor:BasidColor forState:UIControlStateNormal];
-    [self addSubview:_cancelButton];
+    [self.contentView addSubview:_cancelButton];
 
     
     //付款
@@ -146,12 +146,12 @@
     _actionButton.titleLabel.font = Font(15);
     _actionButton.layer.borderColor = BasidColor.CGColor;
     [_actionButton setTitleColor:BasidColor forState:UIControlStateNormal];
-    [self addSubview:_actionButton];
+    [self.contentView addSubview:_actionButton];
     
     //添加最后的View
     UIView *lastView = [[UIView alloc] initWithFrame:CGRectMake(0, 180, MainScreenWidth, 10)];
     lastView.backgroundColor = [UIColor colorWithHexString:@"#f0f0f2"];
-    [self addSubview:lastView];
+    [self.contentView addSubview:lastView];
     
     //单机构或者多机构的配置
     if ([MoreOrSingle integerValue] == 1) {

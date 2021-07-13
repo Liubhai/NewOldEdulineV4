@@ -679,7 +679,7 @@ static NSString *cellID = @"cell";
                 UIView *cellView = [[UIView alloc] initWithFrame:CGRectMake(cellSpace + (i % 2) * (cellWidth + cellSpace), cellSpace + (i / 2) * (cellHight) , cellWidth, cellHight)];
                 cellView.backgroundColor = [UIColor whiteColor];
                 cellView.tag = i;
-                [cell addSubview:cellView];
+                [cell.contentView addSubview:cellView];
                 
                 UIImageView *photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cellWidth, cellWidth / 5 * 3)];
                 photoImageView.backgroundColor = [UIColor whiteColor];
@@ -772,7 +772,7 @@ static NSString *cellID = @"cell";
                 UIView *cellView = [[UIView alloc] initWithFrame:CGRectMake(cellSpace + (i % 2) * (cellWidth + cellSpace), cellSpace + (i / 2) * (cellHight) , cellWidth, cellHight)];
                 cellView.backgroundColor = [UIColor whiteColor];
                 cellView.tag = i;
-                [cell addSubview:cellView];
+                [cell.contentView addSubview:cellView];
                 
                 UIImageView *photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cellWidth, cellWidth / 5 * 3)];
                 photoImageView.backgroundColor = [UIColor whiteColor];
@@ -868,7 +868,7 @@ static NSString *cellID = @"cell";
             if (!cell) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
             }
-            [cell removeAllSubviews];
+            [cell.contentView removeAllSubviews];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.backgroundColor = [UIColor whiteColor];
             CGFloat TeaViewWidth = 115;
@@ -879,7 +879,7 @@ static NSString *cellID = @"cell";
             teacherScrollview.contentSize = CGSizeMake(15 * 2 + (TeaViewWidth + 12) * _teacherArray.count - 12, 160 + 30);
             teacherScrollview.showsVerticalScrollIndicator = NO;
             teacherScrollview.showsHorizontalScrollIndicator = NO;
-            [cell addSubview:teacherScrollview];
+            [cell.contentView addSubview:teacherScrollview];
             
             for (int i = 0 ; i < _teacherArray.count; i ++) {
                 UIView *view = [[UIView alloc] initWithFrame:CGRectMake(15 + (TeaViewWidth + 12) * i, 15, TeaViewWidth, TeaViewHight)];
@@ -932,7 +932,7 @@ static NSString *cellID = @"cell";
             if (!cell) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
             }
-            [cell removeAllSubviews];
+            [cell.contentView removeAllSubviews];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.backgroundColor = [UIColor whiteColor];
             
@@ -943,7 +943,7 @@ static NSString *cellID = @"cell";
             organizationScrollview.backgroundColor = [UIColor whiteColor];
             organizationScrollview.showsVerticalScrollIndicator = NO;
             organizationScrollview.showsHorizontalScrollIndicator = NO;
-            [cell addSubview:organizationScrollview];
+            [cell.contentView addSubview:organizationScrollview];
             
             CGFloat XX = 15;
             

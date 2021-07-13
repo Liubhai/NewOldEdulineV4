@@ -30,25 +30,25 @@
     _groupFace.layer.masksToBounds = YES;
     _groupFace.layer.cornerRadius = 20;
     _groupFace.image = Image(@"站位图");
-    [self addSubview:_groupFace];
+    [self.contentView addSubview:_groupFace];
     
     _groupTitle = [[UILabel alloc] initWithFrame:CGRectMake(_groupFace.right + 5, _groupFace.top, 100, 15)];
     _groupTitle.font = SYSTEMFONT(12);
     _groupTitle.textColor = RGBHex(0x373737);
     _groupTitle.text = @"还差3人成团";
-    [self addSubview:_groupTitle];
+    [self.contentView addSubview:_groupTitle];
     
     _priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(_groupTitle.right + 10, 0, 100, GroupListCellHeight)];
     _priceLabel.textColor = RGBHex(0xFF0000);
     _priceLabel.text = @"100.0育币";
     _priceLabel.font = SYSTEMFONT(13);
-    [self addSubview:_priceLabel];
+    [self.contentView addSubview:_priceLabel];
     
     _timeCountDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(_groupTitle.left, _groupFace.bottom - 11, 150, 11)];
     _timeCountDownLabel.textColor = RGBHex(0x757575);
     _timeCountDownLabel.text = @"剩余时间00:22:33结束";
     _timeCountDownLabel.font = SYSTEMFONT(10);
-    [self addSubview:_timeCountDownLabel];
+    [self.contentView addSubview:_timeCountDownLabel];
     
     _groupJoinButton = [[UIButton alloc] initWithFrame:CGRectMake(GroupListCellWidth - 5 - 60, 0, 60, 25)];
     [_groupJoinButton setBackgroundColor:RGBHex(0x09BB07)];
@@ -59,7 +59,7 @@
     _groupJoinButton.titleLabel.font = SYSTEMFONT(10);
     _groupJoinButton.centerY = _groupFace.centerY;
     [_groupJoinButton addTarget:self action:@selector(joinGroupButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:_groupJoinButton];
+    [self.contentView addSubview:_groupJoinButton];
 }
 
 - (void)setGroupListInfo:(NSDictionary *)groupInfo timeCount:(NSInteger)timeCount {

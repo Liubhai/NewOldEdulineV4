@@ -32,18 +32,18 @@
     _headerImage.layer.cornerRadius = 19 * WideEachUnit;
     _headerImage.layer.masksToBounds = YES;
     _headerImage.backgroundColor = [UIColor redColor];
-    [self addSubview:_headerImage];
+    [self.contentView addSubview:_headerImage];
     
     //标题
     _name = [[UILabel alloc] initWithFrame:CGRectMake(60 * WideEachUnit, 15 * WideEachUnit,MainScreenWidth - 80 * WideEachUnit, 15 * WideEachUnit)];
     _name.font = Font(14 * WideEachUnit);
     _name.textColor = [UIColor colorWithHexString:@"#666"];
     _name.text = @"人与自然";
-    [self addSubview:_name];
+    [self.contentView addSubview:_name];
     
     //具体内容
     _content = [[UILabel alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 52 * WideEachUnit , MainScreenWidth - 30, 14 * WideEachUnit)];
-    [self addSubview:_content];
+    [self.contentView addSubview:_content];
     _content.numberOfLines = 0;
     _content.text = @"老师讲的好";
     _content.textColor = [UIColor colorWithHexString:@"#333"];
@@ -51,7 +51,7 @@
     
     //时间
     _time = [[UILabel alloc] initWithFrame:CGRectMake(15 * WideEachUnit, CGRectGetMaxY(_content.frame) + 10 * WideEachUnit , MainScreenWidth / 2, 10 * WideEachUnit)];
-    [self addSubview:_time];
+    [self.contentView addSubview:_time];
     _time.numberOfLines = 1;
     _time.text = @"50分钟";
     _time.textColor = [UIColor grayColor];
@@ -62,14 +62,14 @@
     [_praiseButton setImage:Image(@"zan@2x") forState:UIControlStateNormal];
     [_praiseButton setTitleColor:[UIColor colorWithHexString:@"#8A8A8A"] forState:UIControlStateNormal];
     _praiseButton.titleLabel.font = Font(12);
-    [self addSubview:_praiseButton];
+    [self.contentView addSubview:_praiseButton];
 
     _commentsButton = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth - 70 * WideEachUnit,CGRectGetMaxY(_content.frame) + 10 * WideEachUnit , 60 * WideEachUnit, 20 * WideEachUnit)];
     [_commentsButton setTitle:@"200" forState:UIControlStateNormal];
     [_commentsButton setTitleColor:[UIColor colorWithHexString:@"#8A8A8A"] forState:UIControlStateNormal];
     _commentsButton.titleLabel.font = Font(12);
     [_commentsButton setImage:Image(@"code@2x") forState:UIControlStateNormal];
-    [self addSubview:_commentsButton];
+    [self.contentView addSubview:_commentsButton];
     
 }
 

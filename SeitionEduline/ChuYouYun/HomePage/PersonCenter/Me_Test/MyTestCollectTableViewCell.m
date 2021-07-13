@@ -26,7 +26,7 @@
 -(void)initLayuot{
     //标题
     _name = [[UILabel alloc] initWithFrame:CGRectMake(10 * WideEachUnit,15 * WideEachUnit,MainScreenWidth - 20 * WideEachUnit, 15 * WideEachUnit)];
-    [self addSubview:_name];
+    [self.contentView addSubview:_name];
     _name.font = Font(15 * WideEachUnit);
     _name.numberOfLines = 2;
     [self setIntroductionText:@"使用一应你带大的空间点击我么大的期"];
@@ -34,7 +34,7 @@
     
     //名字
     _time = [[UILabel alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 45 * WideEachUnit,MainScreenWidth - 90 * WideEachUnit, 15 * WideEachUnit)];
-    [self addSubview:_time];
+    [self.contentView addSubview:_time];
     _time.font = Font(13 * WideEachUnit);
     _time.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
     _time.text = @"2017.10.10";
@@ -43,7 +43,7 @@
     _rightButton = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth - 80 * WideEachUnit, 0, 70 * WideEachUnit, 75 * WideEachUnit)];
     _rightButton.backgroundColor = [UIColor whiteColor];
     [_rightButton setBackgroundImage:Image(@"ic_more@3x") forState:UIControlStateNormal];
-    [self addSubview:_rightButton];
+    [self.contentView addSubview:_rightButton];
     _rightButton.hidden = YES;
     
 }

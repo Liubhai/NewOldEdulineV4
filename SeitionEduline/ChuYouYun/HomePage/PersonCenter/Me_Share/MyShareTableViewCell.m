@@ -26,18 +26,18 @@
     
     _photoView = [[UIImageView alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 10 * WideEachUnit, 90 * WideEachUnit, 50 * WideEachUnit)];
     _photoView.backgroundColor = [UIColor redColor];
-    [self addSubview:_photoView];
+    [self.contentView addSubview:_photoView];
     
     //标题
     _name = [[UILabel alloc] initWithFrame:CGRectMake(120 * WideEachUnit,15 * WideEachUnit,MainScreenWidth - 135 * WideEachUnit, 15 * WideEachUnit)];
-    [self addSubview:_name];
+    [self.contentView addSubview:_name];
     _name.text = @"使用一应";
     _name.font = Font(15 * WideEachUnit);
     _name.textColor = [UIColor colorWithHexString:@"#575757"];
     
     //名字
     _urlLabel = [[UILabel alloc] initWithFrame:CGRectMake(120 * WideEachUnit, 40 * WideEachUnit,MainScreenWidth - 180 * WideEachUnit, 20 * WideEachUnit)];
-    [self addSubview:_urlLabel];
+    [self.contentView addSubview:_urlLabel];
     _urlLabel.font = Font(13 * WideEachUnit);
     _urlLabel.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
     _urlLabel.text = @"你是你上午我问问我我等你过个";
@@ -46,7 +46,7 @@
     
     
     _time = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - 60 * WideEachUnit, 40 * WideEachUnit,50 * WideEachUnit, 20 * WideEachUnit)];
-    [self addSubview:_time];
+    [self.contentView addSubview:_time];
     _time.font = Font(13 * WideEachUnit);
     _time.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
     _time.text = @"你是你上午我问问我我等你过个";
@@ -56,7 +56,7 @@
     _rightButton.backgroundColor = [UIColor whiteColor];
     [_rightButton setTitleColor:BasidColor forState:UIControlStateNormal];
     _rightButton.titleLabel.font = Font(18 * WideEachUnit);
-    [self addSubview:_rightButton];
+    [self.contentView addSubview:_rightButton];
     _rightButton.hidden = YES;
 }
 

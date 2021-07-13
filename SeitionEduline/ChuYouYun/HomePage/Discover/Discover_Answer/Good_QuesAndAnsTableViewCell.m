@@ -38,14 +38,14 @@
     //添加线
     UIButton *lineButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 1)];
     lineButton.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self addSubview:lineButton];
+    [self.contentView addSubview:lineButton];
     
     //头像
     _HeadImage = [[UIButton alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 12 * WideEachUnit, 35 * WideEachUnit, 35 * WideEachUnit)];
     [_HeadImage setBackgroundImage:[UIImage imageNamed:@"站位图"] forState:UIControlStateNormal];
     _HeadImage.clipsToBounds = YES;
     _HeadImage.layer.cornerRadius = 17.5 * WideEachUnit;
-    [self addSubview:_HeadImage];
+    [self.contentView addSubview:_HeadImage];
     
     //名字
     _NameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_HeadImage.frame) + 10 * WideEachUnit, 22 * WideEachUnit, MainScreenWidth - CGRectGetMaxX(_HeadImage.frame) - 100 * WideEachUnit , 15 * WideEachUnit)];
@@ -53,7 +53,7 @@
     _NameLabel.font = Font(12 * WideEachUnit);
     _NameLabel.backgroundColor = [UIColor whiteColor];
     
-    [self addSubview:_NameLabel];
+    [self.contentView addSubview:_NameLabel];
     _NameLabel.text = @"张三";
     
     //时间
@@ -62,26 +62,26 @@
     _TimeLabel.font = [UIFont systemFontOfSize:12 * WideEachUnit];
     _TimeLabel.textAlignment = NSTextAlignmentLeft;
     _TimeLabel.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_TimeLabel];
+    [self.contentView addSubview:_TimeLabel];
     
     //具体
     _JTLabel = [[UILabel alloc] initWithFrame:CGRectMake(15 * WideEachUnit, CGRectGetMaxY(_HeadImage.frame) + 10 * WideEachUnit, MainScreenWidth - 20, 100)];
     _JTLabel.font = [UIFont systemFontOfSize:14 * WideEachUnit];
     _JTLabel.textColor = [UIColor colorWithHexString:@"#656565"];
     _JTLabel.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_JTLabel];
+    [self.contentView addSubview:_JTLabel];
     
     
     //图片
     _TPView = [[UIView alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 0, MainScreenWidth - 30 * WideEachUnit, 0)];
     _TPView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_TPView];
+    [self.contentView addSubview:_TPView];
     
     
     //观看的图片
     UIButton *GKButton = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth - 70 * WideEachUnit , 0, 20 * WideEachUnit, 10 * WideEachUnit)];
     [GKButton setImage:[UIImage imageNamed:@"question_eyes@3x"] forState:UIControlStateNormal];
-    [self addSubview:GKButton];
+    [self.contentView addSubview:GKButton];
     _GKButton = GKButton;
     
     //观看人数
@@ -89,7 +89,7 @@
     _GKLabel.font = [UIFont systemFontOfSize:12 * WideEachUnit];
     _GKLabel.textColor = [UIColor colorWithRed:130.f / 255 green:130.f / 255 blue:130.f / 255 alpha:1];
     _GKLabel.textAlignment = NSTextAlignmentLeft;
-    [self addSubview:_GKLabel];
+    [self.contentView addSubview:_GKLabel];
     _GKLabel.backgroundColor = [UIColor whiteColor];
     
     //评论人数
@@ -97,21 +97,21 @@
     _PLLabel.textColor = [UIColor colorWithRed:130.f / 255 green:130.f / 255 blue:130.f / 255 alpha:1];
     _PLLabel.textAlignment = NSTextAlignmentLeft;
     _PLLabel.font = [UIFont systemFontOfSize:12 * WideEachUnit];
-    [self addSubview:_PLLabel];
+    [self.contentView addSubview:_PLLabel];
     _PLLabel.backgroundColor = [UIColor whiteColor];
     
     //评论图片
     UIButton *PLButton = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth - 140 * WideEachUnit , 0, 20 * WideEachUnit, 20 * WideEachUnit)];
     //    [PLButton setBackgroundImage:[UIImage imageNamed:@"问答评论评论@2x"] forState:UIControlStateNormal];
     [PLButton setImage:[UIImage imageNamed:@"question_comment@3x"] forState:UIControlStateNormal];
-    [self addSubview:PLButton];
+    [self.contentView addSubview:PLButton];
     _PLButton = PLButton;
     
     
     //添加灰色地带
     _footView = [[UIView alloc] initWithFrame:CGRectMake(0, 90 * WideEachUnit, MainScreenWidth , 10 * WideEachUnit)];
     _footView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self addSubview:_footView];
+    [self.contentView addSubview:_footView];
     
 }
 

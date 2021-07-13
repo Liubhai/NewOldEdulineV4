@@ -25,7 +25,7 @@
     
     //机构
     _bankName = [[UILabel alloc] initWithFrame:CGRectMake(20 * WideEachUnit, 10 * WideEachUnit, MainScreenWidth - 100 * WideEachUnit, 30 * WideEachUnit)];
-    [self addSubview:_bankName];
+    [self.contentView addSubview:_bankName];
     _bankName.text = @"";
     _bankName.font = Font(16 * WideEachUnit);
     _bankName.backgroundColor = [UIColor whiteColor];
@@ -36,7 +36,7 @@
     _cancelButton.titleLabel.font = Font(16 * WideEachUnit) ;
     _cancelButton.layer.borderColor = BasidColor.CGColor;
     [_cancelButton setTitleColor:[UIColor colorWithHexString:@"#d04c4c"] forState:UIControlStateNormal];
-    [self addSubview:_cancelButton];
+    [self.contentView addSubview:_cancelButton];
     
 }
 

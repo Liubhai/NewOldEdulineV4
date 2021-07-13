@@ -28,24 +28,24 @@
     _faceImageView.clipsToBounds = YES;
     _faceImageView.contentMode = UIViewContentModeScaleAspectFill;
     _faceImageView.backgroundColor = [UIColor grayColor];
-    [self addSubview:_faceImageView];
+    [self.contentView addSubview:_faceImageView];
     
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(_faceImageView.right + 13, _faceImageView.top, MainScreenWidth - 10, 40)];
     _titleLabel.textColor = RGBHex(0x454545);
     _titleLabel.font = SYSTEMFONT(14);
     _titleLabel.numberOfLines = 0;
-    [self addSubview:_titleLabel];
+    [self.contentView addSubview:_titleLabel];
     
     _priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(_titleLabel.left, _faceImageView.bottom - 20, MainScreenWidth - _titleLabel.left - 15, 20)];
     _priceLabel.font = SYSTEMFONT(15);
-    [self addSubview:_priceLabel];
+    [self.contentView addSubview:_priceLabel];
     
     _countLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - 15 - 100, 0, 100, 15)];
     _countLabel.centerY = _priceLabel.centerY;
     _countLabel.textAlignment = NSTextAlignmentRight;
     _countLabel.font = SYSTEMFONT(11);
     _countLabel.textColor = RGBHex(0x696969);
-    [self addSubview:_countLabel];
+    [self.contentView addSubview:_countLabel];
 }
 
 - (void)setOfflineInfo:(NSDictionary *)dict order_switch:(NSString *)order_switch {

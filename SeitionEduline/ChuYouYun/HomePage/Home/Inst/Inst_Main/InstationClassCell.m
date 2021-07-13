@@ -30,21 +30,21 @@
     imageView.image = Image(@"大家好");
     imageView.layer.cornerRadius = 40;
     imageView.layer.masksToBounds = YES;
-    [self addSubview:imageView];
+    [self.contentView addSubview:imageView];
     _headerImageView = imageView;
     
     //名字 文本
     UILabel *teacherLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + SpaceBaside, SpaceBaside, MainScreenWidth - SpaceBaside - CGRectGetMaxX(imageView.frame) - SpaceBaside , 20)];
     teacherLabel.text = @"石远刚";
     teacherLabel.font = Font(14);
-    [self addSubview:teacherLabel];
+    [self.contentView addSubview:teacherLabel];
     _nameLabel = teacherLabel;
     
     //名字 文本
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + SpaceBaside, SpaceBaside + 20, MainScreenWidth - SpaceBaside - CGRectGetMaxX(imageView.frame) - SpaceBaside , 20)];
     nameLabel.text = @"口语-英语生活口语100句";
     nameLabel.font = Font(12);
-    [self addSubview:nameLabel];
+    [self.contentView addSubview:nameLabel];
     _typeLabel = nameLabel;
     
     //详情
@@ -52,7 +52,7 @@
     detailLabel.text = @"一份耕耘，一份收获";
     detailLabel.font = Font(12);
     detailLabel.textColor = [UIColor grayColor];
-    [self addSubview:detailLabel];
+    [self.contentView addSubview:detailLabel];
     _contentLabel = detailLabel;
     
     //时间
@@ -60,7 +60,7 @@
     timeLabel.text = @"228育币/小时";
     timeLabel.font = Font(15);
     timeLabel.textColor = [UIColor orangeColor];
-    [self addSubview:timeLabel];
+    [self.contentView addSubview:timeLabel];
     _timeLabel = timeLabel;
     
     //在线授课
@@ -69,7 +69,7 @@
     lineLabel.font = Font(12);
     lineLabel.textAlignment = NSTextAlignmentRight;
     lineLabel.textColor = [UIColor grayColor];
-    [self addSubview:lineLabel];
+    [self.contentView addSubview:lineLabel];
     _onLine = lineLabel;
   
 }

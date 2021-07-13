@@ -42,7 +42,7 @@
     [_detailButton setTitleColor:BasidColor forState:UIControlStateSelected];
     [_detailButton setTitleColor:BlackNotColor forState:UIControlStateNormal];
     [_detailButton addTarget:self action:@selector(detailButtonCilck) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:_detailButton];
+    [self.contentView addSubview:_detailButton];
     
     _commentButton = [[UIButton alloc] initWithFrame:CGRectMake(100 * WideEachUnit, 10 * WideEachUnit, 80 * WideEachUnit, 20 * WideEachUnit)];
     [_commentButton setTitle:@"课程评价" forState:UIControlStateNormal];
@@ -50,12 +50,12 @@
     [_commentButton setTitleColor:BasidColor forState:UIControlStateSelected];
     [_commentButton setTitleColor:BlackNotColor forState:UIControlStateNormal];
     [_commentButton addTarget:self action:@selector(commentButtonCilck) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:_commentButton];
+    [self.contentView addSubview:_commentButton];
     
     //添加线
     UIButton *lineButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 39 * WideEachUnit, MainScreenWidth, 1)];
     lineButton.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self addSubview:lineButton];
+    [self.contentView addSubview:lineButton];
     
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 40 * WideEachUnit, MainScreenWidth, 100 * WideEachUnit)];
@@ -68,7 +68,7 @@
     _scrollView.showsVerticalScrollIndicator = NO;
     _scrollView.showsHorizontalScrollIndicator = NO;
 //    _scrollView.contentSize = CGSizeMake(MainScreenWidth * 2,10);
-    [self addSubview:_scrollView];
+    [self.contentView addSubview:_scrollView];
     
     _commentView = [[UIView alloc] initWithFrame:CGRectMake(MainScreenWidth, 0, MainScreenWidth, 200 * WideEachUnit)];
     _commentView.backgroundColor = [UIColor blackColor];

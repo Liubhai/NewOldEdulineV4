@@ -31,7 +31,7 @@
     NSArray *titleArray = @[@"会员昵称",@"注册时间",@"推荐层级",@"附带收入",@"推荐人数"];
     for (int i = 0 ; i < 5 ; i ++) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(laeblWidth * i + space, 0, laeblWidth, labelHight)];
-        [self addSubview:label];
+        [self.contentView addSubview:label];
         label.layer.borderWidth = 0.5;
         label.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
         label.textAlignment = NSTextAlignmentCenter;

@@ -30,7 +30,7 @@
     redView.backgroundColor = [UIColor colorWithHexString:@"#e57373"];
     redView.layer.cornerRadius = 5 * WideEachUnit;
     redView.layer.masksToBounds = YES;
-    [self addSubview:redView];
+    [self.contentView addSubview:redView];
     
     
     //图片

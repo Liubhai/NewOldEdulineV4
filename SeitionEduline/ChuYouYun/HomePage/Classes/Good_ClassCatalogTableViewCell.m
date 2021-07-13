@@ -34,19 +34,19 @@
     //头像
     _palyImage = [[UIImageView alloc] initWithFrame:CGRectMake(12 * WideEachUnit, 18.5 * WideEachUnit, 24 * WideEachUnit, 13 * WideEachUnit)];
     _palyImage.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_palyImage];
+    [self.contentView addSubview:_palyImage];
     
     //标题
     _title = [[UILabel alloc] initWithFrame:CGRectMake(40 * WideEachUnit, 10 * WideEachUnit,MainScreenWidth - 80 * WideEachUnit, 30 * WideEachUnit)];
     _title.font = Font(14 * WideEachUnit);
     _title.textColor = [UIColor colorWithHexString:@"#333"];
-    [self addSubview:_title];
+    [self.contentView addSubview:_title];
     
     //锁
     _lockImageView = [[UIImageView alloc] initWithFrame:CGRectMake(_title.right + 5, 18.5 * WideEachUnit, 10 * WideEachUnit, 13 * WideEachUnit)];
     _lockImageView.backgroundColor = [UIColor whiteColor];
     _lockImageView.image = Image(@"lock");
-    [self addSubview:_lockImageView];
+    [self.contentView addSubview:_lockImageView];
     
     _freeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_lockImageView.frame) + 5, 10 * WideEachUnit, 30 * WideEachUnit, 30 * WideEachUnit)];
     _freeLabel.textColor = [UIColor colorWithHexString:@"#47b37d"];
@@ -56,11 +56,11 @@
     _freeLabel.layer.borderColor = [UIColor colorWithHexString:@"#47b37d"].CGColor;
     _freeLabel.text = @"免费";
     _freeLabel.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_freeLabel];
+    [self.contentView addSubview:_freeLabel];
     
     //时间
     _time = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - 90 * WideEachUnit, 20 * WideEachUnit , 80 * WideEachUnit, 10 * WideEachUnit)];
-    [self addSubview:_time];
+    [self.contentView addSubview:_time];
     _time.numberOfLines = 1;
     _time.textAlignment = NSTextAlignmentRight;
     _time.textColor = [UIColor grayColor];
@@ -72,13 +72,13 @@
     [_isLookButton setTitle:@"" forState:UIControlStateNormal];
     [_isLookButton setTitleColor:[UIColor colorWithHexString:@"#25b882"] forState:UIControlStateNormal];
     _isLookButton.titleLabel.font = Font(12 * WideEachUnit);
-    [self addSubview:_isLookButton];
+    [self.contentView addSubview:_isLookButton];
     _isLookButton.hidden = YES;
     
     //添加下载的按钮
     _downButton = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth - 60 * WideEachUnit, 10 * WideEachUnit, 50 * WideEachUnit, 15 * WideEachUnit)];
     [_downButton setImage:Image(@"") forState:UIControlStateNormal];
-    [self addSubview:_downButton];
+    [self.contentView addSubview:_downButton];
     
     //添加下载的文件大小
     _size = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - 60 * WideEachUnit, 30 * WideEachUnit, 50 * WideEachUnit, 15 * WideEachUnit)];
@@ -86,7 +86,7 @@
     _size.font = Font(13);
     _size.text = @"";
     _size.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_size];
+    [self.contentView addSubview:_size];
     
     //添加下载的按钮
     _progressView = [[UAProgressView alloc] initWithFrame:CGRectMake(MainScreenWidth - 60 * WideEachUnit, 15 * WideEachUnit, 50 * WideEachUnit, 20 * WideEachUnit)];
@@ -110,7 +110,7 @@
     if (_isClassNew) {
         _cellTableViewSpace = [[UIView alloc] initWithFrame:CGRectMake(0, 49.5, MainScreenWidth, 0.5)];
         _cellTableViewSpace.backgroundColor = RGBHex(0xEEEEEE);
-        [self addSubview:_cellTableViewSpace];
+        [self.contentView addSubview:_cellTableViewSpace];
         _dataSource = [NSMutableArray new];
         _cellTableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 50 * WideEachUnit, MainScreenWidth, 1)];
         _cellTableView.dataSource = self;
@@ -119,7 +119,7 @@
         _cellTableView.showsHorizontalScrollIndicator = NO;
         _cellTableView.bounces = NO;
         _cellTableView.rowHeight = 50 * WideEachUnit;
-        [self addSubview:_cellTableView];
+        [self.contentView addSubview:_cellTableView];
     }
 }
 

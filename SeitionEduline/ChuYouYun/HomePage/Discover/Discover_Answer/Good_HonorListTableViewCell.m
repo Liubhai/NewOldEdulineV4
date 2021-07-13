@@ -28,21 +28,21 @@
     //添加线
     _listNumberImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 25 * WideEachUnit,15 * WideEachUnit, 20 * WideEachUnit)];
     _listNumberImageView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_listNumberImageView];
+    [self.contentView addSubview:_listNumberImageView];
     
     //头像
     _userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(40 * WideEachUnit, 15 * WideEachUnit, 40 * WideEachUnit, 40 * WideEachUnit)];
     _userImageView.layer.cornerRadius = 20 * WideEachUnit;
     _userImageView.layer.masksToBounds = YES;
     _userImageView.image = Image(@"站位图");
-    [self addSubview:_userImageView];
+    [self.contentView addSubview:_userImageView];
     
     //名字
     _userName = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userImageView.frame) + 10 * WideEachUnit, 12 * WideEachUnit, MainScreenWidth - CGRectGetMaxX(_userImageView.frame) - 100 * WideEachUnit , 15 * WideEachUnit)];
     _userName.textColor = [UIColor colorWithHexString:@"#666"];
     _userName.font = Font(12 * WideEachUnit);
     _userName.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_userName];
+    [self.contentView addSubview:_userName];
     
     //时间
     _userInfo = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_userImageView.frame) + 10 * WideEachUnit, 35 * WideEachUnit, MainScreenWidth - CGRectGetMaxX(_userImageView.frame) - 100 * WideEachUnit, 20 * WideEachUnit)];
@@ -50,7 +50,7 @@
     _userInfo.font = [UIFont systemFontOfSize:12 * WideEachUnit];
     _userInfo.textAlignment = NSTextAlignmentLeft;
     _userInfo.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_userInfo];
+    [self.contentView addSubview:_userInfo];
     
     //具体
     _quesNumber = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - 50 * WideEachUnit,12 * WideEachUnit, 40 * WideEachUnit, 14 * WideEachUnit)];
@@ -58,7 +58,7 @@
     _quesNumber.textColor = [UIColor colorWithHexString:@"#656565"];
     _quesNumber.backgroundColor = [UIColor whiteColor];
     _quesNumber.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_quesNumber];
+    [self.contentView addSubview:_quesNumber];
     
     //回答
     UILabel *questionLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - 50 * WideEachUnit,40 * WideEachUnit, 40 * WideEachUnit, 14 * WideEachUnit)];
@@ -66,7 +66,7 @@
     questionLabel.textColor = BasidColor;
     questionLabel.text = @"回答";
     questionLabel.backgroundColor = [UIColor whiteColor];
-    [self addSubview:questionLabel];
+    [self.contentView addSubview:questionLabel];
 
 }
 

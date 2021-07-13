@@ -28,18 +28,18 @@
     
     _photoView = [[UIImageView alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 10 * WideEachUnit, 60 * WideEachUnit, 60 * WideEachUnit)];
     _photoView.backgroundColor = [UIColor redColor];
-    [self addSubview:_photoView];
+    [self.contentView addSubview:_photoView];
     
     //标题
     _lineClass = [[UILabel alloc] initWithFrame:CGRectMake(90 * WideEachUnit,10 * WideEachUnit,MainScreenWidth - 155 * WideEachUnit, 16 * WideEachUnit)];
-    [self addSubview:_lineClass];
+    [self.contentView addSubview:_lineClass];
     _lineClass.text = @"使用一应";
     _lineClass.font = Font(16 * WideEachUnit);
     _lineClass.textColor = [UIColor colorWithHexString:@"#575757"];
     
     //价格
     _price = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - 80 * WideEachUnit,10 * WideEachUnit,70 * WideEachUnit, 15 * WideEachUnit)];
-    [self addSubview:_price];
+    [self.contentView addSubview:_price];
     _price.text = @"使用一应";
     _price.font = Font(15 * WideEachUnit);
     _price.textColor = [UIColor colorWithHexString:@"#575757"];
@@ -47,7 +47,7 @@
     
     //名字
     _teacher = [[UILabel alloc] initWithFrame:CGRectMake(90 * WideEachUnit, 35 * WideEachUnit,MainScreenWidth - 180 * WideEachUnit, 12 * WideEachUnit)];
-    [self addSubview:_teacher];
+    [self.contentView addSubview:_teacher];
     _teacher.font = Font(11 * WideEachUnit);
     _teacher.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
     _teacher.text = @"你是你上午我问问我我等你过个";
@@ -55,17 +55,17 @@
     _sexLabel = [[UILabel alloc] initWithFrame:CGRectMake(_teacher.left, _teacher.bottom + 11, _teacher.width, _teacher.height)];
     _sexLabel.font = Font(11 * WideEachUnit);
     _sexLabel.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
-    [self addSubview:_sexLabel];
+    [self.contentView addSubview:_sexLabel];
     
     //添加线
     UILabel *lineTwo = [[UILabel alloc] initWithFrame:CGRectMake(0, 80 * WideEachUnit, MainScreenWidth, 1)];
     lineTwo.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self addSubview:lineTwo];
+    [self.contentView addSubview:lineTwo];
     
     _mapIcon = [[UIImageView alloc] initWithFrame:CGRectMake(20 * WideEachUnit, 115 * WideEachUnit, 20 * WideEachUnit, 20 * WideEachUnit)];
     _mapIcon.backgroundColor = [UIColor whiteColor];
     _mapIcon.image = Image(@"dingwei");
-    [self addSubview:_mapIcon];
+    [self.contentView addSubview:_mapIcon];
     
     
     _adress = [[UILabel alloc] initWithFrame:CGRectMake(50 * WideEachUnit, 100 * WideEachUnit,MainScreenWidth - 80 * WideEachUnit, 20 * WideEachUnit)];
@@ -76,17 +76,17 @@
     
     
     _tel = [[UILabel alloc] initWithFrame:CGRectMake(50 * WideEachUnit, 130 * WideEachUnit,MainScreenWidth - 80 * WideEachUnit, 20 * WideEachUnit)];
-    [self addSubview:_tel];
+    [self.contentView addSubview:_tel];
     _tel.font = Font(13 * WideEachUnit);
     _tel.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
     
     //添加线
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 160 * WideEachUnit, MainScreenWidth, 1)];
     line.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self addSubview:line];
+    [self.contentView addSubview:line];
     
     _orderStaus = [[UILabel alloc] initWithFrame:CGRectMake(20 * WideEachUnit, 170 * WideEachUnit,MainScreenWidth - 30 * WideEachUnit, 20 * WideEachUnit)];
-    [self addSubview:_orderStaus];
+    [self.contentView addSubview:_orderStaus];
     _orderStaus.font = Font(13 * WideEachUnit);
     _orderStaus.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
     _orderStaus.text = @"你是你上午我问问我我等你过个";
@@ -100,11 +100,11 @@
     _completeButton.layer.cornerRadius = 3;
     _completeButton.layer.borderWidth = 1;
     _completeButton.layer.borderColor = [UIColor grayColor].CGColor;
-    [self addSubview:_completeButton];
+    [self.contentView addSubview:_completeButton];
     
     
     _orderTime = [[UILabel alloc] initWithFrame:CGRectMake(20 * WideEachUnit, 185 * WideEachUnit,MainScreenWidth - 30 * WideEachUnit, 20 * WideEachUnit)];
-    [self addSubview:_orderTime];
+    [self.contentView addSubview:_orderTime];
     _orderTime.font = Font(13 * WideEachUnit);
     _orderTime.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
     _orderTime.text = @"你是你上午我问问我我等你过个";
@@ -113,7 +113,7 @@
     //机构按钮
     _rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0 * WideEachUnit, 230 * WideEachUnit, MainScreenWidth, 10 * WideEachUnit)];
     _rightButton.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self addSubview:_rightButton];
+    [self.contentView addSubview:_rightButton];
     
     
     
