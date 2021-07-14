@@ -26,14 +26,14 @@
     
     
     _myClass = [[UILabel alloc] initWithFrame:CGRectMake(SpaceBaside * horizontalrate, SpaceBaside * horizontalrate,(MainScreenWidth / 2 - SpaceBaside) * horizontalrate, 30 * horizontalrate)];
-    [self addSubview:_myClass];
+    [self.contentView addSubview:_myClass];
     _myClass.font = Font(15);
     _myClass.textColor = BlackNotColor;
     _myClass.text = @"你好";
     
     UIButton *lineButton = [[UIButton alloc] initWithFrame:CGRectMake((MainScreenWidth / 2 - 50) * horizontalrate, 25 * horizontalrate,100 * horizontalrate, 1 * horizontalrate)];
     lineButton.backgroundColor = [UIColor redColor];
-    [self addSubview:lineButton];
+    [self.contentView addSubview:lineButton];
     lineButton.hidden = YES;
     
     
@@ -42,20 +42,20 @@
     _myTeacher.font = Font(15);
     _myTeacher.textColor = BlackNotColor;
     _myTeacher.textAlignment = NSTextAlignmentRight;
-    [self addSubview:_myTeacher];
+    [self.contentView addSubview:_myTeacher];
     
     _date = [[UILabel alloc] initWithFrame:CGRectMake(SpaceBaside * horizontalrate, 50, (MainScreenWidth * 3 / 2) * horizontalrate, 30 * horizontalrate)];
     _date.text = @"10-01";
     _date.font = Font(14);
     _date.textColor = [UIColor grayColor];
-    [self addSubview:_date];
+    [self.contentView addSubview:_date];
     
     _number = [[UILabel alloc] initWithFrame:CGRectMake((MainScreenWidth / 2 + 70) * horizontalrate, 50 * horizontalrate, (MainScreenWidth / 2 - 80) * horizontalrate, 30 * horizontalrate)];
     _number.text = @"10人学习";
     _number.textColor = [UIColor grayColor];
     _number.font = Font(14);
     _number.textAlignment = NSTextAlignmentRight;
-    [self addSubview:_number];
+    [self.contentView addSubview:_number];
 }
 
 - (void)dataWithDict:(NSDictionary *)dict {

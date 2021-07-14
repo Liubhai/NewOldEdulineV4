@@ -29,12 +29,12 @@
     //图片
     _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 10 * WideEachUnit, 30 * WideEachUnit, 30 * WideEachUnit)];
     [_iconImageView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:Image(@"站位图")];
-    [self addSubview:_iconImageView];
+    [self.contentView addSubview:_iconImageView];
     
     
     //机构
     _typeName = [[UILabel alloc] initWithFrame:CGRectMake(50 * WideEachUnit, 10 * WideEachUnit, MainScreenWidth - 100 * WideEachUnit, 30 * WideEachUnit)];
-    [self addSubview:_typeName];
+    [self.contentView addSubview:_typeName];
     _typeName.text = @"中国银行";
     _typeName.font = Font(14 * WideEachUnit);
     _typeName.textColor = [UIColor colorWithHexString:@"#333"];
@@ -44,7 +44,7 @@
     _type.font = Font(12 * WideEachUnit);
     _type.textColor = [UIColor colorWithHexString:@"#888"];
     _type.textAlignment = NSTextAlignmentRight;
-    [self addSubview:_type];
+    [self.contentView addSubview:_type];
 }
 
 - (void)dataSourceWith:(NSDictionary *)dict {

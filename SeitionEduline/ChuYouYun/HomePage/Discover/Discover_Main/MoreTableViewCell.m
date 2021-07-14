@@ -27,10 +27,10 @@
 -(void)initLayuot{
     
     _SYGButton = [[UIButton alloc] initWithFrame:CGRectMake(15, 15, 20, 20)];
-    [self addSubview:_SYGButton];
+    [self.contentView addSubview:_SYGButton];
     
     _SYGLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, 200, 30)];
-    [self addSubview:_SYGLabel];
+    [self.contentView addSubview:_SYGLabel];
     
 }
 

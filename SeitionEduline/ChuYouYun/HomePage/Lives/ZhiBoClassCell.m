@@ -28,14 +28,14 @@
     _numberButton.titleLabel.font = Font(16);
     _numberButton.backgroundColor = BasidColor;
     [_numberButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self addSubview:_numberButton];
+    [self.contentView addSubview:_numberButton];
     _numberButton.layer.cornerRadius = 12;
     _numberButton.layer.masksToBounds = YES;
     
     _title = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, MainScreenWidth - 190, 30)];
     _title.textColor = [UIColor colorWithHexString:@"#333"];
     _title.font = Font(13);
-    [self addSubview:_title];
+    [self.contentView addSubview:_title];
     
     
     _priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - 120, 15,50, 20)];
@@ -45,13 +45,13 @@
     _priceLabel.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
     _priceLabel.layer.cornerRadius = 3;
     _priceLabel.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_priceLabel];
+    [self.contentView addSubview:_priceLabel];
     
     _type = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - 70, 10, 60, 30)];
     _type.font = Font(13);
     _type.textColor = [UIColor colorWithHexString:@"#333"];
     _type.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_type];
+    [self.contentView addSubview:_type];
     
 }
 

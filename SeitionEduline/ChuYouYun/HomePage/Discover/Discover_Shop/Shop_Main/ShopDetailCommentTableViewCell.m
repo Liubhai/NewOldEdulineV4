@@ -28,20 +28,20 @@
     //添加线
     UIButton *lineButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 1)];
     lineButton.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self addSubview:lineButton];
+    [self.contentView addSubview:lineButton];
     
     //头像
     _photoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 12 * WideEachUnit, 35 * WideEachUnit, 35 * WideEachUnit)];
     _photoImageView.clipsToBounds = YES;
     _photoImageView.layer.cornerRadius = 17.5 * WideEachUnit;
-    [self addSubview:_photoImageView];
+    [self.contentView addSubview:_photoImageView];
     
     //名字
     _userName = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_photoImageView.frame) + 10 * WideEachUnit, 22 * WideEachUnit, MainScreenWidth - CGRectGetMaxX(_photoImageView.frame) - 100 * WideEachUnit , 15 * WideEachUnit)];
     _userName.textColor = [UIColor colorWithHexString:@"#666"];
     _userName.font = Font(12 * WideEachUnit);
     _userName.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_userName];
+    [self.contentView addSubview:_userName];
     _userName.text = @"张三";
     
     //时间
@@ -50,14 +50,14 @@
     _time.font = [UIFont systemFontOfSize:12 * WideEachUnit];
     _time.textAlignment = NSTextAlignmentRight;
     _time.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_time];
+    [self.contentView addSubview:_time];
     
     //具体
     _comment = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_photoImageView.frame) + 10 * WideEachUnit, CGRectGetMaxY(_time.frame) + 10 * WideEachUnit, MainScreenWidth - 20 * WideEachUnit - CGRectGetMaxX(_photoImageView.frame), 24 * WideEachUnit)];
     _comment.font = [UIFont systemFontOfSize:14 * WideEachUnit];
     _comment.textColor = [UIColor colorWithHexString:@"#656565"];
     _comment.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_comment];
+    [self.contentView addSubview:_comment];
 }
 
 

@@ -26,14 +26,14 @@
 -(void)initLayuot{
     //标题
     _name = [[UILabel alloc] initWithFrame:CGRectMake(10 * WideEachUnit,15 * WideEachUnit,MainScreenWidth - 90 * WideEachUnit, 15 * WideEachUnit)];
-    [self addSubview:_name];
+    [self.contentView addSubview:_name];
     _name.text = @"使用一应";
     _name.font = Font(15 * WideEachUnit);
     _name.textColor = [UIColor colorWithHexString:@"#333"];
     
     //名字
     _time = [[UILabel alloc] initWithFrame:CGRectMake(10 * WideEachUnit, 45 * WideEachUnit,MainScreenWidth - 90 * WideEachUnit, 15 * WideEachUnit)];
-    [self addSubview:_time];
+    [self.contentView addSubview:_time];
     _time.font = Font(13 * WideEachUnit);
     _time.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
     _time.text = @"你是你上午我问问我我等你过个";
@@ -43,7 +43,7 @@
     _rightButton.backgroundColor = [UIColor whiteColor];
     [_rightButton setTitleColor:BasidColor forState:UIControlStateNormal];
     _rightButton.titleLabel.font = Font(18 * WideEachUnit);
-    [self addSubview:_rightButton];
+    [self.contentView addSubview:_rightButton];
 }
 
 - (void)dataSourceWith:(NSDictionary *)dict WithType:(NSString *)type {

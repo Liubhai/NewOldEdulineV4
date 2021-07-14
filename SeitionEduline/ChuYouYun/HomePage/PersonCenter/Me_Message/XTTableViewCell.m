@@ -27,7 +27,7 @@
     
     _backView = [[UIView alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 15 * WideEachUnit, MainScreenWidth - 30 * WideEachUnit, 60 * WideEachUnit)];
     _backView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_backView];
+    [self.contentView addSubview:_backView];
     
     //介绍
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 12 * WideEachUnit, MainScreenWidth - 30 * WideEachUnit, 15 * WideEachUnit)];

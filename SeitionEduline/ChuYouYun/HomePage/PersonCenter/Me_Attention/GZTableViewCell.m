@@ -30,23 +30,23 @@
     _HeadImageButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
     _HeadImageButton.layer.cornerRadius = 30;
     _HeadImageButton.layer.masksToBounds = YES;
-    [self addSubview:_HeadImageButton];
+    [self.contentView addSubview:_HeadImageButton];
     
     _NameLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 10, MainScreenWidth - 110, 20)];
     _NameLabel.font = [UIFont systemFontOfSize:16];
-    [self addSubview:_NameLabel];
+    [self.contentView addSubview:_NameLabel];
     
     _TextLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 35, MainScreenWidth - 130, 15)];
     _TextLabel.font = [UIFont systemFontOfSize:13];
-    [self addSubview:_TextLabel];
+    [self.contentView addSubview:_TextLabel];
     
     
     _fansLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 55, MainScreenWidth - 110, 15)];
     _fansLabel.font = [UIFont systemFontOfSize:12];
-    [self addSubview:_fansLabel];
+    [self.contentView addSubview:_fansLabel];
     
     _GZButton = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth - 60, 15, 50, 30)];
-    [self addSubview:_GZButton];
+    [self.contentView addSubview:_GZButton];
     
 }
 

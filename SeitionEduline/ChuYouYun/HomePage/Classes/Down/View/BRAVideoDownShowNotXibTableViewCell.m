@@ -97,7 +97,7 @@
         self.selectionStyle = 0;
         
         self.nNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, MainScreenWidth - 12 - 50 - 17, 50 * WideEachUnit)];
-        [self addSubview:self.nNameLabel];
+        [self.contentView addSubview:self.nNameLabel];
         if (_isClassNew) {
             _nNameLabel.frame = CGRectMake(12, 0, MainScreenWidth - 12 - 50 - 17, 50 * WideEachUnit);
         } else {
@@ -106,7 +106,7 @@
         self.nNameLabel.font = [UIFont systemFontOfSize:15];
         self.mStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - 12 - 50, 0, 50, 30)];
         _mStatusLabel.centerY = _nNameLabel.centerY;
-        [self addSubview:self.mStatusLabel];
+        [self.contentView addSubview:self.mStatusLabel];
         self.mStatusLabel.layer.cornerRadius = 5.0;
         self.mStatusLabel.clipsToBounds = YES;
         self.mStatusLabel.layer.borderWidth = 1;
@@ -128,7 +128,7 @@
             _mStatusLabel.hidden = YES;
             _cellTableViewSpace = [[UIView alloc] initWithFrame:CGRectMake(0, 49.5, MainScreenWidth, 0.5)];
             _cellTableViewSpace.backgroundColor = RGBHex(0xEEEEEE);
-            [self addSubview:_cellTableViewSpace];
+            [self.contentView addSubview:_cellTableViewSpace];
             _dataSource = [NSMutableArray new];
             _cellTableView = [[STTableView alloc] initWithFrame:CGRectMake(0, 50 * WideEachUnit, MainScreenWidth, 1)];
             _cellTableView.dataSource = self;
@@ -137,7 +137,7 @@
             _cellTableView.showsHorizontalScrollIndicator = NO;
             _cellTableView.bounces = NO;
             _cellTableView.rowHeight = 50 * WideEachUnit;
-            [self addSubview:_cellTableView];
+            [self.contentView addSubview:_cellTableView];
         }
     }
     return self;

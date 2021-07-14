@@ -36,7 +36,7 @@
     _optionButton.layer.masksToBounds = YES;
     _optionButton.userInteractionEnabled = NO;
     [_optionButton setTitle:@"A" forState:UIControlStateNormal];
-    [self addSubview:_optionButton];
+    [self.contentView addSubview:_optionButton];
     
     
     //作答
@@ -45,11 +45,11 @@
     _questionStem.font = [UIFont systemFontOfSize:15 * WideEachUnit];
     _questionStem.textColor = [UIColor colorWithHexString:@"#888"];
 //    [self setIntroductionText:@"梅雨节节，引起一片欧陆"];
-    [self addSubview:_questionStem];
+    [self.contentView addSubview:_questionStem];
     
     
     _photoView = [[UIView alloc] initWithFrame:CGRectMake(65 * WideEachUnit, 0, 50 * WideEachUnit, 75 * WideEachUnit)];
-    [self addSubview:_photoView];
+    [self.contentView addSubview:_photoView];
     
     _headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0 * WideEachUnit, 10 * WideEachUnit, 50 * WideEachUnit, 55 * WideEachUnit)];
     _headerImageView.backgroundColor = [UIColor redColor];

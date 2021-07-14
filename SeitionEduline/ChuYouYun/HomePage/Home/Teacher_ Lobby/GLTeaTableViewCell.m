@@ -28,17 +28,17 @@
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"GLTeaTableViewCell"];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
-        [self addSubview:self.img];
-        [self addSubview:self.nameLab];
-        [self addSubview:self.JGLab];
-        [self addSubview:self.contentLab];
-        [self addSubview:self.areaLab];
-        [self addSubview:self.lineButton];
-        [self addSubview:self.instView];
-        [self addSubview:self.instLabel];
-        [self addSubview:self.instButton];
-        [self addSubview:self.boundaryView];
-        [self addSubview:self.arrowsButton];
+        [self.contentView addSubview:self.img];
+        [self.contentView addSubview:self.nameLab];
+        [self.contentView addSubview:self.JGLab];
+        [self.contentView addSubview:self.contentLab];
+        [self.contentView addSubview:self.areaLab];
+        [self.contentView addSubview:self.lineButton];
+        [self.contentView addSubview:self.instView];
+        [self.contentView addSubview:self.instLabel];
+        [self.contentView addSubview:self.instButton];
+        [self.contentView addSubview:self.boundaryView];
+        [self.contentView addSubview:self.arrowsButton];
         
         if ([MoreOrSingle integerValue] == 1) {
             _instView.hidden = YES;

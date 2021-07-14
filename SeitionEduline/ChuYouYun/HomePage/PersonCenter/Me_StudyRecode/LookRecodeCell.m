@@ -29,24 +29,24 @@
     //添加很线
     _lineButton = [[UIButton alloc] initWithFrame:CGRectMake(SpaceBaside, 0, 1, 100)];
     _lineButton.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self addSubview:_lineButton];
+    [self.contentView addSubview:_lineButton];
     
     //添加原点
     _seleButton = [[UIButton alloc] initWithFrame:CGRectMake(SpaceBaside + 5, 25, 20, 20)];
     _seleButton.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_seleButton];
+    [self.contentView addSubview:_seleButton];
     _seleButton.hidden = YES;
     
     //标题
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SpaceBaside * 4,SpaceBaside,MainScreenWidth - 50, 20)];
-    [self addSubview:_titleLabel];
+    [self.contentView addSubview:_titleLabel];
     _titleLabel.text = @"领域：幼儿教育、幼儿中心";
     _titleLabel.font = Font(15);
     _titleLabel.textColor = BlackNotColor;
     
     //名字
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(SpaceBaside * 4, 40,MainScreenWidth - 50, 20)];
-    [self addSubview:_nameLabel];
+    [self.contentView addSubview:_nameLabel];
     _nameLabel.font = Font(12);
     _nameLabel.textColor = [UIColor grayColor];
     _nameLabel.text = @"阳光学院";

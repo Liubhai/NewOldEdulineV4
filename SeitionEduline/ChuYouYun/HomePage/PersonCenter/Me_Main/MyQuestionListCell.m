@@ -25,38 +25,38 @@
     _titleLabel.font = SYSTEMFONT(15);
     _titleLabel.textColor = RGBHex(0x333333);
     _titleLabel.numberOfLines = 0;
-    [self addSubview:_titleLabel];
+    [self.contentView addSubview:_titleLabel];
     
     _fromLabel = [[UILabel alloc] initWithFrame:CGRectMake(_titleLabel.left, _titleLabel.bottom + 10, _titleLabel.width, 15)];
     _fromLabel.font = SYSTEMFONT(15);
     _fromLabel.textColor = [UIColor colorWithHexString:@"#888"];
     _fromLabel.numberOfLines = 0;
-    [self addSubview:_fromLabel];
+    [self.contentView addSubview:_fromLabel];
     
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(_titleLabel.left, _fromLabel.bottom + 10, _titleLabel.width, 23)];
     _timeLabel.textColor = [UIColor colorWithHexString:@"#888"];
     _timeLabel.font = SYSTEMFONT(12);
-    [self addSubview:_timeLabel];
+    [self.contentView addSubview:_timeLabel];
     
     _scanCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - myquestionspace - 20, _timeLabel.top, 20, 23)];
     _scanCountLabel.font = SYSTEMFONT(12);
-    [self addSubview:_scanCountLabel];
+    [self.contentView addSubview:_scanCountLabel];
     
     _scanCountImage = [[UIImageView alloc] initWithFrame:CGRectMake(_scanCountLabel.left - 23, _timeLabel.top, 23, 23)];
     _scanCountImage.image = Image(@"browse");
-    [self addSubview:_scanCountImage];
+    [self.contentView addSubview:_scanCountImage];
     
     _commentCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(_scanCountImage.left - 20, _timeLabel.top, 20, 23)];
     _commentCountLabel.font = SYSTEMFONT(12);
-    [self addSubview:_commentCountLabel];
+    [self.contentView addSubview:_commentCountLabel];
     
     _commentCountImage = [[UIImageView alloc] initWithFrame:CGRectMake(_commentCountLabel.left - 23, _timeLabel.top, 23, 23)];
     _commentCountImage.image = Image(@"code");
-    [self addSubview:_commentCountImage];
+    [self.contentView addSubview:_commentCountImage];
     
     _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, _timeLabel.bottom, MainScreenWidth, 10)];
     _lineView.backgroundColor = RGBHex(0xEEEEEE);
-    [self addSubview:_lineView];
+    [self.contentView addSubview:_lineView];
 }
 
 - (void)setQuestionListCellInfo:(NSDictionary *)questionInfo typeString:(NSString *)typeString {

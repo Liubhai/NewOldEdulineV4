@@ -27,13 +27,13 @@
     
 
     _headerButton = [[UIButton alloc] initWithFrame:CGRectMake(SpaceBaside, SpaceBaside, 60, 60)];
-    [self addSubview:_headerButton];
+    [self.contentView addSubview:_headerButton];
     _headerButton.layer.cornerRadius = 30;
     _headerButton.layer.masksToBounds = YES;
     
     
     _name = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_headerButton.frame) + SpaceBaside, SpaceBaside,MainScreenWidth - CGRectGetMaxX(_headerButton.frame) + SpaceBaside, 20)];
-    [self addSubview:_name];
+    [self.contentView addSubview:_name];
  
 }
 

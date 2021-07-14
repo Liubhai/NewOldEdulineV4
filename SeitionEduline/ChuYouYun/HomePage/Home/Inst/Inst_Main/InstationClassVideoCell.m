@@ -76,14 +76,14 @@
     //在每个View 上面添加东西
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(SpaceBaside, SpaceBaside, 100, 60)];
     imageView.image = Image(@"大家好");
-    [self addSubview:imageView];
+    [self.contentView addSubview:imageView];
     _headerImageView = imageView;
     
     //名字 文本
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame) + SpaceBaside, SpaceBaside, MainScreenWidth - SpaceBaside - CGRectGetMaxX(imageView.frame) - SpaceBaside , 20)];
     nameLabel.text = @"一年级语文";
     nameLabel.font = Font(14);
-    [self addSubview:nameLabel];
+    [self.contentView addSubview:nameLabel];
     _nameLabel = nameLabel;
     
     //详情
@@ -91,7 +91,7 @@
     detailLabel.text = @"38小时|25人班|2016-09-30开课";
     detailLabel.font = Font(12);
     detailLabel.textColor = [UIColor grayColor];
-    [self addSubview:detailLabel];
+    [self.contentView addSubview:detailLabel];
     _contentLabel = detailLabel;
     
     //老师
@@ -99,7 +99,7 @@
     teacherLabel.text = @"老师：石远刚";
     teacherLabel.font = Font(13);
     teacherLabel.textColor = [UIColor grayColor];
-    [self addSubview:teacherLabel];
+    [self.contentView addSubview:teacherLabel];
     _teacherLabel = teacherLabel;
     
     //价格
@@ -107,7 +107,7 @@
     priceLabel.text = @"2280.00育币";
     priceLabel.font = Font(15);
     priceLabel.textColor = [UIColor orangeColor];
-    [self addSubview:priceLabel];
+    [self.contentView addSubview:priceLabel];
     _priceLabel = priceLabel;
  
     //添加报名 文本
@@ -115,7 +115,7 @@
     applyLabel.text = @"已报名12/15人";
     applyLabel.font = Font(12);
     applyLabel.textColor = [UIColor grayColor];
-    [self addSubview:applyLabel];
+    [self.contentView addSubview:applyLabel];
     _applyLabel = applyLabel;
 
     

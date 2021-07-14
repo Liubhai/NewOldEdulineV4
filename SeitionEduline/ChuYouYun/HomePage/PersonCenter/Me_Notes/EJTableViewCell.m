@@ -30,7 +30,7 @@
     //添加整个VIew
     UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(5, 5, MainScreenWidth - 10, 400)];
     backView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:backView];
+    [self.contentView addSubview:backView];
     _backView = backView;
     
     //头像

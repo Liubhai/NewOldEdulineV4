@@ -24,36 +24,36 @@
 - (void)makeSubViewUI {
     
     _starImageView = [[UIImageView alloc] initWithFrame:CGRectMake(myquestionspace15, myquestionspace15, 63, 10)];
-    [self addSubview:_starImageView];
+    [self.contentView addSubview:_starImageView];
     
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(myquestionspace15, _starImageView.bottom + 5, MainScreenWidth - myquestionspace15 * 2, 15)];
     _titleLabel.font = SYSTEMFONT(13);
     _titleLabel.textColor = RGBHex(0x333333);
     _titleLabel.numberOfLines = 0;
-    [self addSubview:_titleLabel];
+    [self.contentView addSubview:_titleLabel];
     
     _fromLabel = [[UILabel alloc] initWithFrame:CGRectMake(_titleLabel.left, _titleLabel.bottom + 10, _titleLabel.width, 15)];
     _fromLabel.font = SYSTEMFONT(14);
     _fromLabel.textColor = [UIColor colorWithHexString:@"#888"];
     _fromLabel.numberOfLines = 0;
-    [self addSubview:_fromLabel];
+    [self.contentView addSubview:_fromLabel];
     
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(_titleLabel.left, _fromLabel.bottom + 10, _titleLabel.width, 23)];
     _timeLabel.textColor = [UIColor colorWithHexString:@"#888"];
     _timeLabel.font = SYSTEMFONT(12);
-    [self addSubview:_timeLabel];
+    [self.contentView addSubview:_timeLabel];
     
     _commentCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - myquestionspace15 - 20, _timeLabel.top, 20, 23)];
     _commentCountLabel.font = SYSTEMFONT(12);
-    [self addSubview:_commentCountLabel];
+    [self.contentView addSubview:_commentCountLabel];
     
     _commentCountImage = [[UIImageView alloc] initWithFrame:CGRectMake(_commentCountLabel.left - 23, _timeLabel.top, 23, 23)];
     _commentCountImage.image = Image(@"code");
-    [self addSubview:_commentCountImage];
+    [self.contentView addSubview:_commentCountImage];
     
     _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, _timeLabel.bottom, MainScreenWidth, 1)];
     _lineView.backgroundColor = RGBHex(0xEEEEEE);
-    [self addSubview:_lineView];
+    [self.contentView addSubview:_lineView];
 }
 
 - (void)setEvaluateListCellInfo:(NSDictionary *)questionInfo typeString:(NSString *)typeString {

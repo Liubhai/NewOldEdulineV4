@@ -40,18 +40,18 @@
     _headImageView.image = Image(@"文档图标");
     _headImageView.layer.cornerRadius = 40 * WideEachUnit;
     _headImageView.layer.masksToBounds = YES;
-    [self addSubview:_headImageView];
+    [self.contentView addSubview:_headImageView];
     
     //标题
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20 * WideEachUnit, 40 * WideEachUnit,cellW - 100 * WideEachUnit - 20 * WideEachUnit, 20 * WideEachUnit)];
     _titleLabel.font = Font(20 * WideEachUnit);
     _titleLabel.textColor = [UIColor colorWithHexString:@"#333"];
-    [self addSubview:_titleLabel];
+    [self.contentView addSubview:_titleLabel];
     
     //时间
     _contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(20 * WideEachUnit, 70 * WideEachUnit, MainScreenWidth - 120 *
                                                               WideEachUnit, 15)];
-    [self addSubview:_contentLabel];
+    [self.contentView addSubview:_contentLabel];
     _contentLabel.font = Font(16 * WideEachUnit);
     _contentLabel.textColor = [UIColor grayColor];
 }

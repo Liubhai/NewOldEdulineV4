@@ -30,21 +30,21 @@
     //添加线
     UIButton *lineButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 1)];
     lineButton.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self addSubview:lineButton];
+    [self.contentView addSubview:lineButton];
     
     //头像
     _HeadImage = [[UIButton alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 12 * WideEachUnit, 35 * WideEachUnit, 35 * WideEachUnit)];
     [_HeadImage setBackgroundImage:[UIImage imageNamed:@"站位图"] forState:UIControlStateNormal];
     _HeadImage.layer.cornerRadius = 17.5 * WideEachUnit;
     _HeadImage.layer.masksToBounds = YES;
-    [self addSubview:_HeadImage];
+    [self.contentView addSubview:_HeadImage];
     
     //名字
     _NameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_HeadImage.frame) + 8 * WideEachUnit, 12 * WideEachUnit + 12.5 * WideEachUnit, MainScreenWidth - CGRectGetMaxX(_HeadImage.frame) - 100 * WideEachUnit , 15 * WideEachUnit)];
     _NameLabel.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
     _NameLabel.font = Font(12 * WideEachUnit);
     _NameLabel.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_NameLabel];
+    [self.contentView addSubview:_NameLabel];
     
     
     //具体
@@ -53,7 +53,7 @@
     _JTLabel.textColor = [UIColor colorWithHexString:@"#656565"];
     _JTLabel.numberOfLines = 2;
     _JTLabel.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_JTLabel];
+    [self.contentView addSubview:_JTLabel];
     
     
     
@@ -63,7 +63,7 @@
     _TimeLabel.font = [UIFont systemFontOfSize:12 * WideEachUnit];
     _TimeLabel.textAlignment = NSTextAlignmentLeft;
     _TimeLabel.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_TimeLabel];
+    [self.contentView addSubview:_TimeLabel];
     
     
     
@@ -73,7 +73,7 @@
     _kinsLabel.font = [UIFont systemFontOfSize:12 * WideEachUnit];
     _kinsLabel.textAlignment = NSTextAlignmentLeft;
     _kinsLabel.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_kinsLabel];
+    [self.contentView addSubview:_kinsLabel];
     _kinsLabel.hidden = YES;
     
     

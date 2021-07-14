@@ -59,37 +59,37 @@
     
     _imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 120)];
     _imageV.image = Image(@"你好");
-    [self addSubview:_imageV];
+    [self.contentView addSubview:_imageV];
     
     _stausImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width / 2, 20)];
-    [self addSubview:_stausImageView];
+    [self.contentView addSubview:_stausImageView];
     
     _title = [[UILabel alloc] initWithFrame:CGRectMake(SpaceBaside, CGRectGetMaxY(_imageV.frame),self.bounds.size.width , 30)];
     _title.numberOfLines = 2;
     _title.text = @"适应自然法则";
     _title.font = Font(14);
     _title.textColor = [UIColor colorWithHexString:@"#333"];
-    [self addSubview:_title];
+    [self.contentView addSubview:_title];
     
     _person = [[UILabel alloc] initWithFrame:CGRectMake(SpaceBaside, CGRectGetMaxY(_title.frame), self.bounds.size.width / 2 - SpaceBaside, 30)];
     _person.text = @"10人学习";
     _person.font = Font(12);
     _person.textColor = [UIColor colorWithHexString:@"#888"];
-    [self addSubview:_person];
+    [self.contentView addSubview:_person];
     
     _price = [[UILabel alloc] initWithFrame:CGRectMake(self.bounds.size.width / 2, CGRectGetMaxY(_title.frame), self.bounds.size.width / 2 - SpaceBaside, 30)];
     _price.text = @"122育币";
     _price.textColor = BasidColor;
     _price.font = Font(14);
     _price.textAlignment = NSTextAlignmentRight;
-    [self addSubview:_price];
+    [self.contentView addSubview:_price];
     
     _stats = [[UILabel alloc] initWithFrame:CGRectMake(SpaceBaside / 2, 0, self.bounds.size.width / 2 - SpaceBaside, 20)];
     _stats.text = @"直播中...";
     _stats.textColor = [UIColor whiteColor];
     _stats.backgroundColor = [UIColor clearColor];
     _stats.font = Font(12);
-    [self addSubview:_stats];
+    [self.contentView addSubview:_stats];
 }
 
 - (void)dataWithDict:(NSDictionary *)dict WithOrderSwitch:(NSString *)orderSwitch{

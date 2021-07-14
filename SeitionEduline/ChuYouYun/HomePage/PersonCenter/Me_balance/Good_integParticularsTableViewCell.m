@@ -28,14 +28,14 @@
     
     //名字
     _name = [[UILabel alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 15 * WideEachUnit, MainScreenWidth - 100 * WideEachUnit, 18 * WideEachUnit)];
-    [self addSubview:_name];
+    [self.contentView addSubview:_name];
     _name.font = Font(18 * WideEachUnit);
     _name.backgroundColor = [UIColor whiteColor];
     _name.textColor = [UIColor colorWithHexString:@"#333"];
     
     //时间
     _time = [[UILabel alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 43 * WideEachUnit, MainScreenWidth - 100 * WideEachUnit, 12 * WideEachUnit)];
-    [self addSubview:_time];
+    [self.contentView addSubview:_time];
     _time.font = Font(12 * WideEachUnit);
     _time.backgroundColor = [UIColor whiteColor];
     _time.textColor = [UIColor colorWithHexString:@"#888"];
@@ -43,7 +43,7 @@
     
     //钱
     _money = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - 90 * WideEachUnit, 25 * WideEachUnit, 75 * WideEachUnit, 20 * WideEachUnit)];
-    [self addSubview:_money];
+    [self.contentView addSubview:_money];
     _money.font = Font(18 * WideEachUnit);
     _money.backgroundColor = [UIColor whiteColor];
     _money.textColor = [UIColor colorWithHexString:@"#888"];

@@ -28,13 +28,13 @@
     _titleLabel.font = Font(17);
     _titleLabel.textAlignment = NSTextAlignmentLeft;
     _titleLabel.numberOfLines = 2;
-    [self addSubview:_titleLabel];
+    [self.contentView addSubview:_titleLabel];
     
     //时间
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 70, MainScreenWidth - 10 - 100, 20)];
     _timeLabel.font = [UIFont systemFontOfSize:15];
     _timeLabel.textColor = [UIColor colorWithRed:128.f / 255 green:128.f / 255 blue:128.f / 255 alpha:1];
-    [self addSubview:_timeLabel];
+    [self.contentView addSubview:_timeLabel];
     
 
     //人
@@ -42,7 +42,7 @@
     _personLabel.font = [UIFont systemFontOfSize:15];
     _personLabel.textColor = [UIColor colorWithRed:128.f / 255 green:128.f / 255 blue:128.f / 255 alpha:1];
     _personLabel.textAlignment = NSTextAlignmentRight;
-    [self addSubview:_personLabel];
+    [self.contentView addSubview:_personLabel];
     
     
     

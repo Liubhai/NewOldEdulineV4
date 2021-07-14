@@ -32,16 +32,16 @@
     _headImageView.image = Image(@"你好");
     _headImageView.layer.cornerRadius = 40;
     _headImageView.layer.masksToBounds = YES;
-    [self addSubview:_headImageView];
+    [self.contentView addSubview:_headImageView];
     
     //名字
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxY(_headImageView.frame) + SpaceBaside, SpaceBaside,MainScreenWidth - 110, 20)];
-    [self addSubview:_nameLabel];
+    [self.contentView addSubview:_nameLabel];
     _nameLabel.text = @"石远刚";
     
     //课程相关
     _numLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - 100, SpaceBaside,95, 20)];
-    [self addSubview:_numLabel];
+    [self.contentView addSubview:_numLabel];
     _numLabel.textAlignment = NSTextAlignmentRight;
     _numLabel.textColor = [UIColor grayColor];
     _numLabel.font = Font(14);
@@ -49,7 +49,7 @@
     
     //内容
     _contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxY(_headImageView.frame) + SpaceBaside, 40 , MainScreenWidth - 100, 50)];
-    [self addSubview:_contentLabel];
+    [self.contentView addSubview:_contentLabel];
     _contentLabel.numberOfLines = 3;
     _contentLabel.textColor = BlackNotColor;
     _contentLabel.font = Font(13);

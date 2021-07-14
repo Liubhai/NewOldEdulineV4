@@ -30,7 +30,7 @@
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20 * WideEachUnit, 20 * WideEachUnit, 100 * WideEachUnit, 30 * WideEachUnit)];
     _titleLabel.backgroundColor = [UIColor whiteColor];
     _titleLabel.font = [UIFont boldSystemFontOfSize:24 * WideEachUnit];
-    [self addSubview:_titleLabel];
+    [self.contentView addSubview:_titleLabel];
     
     //添加类型
     _type = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_titleLabel.frame) + 10 * WideEachUnit, 25 * WideEachUnit, 100 * WideEachUnit, 20 * WideEachUnit)];
@@ -40,13 +40,13 @@
     _type.layer.masksToBounds = YES;
     _type.textAlignment = NSTextAlignmentCenter;
     _type.font = Font(12 * WideEachUnit);
-    [self addSubview:_type];
+    [self.contentView addSubview:_type];
     
     
     //添加图片
     _segmentationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(270 * WideEachUnit, 0, 10 * WideEachUnit, 150 * WideEachUnit)];
     _segmentationImageView.image = Image(@"diacount@3x");
-    [self addSubview:_segmentationImageView];
+    [self.contentView addSubview:_segmentationImageView];
     
     //添加按钮
 //    _useButton = [[UIButton alloc] initWithFrame:CGRectMake(280 * WideEachUnit, 0, 65 * WideEachUnit, 150 * WideEachUnit)];
@@ -63,7 +63,7 @@
     _use.font = Font(18 * WideEachUnit);
     _use.textColor = [UIColor whiteColor];
     _use.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_use];
+    [self.contentView addSubview:_use];
     
     
     //添加类型
@@ -71,18 +71,18 @@
     _useLabel.backgroundColor = [UIColor whiteColor];
     _useLabel.font = Font(14 * WideEachUnit);
     _useLabel.text = @"";
-    [self addSubview:_useLabel];
+    [self.contentView addSubview:_useLabel];
     
     //添加用于机构
     _insetLabel = [[UILabel alloc] initWithFrame:CGRectMake(20 * WideEachUnit, 85 * WideEachUnit, 200 * WideEachUnit, 20 * WideEachUnit)];
     _insetLabel.backgroundColor = [UIColor whiteColor];
     _insetLabel.text = @"";
     _insetLabel.font = Font(15 * WideEachUnit);
-    [self addSubview:_insetLabel];
+    [self.contentView addSubview:_insetLabel];
     
     //时间
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(20 * WideEachUnit,110 * WideEachUnit,200 * WideEachUnit, 20 * WideEachUnit)];
-    [self addSubview:_timeLabel];
+    [self.contentView addSubview:_timeLabel];
     _timeLabel.text = @"2017.10.10";
     _timeLabel.font = Font(15 * WideEachUnit);
     _timeLabel.textColor = [UIColor colorWithHexString:@"#888"];
@@ -90,7 +90,7 @@
     //添加隔离带
     UIButton *lineButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 150 * WideEachUnit,MainScreenWidth , 20 * WideEachUnit)];
     lineButton.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self addSubview:lineButton];
+    [self.contentView addSubview:lineButton];
     _lineButton = lineButton;
 }
 

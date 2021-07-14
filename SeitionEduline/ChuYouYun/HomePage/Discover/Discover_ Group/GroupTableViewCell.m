@@ -28,27 +28,27 @@
     _headImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15 * WideEachUnit, 15 * WideEachUnit, 80 * WideEachUnit, 80 * WideEachUnit)];
 //    _headImageView.layer.masksToBounds = YES;
 //    _headImageView.layer.cornerRadius = 25;
-    [self addSubview:_headImageView];
+    [self.contentView addSubview:_headImageView];
     
     //标题
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(110 * WideEachUnit, 15 * WideEachUnit,MainScreenWidth - 80 * WideEachUnit, 20 * WideEachUnit)];
-    [self addSubview:_nameLabel];
+    [self.contentView addSubview:_nameLabel];
     
     //内容
     _contentlabel = [[UILabel alloc] initWithFrame:CGRectMake(110 * WideEachUnit, 40 * WideEachUnit , MainScreenWidth - 120 * WideEachUnit, 35 * WideEachUnit)];
-    [self addSubview:_contentlabel];
+    [self.contentView addSubview:_contentlabel];
     _contentlabel.numberOfLines = 2;
     _contentlabel.textColor = [UIColor grayColor];
     _contentlabel.font = Font(13 * WideEachUnit);
     
     //贴子和成员
     _mixLabel = [[UILabel alloc] initWithFrame:CGRectMake(110 * WideEachUnit, 80 * WideEachUnit,(MainScreenWidth - 110 * WideEachUnit - 2 * SpaceBaside * WideEachUnit) / 2, 15 * WideEachUnit)];
-    [self addSubview:_mixLabel];
+    [self.contentView addSubview:_mixLabel];
     _mixLabel.textColor = [UIColor grayColor];
     _mixLabel.font = Font(13);
     
     _member = [[UILabel alloc] initWithFrame:CGRectMake(110 * WideEachUnit + (MainScreenWidth - 110 * WideEachUnit - 2 * SpaceBaside * WideEachUnit) / 2 , 80 * WideEachUnit,(MainScreenWidth - 110 * WideEachUnit - 2 * SpaceBaside * WideEachUnit) / 2, 15 * WideEachUnit)];
-    [self addSubview:_member];
+    [self.contentView addSubview:_member];
     _member.textColor = [UIColor grayColor];
     _member.font = Font(13 * WideEachUnit);
     

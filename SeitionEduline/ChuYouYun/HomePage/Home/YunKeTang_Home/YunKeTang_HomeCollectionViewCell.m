@@ -30,27 +30,27 @@
     _imagePhoto = [[UIImageView alloc] initWithFrame:CGRectMake(5 * WideEachUnit, 5 * WideEachUnit, CellWidth, CellWidth / 5 * 3)];
     _imagePhoto.image = Image(@"你好");
     _imagePhoto.backgroundColor = [UIColor redColor];
-    [self addSubview:_imagePhoto];
+    [self.contentView addSubview:_imagePhoto];
     
     _title = [[UILabel alloc] initWithFrame:CGRectMake(10 * WideEachUnit, CGRectGetMaxY(_imagePhoto.frame),CellWidth - 20 * WideEachUnit , 20 * WideEachUnit)];
     _title.numberOfLines = 1;
     _title.text = @"适应自然法则";
     _title.font = Font(14 * WideEachUnit);
     _title.textColor = [UIColor colorWithHexString:@"#333"];
-    [self addSubview:_title];
+    [self.contentView addSubview:_title];
     
     _person = [[UILabel alloc] initWithFrame:CGRectMake(10 * WideEachUnit, CGRectGetMaxY(_title.frame), CellWidth / 2 - SpaceBaside, 20 * WideEachUnit)];
     _person.text = @"10人学习";
     _person.font = Font(12);
     _person.textColor = [UIColor colorWithHexString:@"#888"];
-    [self addSubview:_person];
+    [self.contentView addSubview:_person];
     
     _price = [[UILabel alloc] initWithFrame:CGRectMake(CellWidth / 2, CGRectGetMaxY(_title.frame), CellWidth / 2 - 10 * WideEachUnit, 20 * WideEachUnit)];
     _price.text = @"122育币";
     _price.textColor = BasidColor;
     _price.font = Font(14);
     _price.textAlignment = NSTextAlignmentRight;
-    [self addSubview:_price];
+    [self.contentView addSubview:_price];
     
 //    _stats = [[UILabel alloc] initWithFrame:CGRectMake(SpaceBaside / 2, 0, self.bounds.size.width / 2 - SpaceBaside, 20)];
 //    _stats.text = @"直播中...";

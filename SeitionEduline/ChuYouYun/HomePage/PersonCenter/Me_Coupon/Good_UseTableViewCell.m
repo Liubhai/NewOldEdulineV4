@@ -31,12 +31,12 @@
     //添加底色
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 22 * WideEachUnit)];
     headerView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self addSubview:headerView];
+    [self.contentView addSubview:headerView];
     
     //添加图像
     _typeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20 * WideEachUnit, 120 * WideEachUnit, 123 * WideEachUnit)];
     _typeImageView.image = Image(@"");
-    [self addSubview:_typeImageView];
+    [self.contentView addSubview:_typeImageView];
     
     
     
@@ -50,7 +50,7 @@
     _type.layer.masksToBounds = YES;
     _type.textAlignment = NSTextAlignmentCenter;
     _type.font = Font(8 * WideEachUnit);
-    [self addSubview:_type];
+    [self.contentView addSubview:_type];
     _type.textColor = [UIColor colorWithHexString:@"#5aa4e0"];
     
     
@@ -61,14 +61,14 @@
     _number.textAlignment = NSTextAlignmentLeft;
     _number.font = Font(12 * WideEachUnit);
     _number.textColor = [UIColor whiteColor];
-    [self addSubview:_number];
+    [self.contentView addSubview:_number];
     
     
     
     //添加图片
     _segmentationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(130 * WideEachUnit, 20 * WideEachUnit, 10 * WideEachUnit, 123 * WideEachUnit)];
     _segmentationImageView.image = Image(@"diacount@3x");
-    [self addSubview:_segmentationImageView];
+    [self.contentView addSubview:_segmentationImageView];
     _segmentationImageView.hidden = YES;
     
     //添加按钮
@@ -86,7 +86,7 @@
     _use.font = Font(18 * WideEachUnit);
     _use.textColor = [UIColor whiteColor];
     _use.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_use];
+    [self.contentView addSubview:_use];
     _use.hidden = YES;
     
     
@@ -96,7 +96,7 @@
     _useLabel.font = Font(12 * WideEachUnit);
     _useLabel.text = @"满78可用";
     _useLabel.textColor = [UIColor colorWithHexString:@"#656565"];
-    [self addSubview:_useLabel];
+    [self.contentView addSubview:_useLabel];
     
     //添加用于机构
     _insetLabel = [[UILabel alloc] initWithFrame:CGRectMake(150 * WideEachUnit, 60 * WideEachUnit, 200 * WideEachUnit, 20 * WideEachUnit)];
@@ -104,11 +104,11 @@
     _insetLabel.text = @"所有机构";
     _insetLabel.font = Font(12 * WideEachUnit);
     _insetLabel.textColor = [UIColor colorWithHexString:@"#656565"];
-    [self addSubview:_insetLabel];
+    [self.contentView addSubview:_insetLabel];
     
     //时间
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(150 * WideEachUnit,100 * WideEachUnit,200 * WideEachUnit, 20 * WideEachUnit)];
-    [self addSubview:_timeLabel];
+    [self.contentView addSubview:_timeLabel];
     _timeLabel.text = @"2017.10.10";
     _timeLabel.font = Font(10 * WideEachUnit);
     _timeLabel.textColor = [UIColor colorWithHexString:@"#9e9e9e"];
@@ -117,12 +117,12 @@
     _seleButton = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth - 60 * WideEachUnit, 72 * WideEachUnit, 20 * WideEachUnit, 20 * WideEachUnit)];
     [_seleButton setImage:Image(@"choose@3x") forState:UIControlStateNormal];
     _seleButton.backgroundColor = [UIColor whiteColor];
-    [self addSubview:_seleButton];
+    [self.contentView addSubview:_seleButton];
     
     //添加隔离带
     UIButton *lineButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 150 * WideEachUnit,345 * WideEachUnit , 20 * WideEachUnit)];
     lineButton.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self addSubview:lineButton];
+    [self.contentView addSubview:lineButton];
 }
 
 - (void)dataSourceWith:(NSDictionary *)dict {

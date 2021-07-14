@@ -31,36 +31,36 @@
     _headImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SpaceBaside, 12.5 * WideEachUnit, 60 * WideEachUnit, 60 * WideEachUnit)];
 
     _headImageView.image = Image(@"机构");
-    [self addSubview:_headImageView];
+    [self.contentView addSubview:_headImageView];
     
     //名字
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(80 * WideEachUnit,12.5 * WideEachUnit,MainScreenWidth - 120, 16 * WideEachUnit)];
-    [self addSubview:_nameLabel];
+    [self.contentView addSubview:_nameLabel];
     _nameLabel.font = Font(16 * WideEachUnit);
     _nameLabel.textColor = [UIColor colorWithHexString:@"#333"];
     _nameLabel.text = @"阳光学院";
     
     //贴子和成员
     _downLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - 10 - 150, 40 * WideEachUnit,150, 10 * WideEachUnit)];
-    [self addSubview:_downLabel];
+    [self.contentView addSubview:_downLabel];
     _downLabel.textColor = [UIColor colorWithHexString:@"#888"];
     _downLabel.font = Font(10 * WideEachUnit);
     _downLabel.textAlignment = NSTextAlignmentRight;
     _downLabel.centerY = _nameLabel.centerY;
     
     _personNumber = [[UILabel alloc] initWithFrame:CGRectMake(200, SpaceBaside, 50, 20)];
-    [self addSubview:_personNumber];
+    [self.contentView addSubview:_personNumber];
     _personNumber.textColor = [UIColor grayColor];
     _personNumber.hidden = YES;
     
     _XJButton = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth - 100 * WideEachUnit, 12.5 * WideEachUnit, 80 * WideEachUnit, 12 * WideEachUnit)];
     [_XJButton setBackgroundImage:Image(@"104@2x") forState:UIControlStateNormal];
-    [self addSubview:_XJButton];
+    [self.contentView addSubview:_XJButton];
     _XJButton.hidden = YES;
     
     //标题
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 35,MainScreenWidth - 80, 15)];
-    [self addSubview:_titleLabel];
+    [self.contentView addSubview:_titleLabel];
     _titleLabel.text = @"领域：幼儿教育、幼儿中心";
     _titleLabel.font = Font(14);
     _titleLabel.textColor = BlackNotColor;
@@ -68,7 +68,7 @@
     
     //内容
     _contentlabel = [[UILabel alloc] initWithFrame:CGRectMake(80 * WideEachUnit, 40 * WideEachUnit , MainScreenWidth - 110 * WideEachUnit, 12 * WideEachUnit)];
-    [self addSubview:_contentlabel];
+    [self.contentView addSubview:_contentlabel];
     _contentlabel.numberOfLines = 1;
     _contentlabel.textColor = [UIColor colorWithHexString:@"#656565"];
     _contentlabel.font = Font(12 * WideEachUnit);

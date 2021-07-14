@@ -31,14 +31,14 @@
 - (void)makeSubView {  
     _faceImageView = [[UIImageView alloc] initWithFrame:CGRectMake(space, 8, faceImageWidth, faceImageHeight)];
     _faceImageView.image = Image(@"站位图");
-    [self addSubview:_faceImageView];
+    [self.contentView addSubview:_faceImageView];
     
     _themeLabel = [[UILabel alloc] initWithFrame:CGRectMake(_faceImageView.right + faceToThemeSpace, _faceImageView.top + 4.5, MainScreenWidth - space * 2 - (_faceImageView.right + faceToThemeSpace), 15)];
     _themeLabel.font = SYSTEMFONT(12);
     _themeLabel.textColor = RGBHex(0x414141);
     _themeLabel.text = @"Swift语言学习教程";
     _themeLabel.centerY = 8 + _faceImageView.height / 6.0;
-    [self addSubview:_themeLabel];
+    [self.contentView addSubview:_themeLabel];
     
     _priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainScreenWidth - space - 100, _themeLabel.top, 100, 15)];
     _priceLabel.font = SYSTEMFONT(13);
@@ -46,14 +46,14 @@
     _priceLabel.text = @"育币100";
     _priceLabel.textAlignment = NSTextAlignmentRight;
     _priceLabel.centerY = _themeLabel.centerY;
-    [self addSubview:_priceLabel];
+    [self.contentView addSubview:_priceLabel];
     
     _courseTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(_themeLabel.left, 0, 100, 15)];
     _courseTimeLabel.text = @"课时：14节";
     _courseTimeLabel.textColor = RGBHex(0xA3A3A3);
     _courseTimeLabel.font = SYSTEMFONT(11);
     _courseTimeLabel.centerY = 8 + _faceImageView.height / 2.0;
-    [self addSubview:_courseTimeLabel];
+    [self.contentView addSubview:_courseTimeLabel];
     
     _introLabel = [[UILabel alloc] initWithFrame:CGRectMake(_themeLabel.left, 0, MainScreenWidth - _themeLabel.left - space, 15)];
     _introLabel.text = @"我是一个简介哦我是一个简介哦我是一个简介哦我是一个简介哦我是一个简介哦";
@@ -61,11 +61,11 @@
     _introLabel.textColor = RGBHex(0xADACB4);
     _introLabel.font = SYSTEMFONT(10);
     _introLabel.centerY = 8 + _faceImageView.height * 5 / 6.0;
-    [self addSubview:_introLabel];
+    [self.contentView addSubview:_introLabel];
     
     _lineView = [[UIView alloc] initWithFrame:CGRectMake(space, _faceImageView.bottom + 7.5, MainScreenWidth - space * 2, 0.5)];
     _lineView.backgroundColor = EdulineLineColor;
-    [self addSubview:_lineView];
+    [self.contentView addSubview:_lineView];
 }
 
 - (void)setCourseInfo:(NSDictionary *)dict {

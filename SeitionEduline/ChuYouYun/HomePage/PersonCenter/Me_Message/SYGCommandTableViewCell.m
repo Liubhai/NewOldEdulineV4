@@ -28,35 +28,35 @@
 -(void)initLayuot{
     //头像
     _myHeadImage = [[UIButton alloc] initWithFrame:CGRectMake(10, 5, 50, 50)];
-    [self addSubview:_myHeadImage];
+    [self.contentView addSubview:_myHeadImage];
     
     //名字
     _myName = [[UILabel alloc] initWithFrame:CGRectMake(70, 5, 200, 20)];
     _myName.textColor = [UIColor colorWithRed:136.f / 255 green:136.f / 255 blue:136.f / 255 alpha:1];
-    [self addSubview:_myName];
+    [self.contentView addSubview:_myName];
     
     //日期
     _dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 30, 200, 20)];
     _dayLabel.textColor = [UIColor colorWithRed:136.f / 255 green:136.f / 255 blue:136.f / 255 alpha:1];
     _dayLabel.font = [UIFont systemFontOfSize:14];
-    [self addSubview:_dayLabel];
+    [self.contentView addSubview:_dayLabel];
     
     //删除
     _SCButton = [[UIButton alloc] initWithFrame:CGRectMake(MainScreenWidth - 90, 5, 80, 20)];
     [_SCButton setTitle:@"滑动删除" forState:UIControlStateNormal];
     [_SCButton setTitleColor:[UIColor colorWithRed:36.f / 255 green:105.f / 255 blue:207.f / 255 alpha:1] forState:UIControlStateNormal];
     _SCButton.titleLabel.font = [UIFont systemFontOfSize:16];
-    [self addSubview:_SCButton];
+    [self.contentView addSubview:_SCButton];
     
     //介绍
     _JTLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, MainScreenWidth - 20, 20)];
     _JTLabel.font = [UIFont systemFontOfSize:16];
-    [self addSubview:_JTLabel];
+    [self.contentView addSubview:_JTLabel];
     
     //评论View
     _otherView = [[UIView alloc] initWithFrame:CGRectMake(10, 90, MainScreenWidth - 20, 30)];
     _otherView.backgroundColor = [UIColor colorWithRed:245.f / 255 green:245.f / 255 blue:245.f / 255 alpha:1];
-    [self addSubview:_otherView];
+    [self.contentView addSubview:_otherView];
     
     
     //评论人的名字

@@ -29,7 +29,7 @@
     
     UIView *cellView = [[UIView alloc] initWithFrame:CGRectMake(5 * WideEachUnit, 0, MainScreenWidth - 10 * WideEachUnit, 110 * WideEachUnit)];
     cellView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:cellView];
+    [self.contentView addSubview:cellView];
     
     _imagePhotoView = [[UIImageView alloc] initWithFrame:CGRectMake(5 * WideEachUnit, 5 * WideEachUnit, 170 * WideEachUnit, 100 * WideEachUnit)];
     _imagePhotoView.backgroundColor = [UIColor whiteColor];
