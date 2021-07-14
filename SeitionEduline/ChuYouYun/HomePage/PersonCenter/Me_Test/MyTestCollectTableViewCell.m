@@ -29,7 +29,7 @@
     [self.contentView addSubview:_name];
     _name.font = Font(15 * WideEachUnit);
     _name.numberOfLines = 2;
-    [self.contentView setIntroductionText:@"使用一应你带大的空间点击我么大的期"];
+    [self setIntroductionText:@"使用一应你带大的空间点击我么大的期"];
     _name.textColor = [UIColor colorWithHexString:@"#333"];
     
     //名字
