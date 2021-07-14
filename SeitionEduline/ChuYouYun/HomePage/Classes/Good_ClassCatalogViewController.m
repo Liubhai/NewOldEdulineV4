@@ -626,6 +626,8 @@
                         if ([[_videoInfoDict stringValueForKey:@"price"] floatValue] != 0 && [[_cellDict stringValueForKey:@"course_hour_price"] floatValue] != 0) {
                             [self isPromptBuy];
                         } else {
+                            [TKProgressHUD showError:@"请先解锁整个课程" toView:[UIApplication sharedApplication].keyWindow];
+                            return;
                             if ([[_videoInfoDict stringValueForKey:@"is_order"] integerValue] == 1) {
                                 if ([[_cellDict stringValueForKey:@"lock"] integerValue] == 1) {
                                     __weak Good_ClassCatalogViewController *weakSelf = self;
@@ -860,6 +862,8 @@
                         if ([[_videoInfoDict stringValueForKey:@"price"] floatValue] != 0 && [[_cellDict stringValueForKey:@"course_hour_price"] floatValue] != 0) {
                             [self isPromptBuy];
                         } else {
+                            [TKProgressHUD showError:@"请先解锁整个课程" toView:[UIApplication sharedApplication].keyWindow];
+                            return;
                             if ([[_videoInfoDict stringValueForKey:@"is_order"] integerValue] == 1) {
                                 if ([[_cellDict stringValueForKey:@"lock"] integerValue] == 1) {
                                     __weak Good_ClassCatalogViewController *weakSelf = self;
