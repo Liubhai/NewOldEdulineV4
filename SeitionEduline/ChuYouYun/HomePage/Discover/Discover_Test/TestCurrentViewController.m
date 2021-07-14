@@ -1046,7 +1046,7 @@
         [self.collectButton setImage:Image(@"test_uncollect@3x") forState:UIControlStateNormal];
         [self.collectButton setTitle:@" 收藏习题" forState:UIControlStateNormal];
     } else {
-        [self.collectButton setImage:Image(@"test_collect@3x") forState:UIControlStateSelected];
+        [self.collectButton setImage:Image(@"test_collect@3x") forState:UIControlStateNormal];
         [self.collectButton setTitle:@" 取消收藏" forState:UIControlStateNormal];
     }
     [self.collectButton setTitleColor:[UIColor colorWithHexString:@"#656565"] forState:UIControlStateNormal];
@@ -2816,7 +2816,7 @@
     NSMutableDictionary *mutabDict = [NSMutableDictionary dictionaryWithCapacity:0];
     NSString *ID = [[_currentArray objectAtIndex:subjectNumber] stringValueForKey:@"exams_question_id"];
     [mutabDict setObject:ID forKey:@"source_id"];
-    if ([[self.collectArray objectAtIndex:subjectAllNumber] integerValue] == 1) {//已经收藏过
+    if ([[[_currentArray objectAtIndex:subjectNumber] stringValueForKey:@"is_collect"] integerValue] == 1) {//已经收藏过
         [mutabDict setObject:@"0" forKey:@"action"];//1 收藏 0 取消收藏
     } else {//没有收藏
         [mutabDict setObject:@"1" forKey:@"action"];//1 收藏 0 取消收藏
@@ -2837,14 +2837,26 @@
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         NSDictionary *dict = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject];
         if (dict.allKeys.count > 0) {
-            if ([[self.collectArray objectAtIndex:subjectAllNumber] integerValue] == 0) {//收藏
+            [_currentArray addObjectsFromArray:_allQuestionArray[currentQuestionArrayIndex]];
+            if (([[[_currentArray objectAtIndex:subjectNumber] stringValueForKey:@"is_collect"] integerValue] == 0)) {//收藏
                 [self.collectButton setTitle:@" 取消收藏" forState:UIControlStateNormal];
                 [self.collectButton setImage:Image(@"test_collect@3x") forState:UIControlStateNormal];
-                [self.collectArray replaceObjectAtIndex:subjectAllNumber withObject:@"1"];
+//                [self.collectArray replaceObjectAtIndex:subjectAllNumber withObject:@"1"];
+                
+                // 处理 两个数组的数据源
+                NSMutableDictionary *pass = [NSMutableDictionary dictionaryWithDictionary:_currentArray[subjectNumber]];
+                [pass setObject:@"1" forKey:@"is_collect"];
+                [_currentArray replaceObjectAtIndex:subjectNumber withObject:[NSDictionary dictionaryWithDictionary:pass]];
+                [_allQuestionArray replaceObjectAtIndex:currentQuestionArrayIndex withObject:[NSArray arrayWithArray:_currentArray]];
             } else {//取消收藏
                 [self.collectButton setTitle:@" 添加收藏" forState:UIControlStateNormal];
                 [self.collectButton setImage:Image(@"test_uncollect@3x") forState:UIControlStateNormal];
-                [self.collectArray replaceObjectAtIndex:subjectAllNumber withObject:@"0"];
+//                [self.collectArray replaceObjectAtIndex:subjectAllNumber withObject:@"0"];
+                // 处理 两个数组的数据源
+                NSMutableDictionary *pass = [NSMutableDictionary dictionaryWithDictionary:_currentArray[subjectNumber]];
+                [pass setObject:@"0" forKey:@"is_collect"];
+                [_currentArray replaceObjectAtIndex:subjectNumber withObject:[NSDictionary dictionaryWithDictionary:pass]];
+                [_allQuestionArray replaceObjectAtIndex:currentQuestionArrayIndex withObject:[NSArray arrayWithArray:_currentArray]];
             }
         }
         
