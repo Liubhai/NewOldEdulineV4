@@ -32,7 +32,7 @@ NSString * const kBlumMoney = @"money_data";
 @synthesize money_data = _money_data;
 +(instancetype)modelObjectWithDictionary:(NSDictionary *)dicts
 {
-    return [[self alloc] initWithDictionary:dicts];
+    return [[self alloc] initWithDictionarys:dicts];
 }
 - (instancetype)initWithDictionarys:(NSDictionary *)dict
 {

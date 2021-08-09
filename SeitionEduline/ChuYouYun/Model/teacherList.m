@@ -51,7 +51,7 @@ NSString * const kClassVideoAddress = @"video_address";
 @synthesize videoAddress = _videoAddress;
 +(instancetype)modelObjectWithDictionary:(NSDictionary *)dicts
 {
-    return [[self alloc] initWithDictionary:dicts];
+    return [[self alloc] initWithDictionarys:dicts];
 }
 
 - (instancetype)initWithDictionarys:(NSDictionary *)dict

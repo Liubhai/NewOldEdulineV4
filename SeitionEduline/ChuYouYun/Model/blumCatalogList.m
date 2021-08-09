@@ -20,7 +20,7 @@ NSString * const kBlumCatalogTitle = @"video_title";
 @synthesize classTitle = _classTitle;
 +(instancetype)modelObjectWithDictionary:(NSDictionary *)dicts
 {
-    return [[self alloc] initWithDictionary:dicts];
+    return [[self alloc] initWithDictionarys:dicts];
 }
 - (instancetype)initWithDictionarys:(NSDictionary *)dict
 {

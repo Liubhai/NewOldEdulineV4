@@ -53,7 +53,7 @@ NSString * const kCourseReviewId = @"id";
 @synthesize qst_id = _qst_id;
 +(instancetype)modelObjectWithDictionary:(NSDictionary *)dicts
 {
-    return [[self alloc] initWithDictionary:dicts];
+    return [[self alloc] initWithDictionarys:dicts];
 }
 
 - (instancetype)initWithDictionarys:(NSDictionary *)dict

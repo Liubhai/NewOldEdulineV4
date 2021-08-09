@@ -20,7 +20,7 @@ NSString * const kcategoryTitle = @"title";
 @synthesize Category_title = _Category_title;
 +(instancetype)modelObjectWithDictionary:(NSDictionary *)dicts
 {
-    return [[self alloc] initWithDictionary:dicts];
+    return [[self alloc] initWithDictionarys:dicts];
 }
 
 - (instancetype)initWithDictionarys:(NSDictionary *)dict
