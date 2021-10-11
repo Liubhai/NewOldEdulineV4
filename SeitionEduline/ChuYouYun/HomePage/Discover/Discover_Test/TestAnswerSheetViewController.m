@@ -855,6 +855,8 @@
 
                         if ([_classTestType isEqualToString:@"Search_ClassGoin"]) {
                              [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
+                        } else if ([_classTestType isEqualToString:@"course_test"]) {
+                            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 3] animated:YES];
                         } else {
                              [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
                         }

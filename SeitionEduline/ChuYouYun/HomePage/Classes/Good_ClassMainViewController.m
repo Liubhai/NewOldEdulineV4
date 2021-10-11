@@ -2786,6 +2786,7 @@
         vc.examsType = @"2";
         vc.dataSource = dict;
         vc.testDict = _seleCurrentDict;
+        vc.classTestType = @"course_test";
         [wekself.navigationController pushViewController:vc animated:YES];
         
     } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {

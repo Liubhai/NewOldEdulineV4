@@ -454,7 +454,7 @@
             [indexTemp addObject:@(i)];
         }
     }
-    for (int i = 0; i<indexTemp.count; i++) {
+    for (int i = (indexTemp.count - 1); i>=0; i--) {
         [_options_type_array removeObjectAtIndex:[indexTemp[i] integerValue]];
     }
     [_currentArray removeAllObjects];
