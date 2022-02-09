@@ -6811,6 +6811,7 @@
 		78DAEC2C2387CF9F0000311F /* ScanPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanPhotoViewController.m; sourceTree = "<group>"; };
 		78DF190422AF5AB500DF10FB /* ShopOrderDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShopOrderDetailVC.h; sourceTree = "<group>"; };
 		78DF190522AF5AB500DF10FB /* ShopOrderDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShopOrderDetailVC.m; sourceTree = "<group>"; };
+		78EE32E827B240FF003748EF /* EdulineRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EdulineRelease.entitlements; sourceTree = SOURCE_ROOT; };
 		78F108F022B7471900288DEB /* LanchAnimationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanchAnimationVC.m; sourceTree = "<group>"; };
 		78F108F122B7471900288DEB /* LanchAnimationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanchAnimationVC.h; sourceTree = "<group>"; };
 		78F108F222B7471A00288DEB /* LanchAnimationVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LanchAnimationVC.xib; sourceTree = "<group>"; };
@@ -10143,6 +10144,7 @@
 		50566DFE1A6F44A400F093DE /* YunKeTang */ = {
 			isa = PBXGroup;
 			children = (
+				78EE32E827B240FF003748EF /* EdulineRelease.entitlements */,
 				780F77D2230F85D300B67CEF /* TKSDK */,
 				78FBCE3E23010B1000D9E5BF /* GenSee */,
 				097DC17C21D632840060C974 /* ALiYun_SDK */,
@@ -26062,7 +26064,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.saixin.eduline02;
+				PRODUCT_BUNDLE_IDENTIFIER = com.saixin.eduline;
 				PRODUCT_NAME = Eduline;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -26080,6 +26082,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = EdulineRelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -26173,10 +26176,10 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.saixin.eduline02;
+				PRODUCT_BUNDLE_IDENTIFIER = com.saixin.eduline;
 				PRODUCT_NAME = Eduline;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = appTongYongDis;
+				PROVISIONING_PROFILE_SPECIFIER = saixinv4shareadhoc;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_WORKSPACE = YES;

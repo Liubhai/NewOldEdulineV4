@@ -234,7 +234,8 @@ void uncaughtExceptionHandler(NSException*exception){
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:QQAppId  appSecret:QQAppSecret redirectURL:@"http://www.umeng.com/social"];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:SinaAppId appSecret:SinaAppSecret redirectURL:@"http://sns.eduline.com/sina2/callback"];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:WXAppId appSecret:WXAppSecret redirectURL:@"https://api.weixin.qq.com/cgi-bin/menu/create?access_token="];
-    [WXApi registerApp:WXAppId universalLink:@"applinks:b7n7.t4m.cn"];
+    [WXApi registerApp:WXAppId universalLink:@"https://5d1f08fe76a352b721c7eb69d7498add.share2dlink.com/"];
+    
 //    //隐藏未安装客户端的平台
 //    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ, UMShareToQzone, UMShareToWechatSession, UMShareToWechatTimeline]];
     
