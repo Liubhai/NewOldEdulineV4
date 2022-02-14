@@ -6927,6 +6927,7 @@
 		78FBCE4423010B1100D9E5BF /* SpeedSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeedSettingViewController.m; sourceTree = "<group>"; };
 		78FBCE4523010B1100D9E5BF /* GenSeeLiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenSeeLiveViewController.m; sourceTree = "<group>"; };
 		78FBCE4623010B1100D9E5BF /* GenSeePlayBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenSeePlayBackViewController.h; sourceTree = "<group>"; };
+		78FBEEB827B3B3D3009E8A07 /* EdulineDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EdulineDebug.entitlements; sourceTree = SOURCE_ROOT; };
 		810772FB224882A500FC721E /* suo1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = suo1.png; sourceTree = "<group>"; };
 		810772FD2248B01800FC721E /* ClassScreeningViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClassScreeningViewController.h; sourceTree = "<group>"; };
 		810772FE2248B01800FC721E /* ClassScreeningViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClassScreeningViewController.m; sourceTree = "<group>"; };
@@ -10144,6 +10145,7 @@
 		50566DFE1A6F44A400F093DE /* YunKeTang */ = {
 			isa = PBXGroup;
 			children = (
+				78FBEEB827B3B3D3009E8A07 /* EdulineDebug.entitlements */,
 				78EE32E827B240FF003748EF /* EdulineRelease.entitlements */,
 				780F77D2230F85D300B67CEF /* TKSDK */,
 				78FBCE3E23010B1000D9E5BF /* GenSee */,
@@ -25971,6 +25973,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = EdulineDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;

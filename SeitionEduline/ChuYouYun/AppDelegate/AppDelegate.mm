@@ -231,11 +231,10 @@ void uncaughtExceptionHandler(NSException*exception){
     [self getCurrentAPPName];
 
     [UMConfigure initWithAppkey:@"574e8829e0f55a12f8001790" channel:@"App Store"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:WXAppId appSecret:WXAppSecret redirectURL:@"https://api.weixin.qq.com/cgi-bin/menu/create?access_token="];
+    [WXApi registerApp:WXAppId universalLink:@"https://d31c2fd1856a7e2c83e28becfe50d256.share2dlink.com/"];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:QQAppId  appSecret:QQAppSecret redirectURL:@"http://www.umeng.com/social"];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:SinaAppId appSecret:SinaAppSecret redirectURL:@"http://sns.eduline.com/sina2/callback"];
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:WXAppId appSecret:WXAppSecret redirectURL:@"https://api.weixin.qq.com/cgi-bin/menu/create?access_token="];
-    [WXApi registerApp:WXAppId universalLink:@"https://5d1f08fe76a352b721c7eb69d7498add.share2dlink.com/"];
-    
 //    //隐藏未安装客户端的平台
 //    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ, UMShareToQzone, UMShareToWechatSession, UMShareToWechatTimeline]];
     
@@ -365,7 +364,8 @@ void uncaughtExceptionHandler(NSException*exception){
 
 //使用第三方登录需要重写下面两个方法
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
+    //6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响
+    BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url sourceApplication:sourceApplication annotation:annotation];
     return result;
  }
 
@@ -374,7 +374,24 @@ void uncaughtExceptionHandler(NSException*exception){
     return [[UMSocialManager defaultManager] handleOpenURL:url];
 }
 
+//// NOTE: 9.0以后使用新API接口
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
+{
+    BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
+    if ([url.scheme isEqualToString:WXAppId]) {
+        BOOL result1 = [WXApi handleOpenURL:url delegate:self];
+        return result1;
+    } else if ([url.host isEqualToString:@"platformapi"]){
+        return YES;
+    }
+    return YES;
+}
 
+- (void)onResp:(BaseResp*)resp {
+    NSLog(@"%@",resp);
+    if (resp.errCode == 0) {
+    }
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
