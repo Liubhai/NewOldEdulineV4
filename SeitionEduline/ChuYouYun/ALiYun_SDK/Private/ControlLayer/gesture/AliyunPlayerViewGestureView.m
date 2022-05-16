@@ -173,9 +173,9 @@ static const CGFloat ALYPVGestureViewBrightProgressBottom        = 10;     //亮
         }
         case UIGestureRecognizerStateChanged: {
             if (moveOrientation == ALYPVOrientationHorizontal) {
-                if (self.seekView.superview == nil) {
-                    [self.seekView showWithParentView:self];
-                }
+//                if (self.seekView.superview == nil) {
+//                    [self.seekView showWithParentView:self];
+//                }
             }
             break;
         }

@@ -308,6 +308,9 @@ static NSString * const ALYPVBottomViewDefaultTime          = @"00:00";         
 
 #pragma mark - progressDelegate
 - (void)aliyunVodProgressView:(AliyunPlayerViewProgressView *)progressView dragProgressSliderValue:(float)value event:(UIControlEvents)event {
+    if (event != UIControlEventValueChanged) {
+        return;
+    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(aliyunVodBottomView:dragProgressSliderValue:event:)]) {
         [self.delegate aliyunVodBottomView:self dragProgressSliderValue:value event:event];
     }

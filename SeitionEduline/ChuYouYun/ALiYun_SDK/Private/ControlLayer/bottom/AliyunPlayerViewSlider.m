@@ -21,17 +21,19 @@
 //}
 
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    CGRect t = [self trackRectForBounds: [self bounds]];
-    float v = [self minimumValue] + ([[touches anyObject] locationInView: self].x - t.origin.x - 4.0) * (([self maximumValue]-[self minimumValue]) / (t.size.width - 8.0));
+//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+//    CGRect t = [self trackRectForBounds: [self bounds]];
+//    float v = [self minimumValue] + ([[touches anyObject] locationInView: self].x - t.origin.x - 4.0) * (([self maximumValue]-[self minimumValue]) / (t.size.width - 8.0));
+//
+//    if ([self.sliderDelegate respondsToSelector:@selector(aliyunPlayerViewSlider:clickedSlider:)] ) {
+//        [self.sliderDelegate aliyunPlayerViewSlider:self clickedSlider:v];
+//    }
+//    [super touchesBegan: touches withEvent: event];
+//}
 
-    if ([self.sliderDelegate respondsToSelector:@selector(aliyunPlayerViewSlider:clickedSlider:)] ) {
-        [self.sliderDelegate aliyunPlayerViewSlider:self clickedSlider:v];
-    }
-    [super touchesBegan: touches withEvent: event];
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    return NO;
 }
-
-
 
 
 

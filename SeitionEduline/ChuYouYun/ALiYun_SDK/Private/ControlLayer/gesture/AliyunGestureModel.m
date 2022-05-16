@@ -135,9 +135,9 @@ static UISwipeGestureRecognizerDirection direction = UISwipeGestureRecognizerDir
                 _savePoint = point;
             }else if (moveOrientation == ALYPVOrientationHorizontal){//水平
                 //水平偏移量
-                if (self.delegate && [self.delegate respondsToSelector:@selector(horizontalOrientationMoveOffset:)]) {
-                    [self.delegate horizontalOrientationMoveOffset:tranPoint.x];
-                }
+//                if (self.delegate && [self.delegate respondsToSelector:@selector(horizontalOrientationMoveOffset:)]) {
+//                    [self.delegate horizontalOrientationMoveOffset:tranPoint.x];
+//                }
             }
             if (self.delegate && [self.delegate respondsToSelector:@selector(aliyunGestureModel:state:moveOrientation:)]) {
                 [self.delegate aliyunGestureModel:self state:sender.state moveOrientation:moveOrientation];

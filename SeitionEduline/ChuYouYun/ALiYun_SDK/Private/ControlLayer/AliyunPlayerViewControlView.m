@@ -268,6 +268,7 @@ static const CGFloat ALYControlViewLockButtonHeight = 40;   //lockButton 高度
 }
 
 - (void)horizontalOrientationMoveOffset:(float)moveOffset{
+    return;
     UISwipeGestureRecognizerDirection direction = UISwipeGestureRecognizerDirectionLeft;
     if (moveOffset >= 0) {
         direction = UISwipeGestureRecognizerDirectionRight;
