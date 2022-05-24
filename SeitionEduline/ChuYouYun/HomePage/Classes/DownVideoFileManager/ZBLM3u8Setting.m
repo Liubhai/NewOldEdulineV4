@@ -37,7 +37,9 @@
 //        NSString *mu38 = [NSString stringWithFormat:@"m3u8files_%@",UserID];
 //        return  [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0] stringByAppendingPathComponent:mu38];;
 //    }
-    return  [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0] stringByAppendingPathComponent:@"m3u8files"];
+    NSString *bundleIdString = [[NSBundle mainBundle] bundleIdentifier];
+    NSString *wedpathLocal = [NSString stringWithFormat:@"%@.m3u8files",bundleIdString];
+    return  [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0] stringByAppendingPathComponent:wedpathLocal];
 }
 +(NSString *)videoInfoName{
     return @"videoInfo.data";

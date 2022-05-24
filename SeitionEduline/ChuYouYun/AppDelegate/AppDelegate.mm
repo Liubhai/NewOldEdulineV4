@@ -245,9 +245,12 @@ void uncaughtExceptionHandler(NSException*exception){
     
     [httpServer setType:@"_http._tcp."];
     
-    [httpServer setPort:12345];
+    [httpServer setPort:8080];
     
-    NSString *webPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Private Documents/Temp"];
+    NSString *bundleIdString = [[NSBundle mainBundle] bundleIdentifier];
+    NSString *wedpathLocal = [NSString stringWithFormat:@"%@.m3u8files",bundleIdString];
+    
+    NSString *webPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES) objectAtIndex:0] stringByAppendingPathComponent:wedpathLocal];
     NSFileManager *fileManager=[NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:webPath])
     {
