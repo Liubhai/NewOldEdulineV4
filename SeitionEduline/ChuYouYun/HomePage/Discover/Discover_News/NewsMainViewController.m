@@ -21,38 +21,19 @@
 #import "NewsViewController.h"
 
 
-@interface NewsMainViewController ()<UIScrollViewDelegate>{
-    
-    NSArray *_menuarr;
-    UIButton *menubtn;
-    int numsender;
-    int tempNumber;
-    UILabel *_colorLine;
-    NSString *_ID;
-    CGFloat buttonX;//每个按钮的最开始的位置
-    CGFloat allButtonX;//最后按钮的X轴上的偏移量
-    
-    NSInteger index;//标题的下标
-    BOOL isScrollAgain;//主页面是否滑动
-}
+@interface NewsMainViewController ()<UIScrollViewDelegate>
 
-@property (strong ,nonatomic)NSArray *lookArray;
 @property (strong ,nonatomic)UIImageView  *imageView;
-@property (strong ,nonatomic)UIScrollView *headScrollow;
 
-///顶部btn集合
-@property (strong, nonatomic) NSArray *btns;
+@property (strong, nonatomic) UIButton *pastBtn;// 记录上一个按钮 用于判断是左滑还是右滑
 
-@property (strong ,nonatomic)NSArray *dataArray;
+@property (strong, nonatomic) UIView *topCateView;
+@property (strong, nonatomic) UIScrollView *topScrollView;
+@property (strong, nonatomic) UIView *cateSelectLineView;
 
-@property (strong ,nonatomic)NSMutableArray *dataArr;
+@property (strong, nonatomic) UIScrollView *mainScrollView;//容器
 
-@property (assign ,nonatomic)NSInteger number;
-
-@property (strong ,nonatomic)NSMutableArray *imgdataArray;
-
-@property (strong ,nonatomic)UIScrollView *controllerSrcollView;
-@property (strong ,nonatomic)NSArray        *buttonsArray;//顶部滑动按钮的集合
+@property (strong, nonatomic) NSMutableArray *cateArray;
 
 
 @end
@@ -90,19 +71,58 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [self interFace];
+    _cateArray = [NSMutableArray new];
     [self addNav];
-//    [self NetWork];
     [self netWorkNewsGetCategory];
 }
 
-- (void)interFace {
+- (void)makeTopCateView {
+    _topCateView = [[UIView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT, MainScreenWidth, 40)];
+    _topCateView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_topCateView];
     
-    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    buttonX = 0;
-    allButtonX = 0;
-    index = 0;
-    isScrollAgain = NO;
+    _topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 40)];
+    _topScrollView.backgroundColor = [UIColor whiteColor];
+    _topScrollView.showsVerticalScrollIndicator = NO;
+    _topScrollView.showsHorizontalScrollIndicator = NO;
+    [_topCateView addSubview:_topScrollView];
+    
+    _cateSelectLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 40 / 2.0 + 7 + 5, 20, 2)];
+    _cateSelectLineView.backgroundColor = BasidColor;
+    
+    [self makeCateUI];
+    
+    [_topScrollView addSubview:_cateSelectLineView];
+}
+
+// MARK: - 构建分类视图
+- (void)makeCateUI {
+    [_topScrollView removeAllSubviews];
+    CGFloat xx = 0.0;
+    CGFloat ww = 0.0;
+    for (int i = 0; i<_cateArray.count; i++) {
+        
+        ww = [[NSString stringWithFormat:@"%@",[_cateArray[i] objectForKey:@"title"]] sizeWithFont:SYSTEMFONT(16)].width + 28;
+        
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(xx, 0, ww, 40)];
+        [btn setTitleColor:BasidColor forState:UIControlStateSelected];
+        [btn setTitleColor:[UIColor blackColor] forState:0];
+        btn.titleLabel.font = SYSTEMFONT(16);
+        btn.tag = 66 + i;
+        [btn setTitle:[_cateArray[i] objectForKey:@"title"] forState:0];
+        [btn addTarget:self action:@selector(cateButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        if (i == 0) {
+            _cateSelectLineView.centerX = btn.centerX;
+            btn.selected = YES;
+            btn.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Medium" size:18];//SYSTEMFONT(18);
+            _pastBtn = btn;
+        }
+        [_topScrollView addSubview:btn];
+        xx = xx + ww;
+        if (i == (_cateArray.count - 1)) {
+            _topScrollView.contentSize = CGSizeMake(xx, 0);
+        }
+    }
 }
 
 - (void)addNav {
@@ -145,187 +165,97 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)creatMenu{
-    
-    //自定义segment区域
-    NSMutableArray *marr = [NSMutableArray array];
-    UIColor *ffbbcolor = [UIColor colorWithRed:33.f / 255 green:81.f / 255 blue:196.f / 255 alpha:1];
-    
-    for (int i=0; i< _dataArray.count; i++) {
-        menubtn = [[UIButton alloc]init];
-        //        menubtn.frame = CGRectMake(i*MainScreenWidth/5, 0, MainScreenWidth/5, 40);
-        menubtn.frame = CGRectMake(buttonX, 0, MainScreenWidth / 5, 40);
-        [menubtn setTitle:_dataArray[i][@"title"] forState:UIControlStateNormal];
-        [_headScrollow addSubview:menubtn];
-        menubtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [menubtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        menubtn.tag = 100+i;
-        menubtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        if (iPhone5o5Co5S) {
-            menubtn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-            menubtn.titleLabel.font = [UIFont systemFontOfSize:12];
-        } else if (iPhone6) {
-            menubtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-            menubtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        } else if (iPhone6Plus) {
-            menubtn.titleLabel.font = [UIFont boldSystemFontOfSize:15];
-            menubtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        } else if (iPhoneX) {
-            menubtn.titleLabel.font = [UIFont boldSystemFontOfSize:15];
-            menubtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        }
-        
-        
-        //按钮的自适应
-        
-        CGRect labelSize = [menubtn.titleLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 40) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName: menubtn.titleLabel.font} context:nil];
-        labelSize = CGRectMake(labelSize.origin.x, labelSize.origin.y, labelSize.size.width + 5, labelSize.size.height);
-        if (labelSize.size.width < MainScreenWidth / 5) {
-            if (_dataArray.count < 5) {
-                labelSize.size.width = MainScreenWidth / _dataArray.count;
-            } else {
-                if (iPhone6) {
-                     labelSize.size.width = MainScreenWidth / 4;
-                } else if (iPhone6Plus){
-                     labelSize.size.width = MainScreenWidth / 4;
-                }
-            }
-        } else {
-            if (_dataArray.count < 5) {
-                labelSize.size.width = MainScreenWidth / _dataArray.count;
-            } else {//特殊处理
-                if (iPhone6) {
-                     labelSize.size.width = MainScreenWidth / 4;
-                }
-            }
-        }
-        menubtn.frame = CGRectMake(menubtn.frame.origin.x, 0,labelSize.size.width, 40);
-        buttonX = labelSize.size.width + menubtn.frame.origin.x;
-        allButtonX = labelSize.size.width + menubtn.frame.origin.x;
-        
-        [menubtn addTarget:self action:@selector(change:) forControlEvents:UIControlEventTouchUpInside];
-        if (i==0) {
-            [menubtn setTitleColor:ffbbcolor forState:UIControlStateNormal];
-        }
-        [marr addObject:menubtn];
-        
-        NSLog(@"X----%lf",buttonX);
-        if (i == _dataArray.count - 1) {
-            
-        } else {
-            //添加横线
-            for (int i = 0 ; i < _dataArray.count - 1 ; i ++) {
-                UIButton *lineButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonX, 12.5, 1, 15)];
-                lineButton.backgroundColor = [UIColor colorWithHexString:@"#dedede"];
-                [_headScrollow addSubview:lineButton];
-            }
-        }
-    }
-    _buttonsArray = [marr copy];
-    int tempNum;
-    tempNum = (int)_dataArray.count;
-    _headScrollow.contentSize = CGSizeMake(allButtonX + 2, 40);
-//    _colorLine = [[UILabel alloc]initWithFrame:CGRectMake(0, _headScrollow.frame.size.height - 2, MainScreenWidth/5, 2)];
-//    _colorLine.backgroundColor = [UIColor colorWithRed:33.f / 255 green:81.f / 255 blue:196.f / 255 alpha:1];
-//    [_headScrollow addSubview:_colorLine];
-//    CGPoint center = _colorLine.center;
-//    center.x = MainScreenWidth / (2 * tempNum);
-//    _colorLine.center = center;
-//    _colorLine.hidden = YES;
-}
-
--(void)addscrollow{
-    _headScrollow = [[UIScrollView alloc]initWithFrame:CGRectMake(0,64, MainScreenWidth,40)];
-    if (iPhoneX) {
-        _headScrollow.frame = CGRectMake(0, 88, MainScreenWidth, 40);
-    }
-    _headScrollow.delegate = self;
-    _headScrollow.alwaysBounceVertical = NO;
-    _headScrollow.pagingEnabled = NO;
-    _headScrollow.backgroundColor = [UIColor whiteColor];
-    //同时单方向滚动
-    _headScrollow.directionalLockEnabled = YES;
-    _headScrollow.contentOffset = CGPointMake(0, 0);
-    [self.view addSubview:_headScrollow];
-    _headScrollow.showsVerticalScrollIndicator = NO;
-    _headScrollow.showsHorizontalScrollIndicator = NO;
-}
-
 
 #pragma mark --- 添加控制器的滚动
 - (void)addControllerSrcollView {
     
-    NSLog(@"%ld",_dataArray.count);
-    _controllerSrcollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, MACRO_UI_UPHEIGHT + 40 *HigtEachUnit,  MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 40 * HigtEachUnit)];
-    _controllerSrcollView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    _controllerSrcollView.pagingEnabled = YES;
-    _controllerSrcollView.scrollEnabled = YES;
-    _controllerSrcollView.delegate = self;
-    _controllerSrcollView.bounces = NO;
-//    self.automaticallyAdjustsScrollViewInsets = NO;
-    _controllerSrcollView.contentSize = CGSizeMake(MainScreenWidth * _dataArray.count,0);
-    [self.view addSubview:_controllerSrcollView];
-    
+    _mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,MACRO_UI_UPHEIGHT + 40, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 40)];
+    _mainScrollView.contentSize = CGSizeMake(MainScreenWidth * _cateArray.count, 0);
+    _mainScrollView.pagingEnabled = YES;
+    _mainScrollView.showsHorizontalScrollIndicator = NO;
+    _mainScrollView.showsVerticalScrollIndicator = NO;
+    _mainScrollView.bounces = NO;
+    _mainScrollView.delegate = self;
+    [self.view addSubview:_mainScrollView];
     
     //添加控制器
-    for (int i = 0 ; i < _dataArray.count ; i ++) {
-        NewsViewController *newsVc= [[NewsViewController alloc] initWithIDString:_dataArray[i][@"zy_topic_category_id"] schoolId:[NSString stringWithFormat:@"%@",_dataArray[i][@"mhm_id"]]];
+    for (int i = 0 ; i < _cateArray.count ; i ++) {
+        NewsViewController *newsVc= [[NewsViewController alloc] initWithIDString:_cateArray[i][@"zy_topic_category_id"] schoolId:[NSString stringWithFormat:@"%@",_cateArray[i][@"mhm_id"]]];
         newsVc.view.frame = CGRectMake(MainScreenWidth * i, 0, MainScreenWidth, MainScreenHeight - MACRO_UI_UPHEIGHT - 40 * HigtEachUnit);
-        [_controllerSrcollView addSubview:newsVc.view];
+        [_mainScrollView addSubview:newsVc.view];
         [self addChildViewController:newsVc];
     }
     
 }
 
-
-#pragma mark --- 滚动试图
-
--(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+// MARK: - 滚动和点击事件最终逻辑
+- (void)cateExchanged:(UIButton *)sender {
     
-    CGFloat contentCrorX = _controllerSrcollView.contentOffset.x;
-    index = contentCrorX / MainScreenWidth;
-    for (int i = 0; i < _buttonsArray.count; i++) {
-        UIButton *button = _buttonsArray[i];
-        button.tag = 100 + i;
-        [self.buttonsArray[i] setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        if (i == index) {
-            NSLog(@"移动%d   %ld",i,(long)index);
-            isScrollAgain = NO;
-            [self change:button];
+//    CGPoint btnPoint = [_topScrollView convertPoint:CGPointMake(sender.origin.x, sender.origin.y) toView:_topCateView];
+    // 还需要继续优化成 首先分成 左滑 右滑
+    if ((sender.right - _topScrollView.contentOffset.x) >= MainScreenWidth) {
+        
+        if (sender.tag > _pastBtn.tag) {
+            // 右滑动
+            if ((sender.tag - 66) < (_cateArray.count - 1)) {
+                // 每次多移动一个按钮宽度
+                UIButton *nextBtn = [_topScrollView viewWithTag:sender.tag + 1];
+                [_topScrollView setContentOffset:CGPointMake((_topScrollView.contentOffset.x + ((sender.right - _topScrollView.contentOffset.x) - MainScreenWidth) + nextBtn.width), 0)];
+            } else {
+                [_topScrollView setContentOffset:CGPointMake(sender.right - MainScreenWidth, 0)];
+            }
+        } else if (sender.tag < _pastBtn.tag) {
+            // 左滑动
+            
+        } else {
+            
+        }
+    } else if ((sender.right - _topScrollView.contentOffset.x) < sender.width) {
+        if ((sender.tag - 66) == 0) {
+            // 每次多移动一个按钮宽度
+            [_topScrollView setContentOffset:CGPointMake(0, 0)];
+        } else if ((sender.tag - 66) > 0) {
+            UIButton *btn = [_topScrollView viewWithTag:sender.tag - 1];
+            [_topScrollView setContentOffset:CGPointMake(_topScrollView.contentOffset.x - btn.width - fabs(sender.right - _topScrollView.contentOffset.x), 0)];
         }
     }
-    isScrollAgain = YES;
-}
-
-
-
-#pragma mark ----按钮滚动试图
--(void)change:(UIButton *)button{
     
-    for (int i = 0; i < _buttonsArray.count; i++) {
-        [self.buttonsArray[i] setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    for (UIButton *object in _topScrollView.subviews) {
+        if ([object isKindOfClass:[UIButton class]]) {
+            if (object.tag == sender.tag) {
+                object.selected = YES;
+                object.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Medium" size:18];
+            } else {
+                object.selected = NO;
+                object.titleLabel.font = SYSTEMFONT(16);
+            }
+        }
     }
-    // 滚动标题栏到中间位置
-    CGFloat offsetx   =  button.center.x - MainScreenWidth * 0.5;
-    CGFloat offsetMax = _headScrollow.contentSize.width - _headScrollow.frame.size.width;
-    
-    // 在最左和最右时，标签没必要滚动到中间位置。
-    if (offsetx < 0)		 {offsetx = 0;}
-    if (offsetx > offsetMax) {offsetx = offsetMax;}
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        [_headScrollow setContentOffset:CGPointMake(offsetx, 0) animated:YES];
-        [button setTitleColor:BasidColor forState:UIControlStateNormal];
-    }];
-    
-    if (isScrollAgain) {
-        NSInteger buttonTag = button.tag - 100;
-        _controllerSrcollView.contentOffset = CGPointMake(MainScreenWidth * buttonTag, 0);
-    } else {//已经滑动过了，就不需要滑动了
-        
+    if (_cateSelectLineView) {
+        [UIView animateWithDuration:0.2 animations:^{
+            
+        } completion:^(BOOL finished) {
+            self.cateSelectLineView.centerX = sender.centerX;
+        }];
     }
 }
 
+
+// MARK: - 分类按钮点击事件
+- (void)cateButtonClick:(UIButton *)sender {
+    [self.mainScrollView setContentOffset:CGPointMake(MainScreenWidth * (sender.tag - 66), 0) animated:YES];
+    [self cateExchanged:sender];
+    _pastBtn = sender;
+}
+
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSInteger index = scrollView.contentOffset.x / MainScreenWidth;
+    self.mainScrollView.contentOffset = CGPointMake(index * MainScreenWidth, 0);
+    [self cateExchanged:[_topCateView viewWithTag:index + 66]];
+    _pastBtn = [_topCateView viewWithTag:index + 66];
+}
 
 #pragma mark --- 网络请求
 - (void)netWorkNewsGetCategory {
@@ -350,12 +280,12 @@
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         NSDictionary *dict = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr_Before:responseObject];
         if ([[dict stringValueForKey:@"code"] integerValue] == 1) {
-            _dataArray = (NSArray *) [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject];
-            if (_dataArray.count == 0) {
+            [_cateArray removeAllObjects];
+            [_cateArray addObjectsFromArray:[YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr:responseObject]];
+            if (_cateArray.count == 0) {
                 self.imageView.hidden = NO;
             } else {
-                [self addscrollow];
-                [self creatMenu];
+                [self makeTopCateView];
                 [self addControllerSrcollView];
             }
         } else {
