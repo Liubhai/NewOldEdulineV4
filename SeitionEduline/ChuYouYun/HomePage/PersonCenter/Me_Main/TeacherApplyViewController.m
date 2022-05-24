@@ -83,8 +83,6 @@
     _firstDataSource = [NSMutableArray new];
     _secondDataSource = [NSMutableArray new];
     
-    [self makeSubViews];
-    [self makePickerView];
     [self getTeacherApplyInfo];
 }
 
@@ -131,7 +129,7 @@
     [_organizationButton addTarget:self action:@selector(coverButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [_organizationBg addSubview:_organizationButton];
     
-    if ([MoreOrSingle isEqualToString:@"1"]) {
+    if ([MoreOrSingle isEqualToString:@"1"] || !SWNOTEmptyArr(_schoolArray)) {
         [_organizationBg setHeight:0];
         _organizationBg.hidden = YES;
     }
@@ -849,6 +847,10 @@
                 if (SWNOTEmptyArr([_teacherApplyInfo objectForKey:@"school"])) {
                     [_schoolArray addObjectsFromArray:[_teacherApplyInfo objectForKey:@"school"]];
                 }
+                
+                [self makeSubViews];
+                [self makePickerView];
+                
                 if (SWNOTEmptyDictionary([_teacherApplyInfo objectForKey:@"verifyInfo"])) {
                     verified_status = [NSString stringWithFormat:@"%@",[[_teacherApplyInfo objectForKey:@"verifyInfo"] objectForKey:@"verified_status"]];
                     [self setValueForTeacherInfo:[_teacherApplyInfo objectForKey:@"verifyInfo"]];
@@ -894,6 +896,8 @@
     
     if (SWNOTEmptyStr(schoolID)) {
         [mutabDict setObject:schoolID forKey:@"mhm_id"];
+    } else {
+        [mutabDict setObject:@"0" forKey:@"mhm_id"];
     }
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:allUrlStr]];
