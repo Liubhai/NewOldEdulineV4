@@ -1242,8 +1242,10 @@
         [mutabDict setValue:@"2" forKey:@"vtype"];
     } else if ([_typeStr integerValue] == 3) {//线下课
         [mutabDict setValue:@"4" forKey:@"vtype"];
-    } else if ([_typeStr integerValue] == 5) {//线下课
+    } else if ([_typeStr integerValue] == 5) {//班级
         [mutabDict setValue:@"6" forKey:@"vtype"];
+    } else if ([_typeStr integerValue] == 4) {//套餐
+        [mutabDict setValue:@"3" forKey:@"vtype"];
     }
     [mutabDict setValue:_cid forKey:@"vid"];
     if (_counpID) {
