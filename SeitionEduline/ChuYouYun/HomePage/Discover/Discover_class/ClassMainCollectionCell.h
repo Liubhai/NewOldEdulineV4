@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UILabel *scanCountlabel;
 @property (nonatomic, strong) UILabel *studyCountlabel;
 @property (nonatomic, strong) NSIndexPath *cellIndex;
+@property (strong, nonatomic) UIButton *activityType;
 
 - (void)setClassMainInfo:(NSDictionary *)dict cellIndex:(NSIndexPath *)index;
 

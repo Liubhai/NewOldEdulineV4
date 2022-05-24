@@ -74,6 +74,15 @@
     _studyIcon.centerY = _scanIcon.centerY;
     _studyIcon.image = Image(@"study_count");
     [self.contentView addSubview:_studyIcon];
+    
+    _activityType = [[UIButton alloc] initWithFrame:CGRectMake(_faceImageView.left + 5, _faceImageView.bottom - 20, 70, 15)];
+    _activityType.layer.masksToBounds = YES;
+    _activityType.layer.cornerRadius = 3.0;
+    _activityType.hidden = YES;
+    _activityType.titleLabel.font = SYSTEMFONT(11);
+    [_activityType setTitleColor:[UIColor whiteColor] forState:0];
+    [_activityType setBackgroundColor:RGBHex(0xE02620)];
+    [self.contentView addSubview:_activityType];
 }
 
 - (void)setClassMainInfo:(NSDictionary *)dict cellIndex:(NSIndexPath *)index {
@@ -110,6 +119,45 @@
         _studyCountlabel.centerY = _scanIcon.centerY;
         _studyIcon.frame = CGRectMake(_studyCountlabel.left - 4 - 15, 0, 15, 15);
         _studyIcon.centerY = _scanIcon.centerY;
+    }
+    
+    if ([[dict objectForKey:@"has_event"] integerValue]) {
+        _activityType.hidden = NO;
+        NSString *eventType = [NSString stringWithFormat:@"%@",[[dict objectForKey:@"event_type_info"] objectForKey:@"type_code"]];
+        // 1 限时打折 2 抢购(不限时不限量) 3 限量秒杀(不限时) 4 限时抢购(不限量) 5 秒杀(限时限量) 6 拼团
+        NSString *eventTitle = @" ";
+        NSString *eventIcon = @"discount";
+        if ([eventType integerValue] == 1) {
+            eventTitle = @"限时打折";
+        } else if ([eventType integerValue] == 2) {
+            eventTitle = @"抢购";
+            eventIcon = @"fire";
+        } else if ([eventType integerValue] == 3) {
+            eventTitle = @"限量秒杀";
+            eventIcon = @"seckill";
+        } else if ([eventType integerValue] == 4) {
+            eventTitle = @"限时抢购";
+            eventIcon = @"fire";
+        } else if ([eventType integerValue] == 5) {
+            eventTitle = @"秒杀";
+            eventIcon = @"seckill";
+        } else if ([eventType integerValue] == 6) {
+            eventTitle = @"拼团";
+            eventIcon = @"seckill";
+        } else if ([eventType integerValue] == 7) {
+            eventTitle = @"砍价";
+            eventIcon = @"seckill";
+        } else {
+            _activityType.hidden = YES;
+        }
+        CGFloat eventWidth = [eventTitle sizeWithFont:_activityType.titleLabel.font].width + 4;
+        _activityType.frame = CGRectMake(_faceImageView.left + 5, _faceImageView.bottom - 20, eventWidth + 6 + 12 + 10, 15);
+        [_activityType setImage:Image(eventIcon) forState:0];
+        [_activityType setTitle:eventTitle forState:0];
+        _activityType.imageEdgeInsets = UIEdgeInsetsMake(0, -6/2.0, 0, 6/2.0);
+        _activityType.titleEdgeInsets = UIEdgeInsetsMake(0, 6/2.0, 0, -6/2.0);
+    } else {
+        _activityType.hidden = YES;
     }
 }
 
