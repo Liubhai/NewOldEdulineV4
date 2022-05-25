@@ -2023,7 +2023,7 @@
         // 砍价成功
         ClassAndLivePayViewController *vc = [[ClassAndLivePayViewController alloc] init];
         vc.dict = _zhiBoDic;
-        vc.typeStr = @"1";
+        vc.typeStr = @"2";
         vc.isBuyAlone = YES;
         vc.cid = _ID;
         vc.activityInfo = [NSDictionary dictionaryWithDictionary:_activityInfo];
