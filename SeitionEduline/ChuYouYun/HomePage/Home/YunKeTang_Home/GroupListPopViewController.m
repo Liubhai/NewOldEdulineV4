@@ -94,6 +94,7 @@
     vc.activityInfo = [NSDictionary dictionaryWithDictionary:_activityInfo];
     vc.isJoinGroup = YES;
     vc.isBuyAlone = YES;
+    vc.groupID = [groupInfo stringValueForKey:@"id"];
     [self.parentViewController.navigationController pushViewController:vc animated:YES];
 }
 
