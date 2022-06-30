@@ -186,9 +186,9 @@
     } else if (section == 3){
         if ([Show_Config isEqualToString:@"1"]) {
             // 开启了机构app
-            return 4;
+            return 5;
         }
-        return 3;
+        return 4;
     }
     return 1;
 }
@@ -346,14 +346,14 @@
         }
         return cell;
     }else if (indexPath.section == 3) {
-        NSArray *array= @[@"意见反馈",@"清除缓存",@"关于我们"];
+        NSArray *array= @[@"意见反馈",@"清除缓存",@"注销账户",@"关于我们"];
         if ([Show_Config isEqualToString:@"1"]) {
-            array= @[@"意见反馈",@"清除缓存",@"关于我们",@"设置机构"];
+            array= @[@"意见反馈",@"清除缓存",@"注销账户",@"关于我们",@"设置机构"];
         }
         static NSString *identifier = @"Cell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
-            if (indexPath.row==0 || indexPath.row == 3) {
+            if (indexPath.row==0 || indexPath.row == 4) {
                 cell = [[UITableViewCell alloc]initWithStyle:0 reuseIdentifier:identifier];
                 [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
                 UILabel *numberLbl = [[UILabel alloc]initWithFrame:CGRectMake(17, 12, MainScreenWidth-30, 21)];
@@ -381,7 +381,7 @@
                 
                 _sizeLabel.textAlignment = NSTextAlignmentRight;
                 [cell addSubview:_sizeLabel];
-            } else if (indexPath.row == 2) {
+            } else if (indexPath.row == 2 || indexPath.row == 3) {
                 cell = [[UITableViewCell alloc]initWithStyle:0 reuseIdentifier:identifier];
                 [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
                 UILabel *numberLbl = [[UILabel alloc]initWithFrame:CGRectMake(17, 12, MainScreenWidth-30, 21)];
@@ -459,9 +459,13 @@
                 UIActionSheet *shit = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"确定", nil];
                 shit.tag = 100;
                 [shit showInView:self.view];
-            } else if (indexPath.row == 2) {
+            } else if (indexPath.row == 3) {
                 AboutUsViewController *aboutVc = [[AboutUsViewController alloc] init];
                 [self.navigationController pushViewController:aboutVc animated:YES];
+            } else if (indexPath.row == 2) {
+                UIActionSheet *shit = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"确定", nil];
+                shit.tag = 101;
+                [shit showInView:self.view];
             } else if (indexPath.row == 3) {
                 InstitutionsChooseVC *vc = [[InstitutionsChooseVC alloc] init];
                 vc.fromSetingVC = YES;
@@ -499,6 +503,14 @@
                 break;
         }
         
+    } else if (actionSheet.tag == 101) {//注销账户
+        switch (buttonIndex) {
+            case 0:
+                [self userLogout];
+                break;
+            default:
+                break;
+        }
     } else if (actionSheet.tag == 200) {//退出程序
         switch (buttonIndex) {
             case 0:
@@ -694,7 +706,37 @@
     [op start];
 }
 
-
+//注销账户
+- (void)userLogout {
+    
+    NSString *endUrlStr = YunKeTang_passport_logout;
+    NSString *allUrlStr = [YunKeTang_Api_Tool YunKeTang_GetFullUrl:endUrlStr];
+    
+    NSMutableDictionary *mutabDict = [NSMutableDictionary dictionaryWithCapacity:0];
+    NSString *oath_token_Str = nil;
+    if (UserOathToken) {
+        oath_token_Str = [NSString stringWithFormat:@"%@:%@",UserOathToken,UserOathTokenSecret];
+        [mutabDict setObject:oath_token_Str forKey:OAUTH_TOKEN];
+    }
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:allUrlStr]];
+    [request setHTTPMethod:NetWay];
+    NSString *encryptStr = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetEncryptStr:mutabDict];
+    [request setValue:encryptStr forHTTPHeaderField:HeaderKey];
+    [request setValue:oath_token_Str forHTTPHeaderField:OAUTH_TOKEN];
+    
+    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        NSDictionary *dict = [YunKeTang_Api_Tool YunKeTang_Api_Tool_GetDecodeStr_Before:responseObject];
+        if ([[dict stringValueForKey:@"code"] integerValue] == 1) {
+            [self quit];
+        } else {
+            [TKProgressHUD showError:[dict stringValueForKey:@"msg"] toView:self.view];
+        }
+    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+    }];
+    [op start];
+}
 
 
 

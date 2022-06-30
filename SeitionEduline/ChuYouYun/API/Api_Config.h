@@ -340,6 +340,8 @@
 #define YunKeTang_passport_doFindPasswordByEmail @"passport.doFindPasswordByEmail"
 #define YunKeTang_passport_clickRepwdCode @"passport.clickRepwdCode"
 #define YunKeTang_passport_registerConf @"passport.registerConf"
+// 注销账户
+#define YunKeTang_passport_logout @"passport.logout"
 
 
 //登录改变
