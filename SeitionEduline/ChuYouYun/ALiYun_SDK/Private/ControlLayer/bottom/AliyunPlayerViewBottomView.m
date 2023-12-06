@@ -193,7 +193,10 @@ static NSString * const ALYPVBottomViewDefaultTime          = @"00:00";         
 //        self.leftTimeLabel.frame = CGRectMake(progressFrame.origin.x, height/2, progressFrame.size.width/2, height/2);
         self.leftTimeLabel.frame = CGRectMake(10, height/8, progressFrame.size.width/2, height/2);
         self.rightTimeLabel.frame = CGRectMake(progressFrame.origin.x + progressFrame.size.width/2,height/2, progressFrame.size.width/2, height/2);
-        return;
+        if (@available(iOS 16, *)) {
+        } else {
+            return;
+        }
     }
     
     if ([AliyunUtil isInterfaceOrientationPortrait]) {

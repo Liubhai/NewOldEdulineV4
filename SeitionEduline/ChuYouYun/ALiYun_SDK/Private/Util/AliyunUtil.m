@@ -9,6 +9,7 @@
 #import "AliyunUtil.h"
 #import <ifaddrs.h>
 #import <arpa/inet.h>
+#import "AppDelegate.h"
 
 static NSString * const AliyunUtilImageBundleName = @"AliyunImageSource.bundle";
 static NSString * const AliyunUtilImageBundle     = @"AliyunImageSource";
@@ -72,18 +73,61 @@ static NSString * const ALYPVVersion  = @"3.4.0";
 }
 
 + (void)setFullOrHalfScreen {
+//    BOOL isFull = [self isInterfaceOrientationPortrait];
+//    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+//        SEL selector = NSSelectorFromString(@"setOrientation:");
+//        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+//        [invocation setSelector:selector];
+//        [invocation setTarget:[UIDevice currentDevice]];
+//        int val = isFull ? UIInterfaceOrientationLandscapeRight:UIInterfaceOrientationPortrait;
+//
+//        [invocation setArgument:&val atIndex:2];
+//        [invocation invoke];
+//    }
+//    [[UIApplication sharedApplication]setStatusBarOrientation:UIInterfaceOrientationLandscapeRight animated:YES];
+    
     BOOL isFull = [self isInterfaceOrientationPortrait];
-    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
-        SEL selector = NSSelectorFromString(@"setOrientation:");
-        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
-        [invocation setSelector:selector];
-        [invocation setTarget:[UIDevice currentDevice]];
-        int val = isFull ? UIInterfaceOrientationLandscapeRight:UIInterfaceOrientationPortrait;
-        
-        [invocation setArgument:&val atIndex:2];
-        [invocation invoke];
+    if (@available(iOS 16, *)) {
+        AppDelegate *app = [AppDelegate delegate];
+        app._allowRotation = isFull;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"dealFull" object:nil];
     }
-    [[UIApplication sharedApplication]setStatusBarOrientation:UIInterfaceOrientationLandscapeRight animated:YES];
+        if (@available(iOS 16.0, *)) {
+            @try {
+                NSArray *array = [[[UIApplication sharedApplication] connectedScenes] allObjects];
+                UIWindowScene *ws = (UIWindowScene *)array[0];
+                Class GeometryPreferences = NSClassFromString(@"UIWindowSceneGeometryPreferencesIOS");
+                id geometryPreferences = [[GeometryPreferences alloc]init];
+                UIInterfaceOrientationMask orientationMask = UIInterfaceOrientationMaskLandscapeRight;
+                if (!isFull) {
+                    orientationMask = UIInterfaceOrientationMaskPortrait;
+                }
+                
+                [geometryPreferences setValue:@(orientationMask) forKey:@"interfaceOrientations"];
+                SEL sel_method = NSSelectorFromString(@"requestGeometryUpdateWithPreferences:errorHandler:");
+                void (^ErrorBlock)(NSError *err) = ^(NSError *err){
+                    NSLog(@"屏幕旋转出错:%@", [err debugDescription]);
+                };
+                if ([ws respondsToSelector:sel_method]) {
+                    (((void (*)(id, SEL,id,id))[ws methodForSelector:sel_method])(ws, sel_method,geometryPreferences,ErrorBlock));
+                }
+            } @catch (NSException *exception) {
+                NSLog(@"屏幕旋转出错:%@", exception.reason);
+            } @finally {
+            }
+        } else {
+            if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+                SEL selector = NSSelectorFromString(@"setOrientation:");
+                NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+                [invocation setSelector:selector];
+                [invocation setTarget:[UIDevice currentDevice]];
+                int val = isFull ? UIInterfaceOrientationLandscapeRight:UIInterfaceOrientationPortrait;
+                
+                [invocation setArgument:&val atIndex:2];
+                [invocation invoke];
+            }
+            [[UIApplication sharedApplication]setStatusBarOrientation:UIInterfaceOrientationLandscapeRight animated:YES];
+        }
 }
 
 + (NSString *)timeformatFromSeconds:(NSInteger)seconds {

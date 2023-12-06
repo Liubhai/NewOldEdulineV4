@@ -335,6 +335,9 @@
     [self interFace];
     [self addShareImageView];
     [self addNotification];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealFull) name:@"dealFull" object:nil];
+    
     [self createSubView];
     //    [self addAllScrollView];
     [self addInfoView];
@@ -2149,6 +2152,16 @@
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
+-(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    NSLog(@"viewWillTransitionToSize %@", NSStringFromCGSize(size));
+    BOOL isFullScreen = NO;
+    if (size.width > size.height) {
+        isFullScreen = YES;
+    }
+    NSLog(@"旋转全屏 === %@",isFullScreen ? @"是" : @"否");
+}
+
 - (void)aliyunVodPlayerView:(AliyunVodPlayerView *)playerView onVideoDefinitionChanged:(NSString *)videoDefinition {
     
 }
@@ -2158,21 +2171,16 @@
 }
 
 - (void)refreshUIWhenScreenChanged:(BOOL)isFullScreen{
+    if (@available(iOS 16, *)) {
+        AppDelegate *app = [AppDelegate delegate];
+        app._allowRotation = isFullScreen;
+        [self setNeedsUpdateOfSupportedInterfaceOrientations];
+    }
     if (isFullScreen) {
         //自己项目里面的一些配置
         _moreButton.hidden = YES;
         _backButton.hidden = YES;
         _controllerSrcollView.userInteractionEnabled = NO;
-        _videoView.frame = CGRectMake(0, 0, MainScreenHeight, MainScreenWidth);
-        if (iPhone6) {
-            _videoView.frame = CGRectMake(0, 0, 667, 375);
-        } else if (iPhone6Plus) {
-            _videoView.frame = CGRectMake(0, 0, 736, 414);
-        } else if (iPhoneX) {
-            _videoView.frame = CGRectMake(0, 0, 812, 375);
-        } else if (iPhone5o5Co5S) {
-            _videoView.frame = CGRectMake(0, 0, 568, 320);
-        }
         _videoView.frame = CGRectMake(0, 0, MainScreenHeight, MainScreenWidth);
         _headerView.frame = _videoView.frame;
         _tableView.frame = _videoView.frame;
@@ -2190,7 +2198,7 @@
         _controllerSrcollView.userInteractionEnabled = YES;
         _videoView.frame = CGRectMake(0, 0, MainScreenWidth, 210 * WideEachUnit);
         _headerView.frame = CGRectMake(0, 0, MainScreenWidth, _teachersHeaderBackView.bottom);//280 * WideEachUnit
-        _tableView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight - MACRO_UI_SAFEAREA - 50 * HigtEachUnit);
+        _tableView.frame = CGRectMake(0, 0, MainScreenWidth, MainScreenHeight - MACRO_UI_SAFEAREA - 50 * HigtEachUnit);
         _controllerSrcollView.userInteractionEnabled = YES;
         _mainDetailView.hidden = NO;
         _segleMentView.hidden = NO;
@@ -4370,5 +4378,9 @@
     [op start];
 }
 
+// MARK: - 当前及时处理横屏权限
+- (void)dealFull {
+    [self setNeedsUpdateOfSupportedInterfaceOrientations];
+}
 
 @end

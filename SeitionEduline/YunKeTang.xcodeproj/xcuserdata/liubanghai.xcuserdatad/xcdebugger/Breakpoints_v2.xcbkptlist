@@ -15,5 +15,21 @@
             stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CAE8B416-BCAB-4707-A390-37D7FECC9938"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ChuYouYun/HomePage/Classes/Down/Help/BRDownHelpManager.m"
+            startingColumnNumber = "9"
+            endingColumnNumber = "11"
+            startingLineNumber = "44"
+            endingLineNumber = "49"
+            landmarkName = "-br_startDownUrl:dictInfo:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

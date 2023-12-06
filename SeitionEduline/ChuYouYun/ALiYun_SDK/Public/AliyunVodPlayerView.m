@@ -395,26 +395,30 @@ static const CGFloat AlilyunViewLoadingViewHeight = 120;
         case UIDeviceOrientationLandscapeLeft:
         case UIDeviceOrientationLandscapeRight:
         {
-            self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+            self.frame = CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH);
             if (self.delegate &&[self.delegate respondsToSelector:@selector(aliyunVodPlayerView:fullScreen:)]) {
                 [self.delegate aliyunVodPlayerView:self fullScreen:YES];
             }
-            
-            self.playButton.center = CGPointMake(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+            self.playButton.center = CGPointMake(SCREEN_HEIGHT / 2, SCREEN_WIDTH / 2);
         }
             break;
         case UIDeviceOrientationPortrait:
         {
-            if (self.saveFrame.origin.x == 0 && self.saveFrame.origin.y==0 && self.saveFrame.size.width == 0 && self.saveFrame.size.height == 0) {
-                //开始时全屏展示，self.saveFrame = CGRectZero, 旋转竖屏时做以下默认处理
-                CGRect tempFrame = self.frame ;
-                tempFrame.size.width = self.frame.size.height;
-                tempFrame.size.height = self.frame.size.height* 9/16;
-                self.frame = tempFrame;
-            }else{
-                self.frame = self.saveFrame;
-               
+            if (@available(iOS 16, *)) {
+                self.frame = CGRectMake(0, 0, SCREEN_WIDTH, 210);//SCREEN_HEIGHT * 9/16
+            } else {
+                if (self.saveFrame.origin.x == 0 && self.saveFrame.origin.y==0 && self.saveFrame.size.width == 0 && self.saveFrame.size.height == 0) {
+                    //开始时全屏展示，self.saveFrame = CGRectZero, 旋转竖屏时做以下默认处理
+                    CGRect tempFrame = self.frame;
+                    tempFrame.size.width = self.frame.size.height;
+                    tempFrame.size.height = self.frame.size.height* 9/16;
+                    self.frame = tempFrame;
+                }else{
+                    self.frame = self.saveFrame;
+                   
+                }
             }
+            
             //2018-6-28 cai
             BOOL isFullScreen = YES;
             if (self.frame.size.width > self.frame.size.height) {
@@ -1324,6 +1328,36 @@ static const CGFloat AlilyunViewLoadingViewHeight = 120;
     }else{
         if(self.isScreenLocked){
             return;
+        }
+        if (@available(iOS 16, *)) {
+            BOOL isFull = [AliyunUtil isInterfaceOrientationPortrait];
+            self.isProtrait = !isFull;
+            controlView.lockButton.hidden = self.isProtrait;
+            
+            if(!self.isProtrait){
+                self.isProtrait = YES;
+                
+                self.frame = CGRectMake(0, 0, SCREEN_HEIGHT, SCREEN_WIDTH);
+                self.playButton.center = CGPointMake(SCREEN_HEIGHT / 2, SCREEN_WIDTH / 2);
+            }else{
+                self.isProtrait = NO;
+                
+//                if (self.frame.size.width > self.frame.size.height) {
+//                    CGRect tempFrame = self.frame ;
+//                    tempFrame.size.width = self.frame.size.height;
+//                    tempFrame.size.height = self.frame.size.height* 9/16;
+//                    self.frame = tempFrame;
+//                }
+                
+                self.frame = CGRectMake(0, 0, SCREEN_WIDTH, 210);//SCREEN_HEIGHT * 9/16
+                
+                [self.guideView removeFromSuperview];
+                self.playButton.center = CGPointMake(SCREEN_WIDTH / 2, 110 * WideEachUnit);
+            }
+            
+            if (self.delegate &&[self.delegate respondsToSelector:@selector(aliyunVodPlayerView:fullScreen:)]) {
+                [self.delegate aliyunVodPlayerView:self fullScreen:self.isProtrait];
+            }
         }
         [AliyunUtil setFullOrHalfScreen];
     }

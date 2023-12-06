@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "AliyunVodPlayerViewDefine.h"
+#import "YunKeTang_Api_Tool.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]/// rgb颜色转换（16进制->10进制）
-#define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
-#define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
+#define SCREEN_WIDTH [YunKeTang_Api_Tool sharedInstance].tsShowWindowsWidth
+#define SCREEN_HEIGHT [YunKeTang_Api_Tool sharedInstance].tsShowWindowsHeight
+//#define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
+//#define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 
 /*
  *功能：错误提示内容，显示在界面中间的错误内容；用于用户自定义错误

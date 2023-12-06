@@ -413,6 +413,24 @@ void uncaughtExceptionHandler(NSException*exception){
     return UIInterfaceOrientationMaskPortrait;
 }
 
+//- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
+//
+//    UINavigationController *navigationController = (id)self.window.rootViewController;
+//    if ([navigationController isKindOfClass:[UINavigationController class]]) {
+//        return [navigationController.visibleViewController supportedInterfaceOrientations];
+//    }
+//    return navigationController.supportedInterfaceOrientations;
+//}
+
+//- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
+//
+//    UINavigationController *navigationController = (id)self.window.rootViewController;
+//    if ([navigationController isKindOfClass:[UINavigationController class]]) {
+//        return [navigationController.visibleViewController supportedInterfaceOrientations];
+//    }
+//    return navigationController.supportedInterfaceOrientations;
+//}
+
 
 #pragma mark --- 请求加密的KEY
 

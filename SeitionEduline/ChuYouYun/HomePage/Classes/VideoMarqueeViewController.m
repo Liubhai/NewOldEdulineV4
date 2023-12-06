@@ -36,7 +36,8 @@
         _marqueeLabel.textColor = [UIColor redColor];
         _marqueeLabel.font = Font(11);
         [self.view addSubview:_marqueeLabel];
-    }    _dict = dict;
+        _dict = dict;
+    }
     return self;
 }
 

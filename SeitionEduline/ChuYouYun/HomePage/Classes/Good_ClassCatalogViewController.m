@@ -109,7 +109,7 @@
 {
     AppDelegate *app = [AppDelegate delegate];
     rootViewController * nv = (rootViewController *)app.window.rootViewController;
-    [nv isHiddenCustomTabBarByBoolean:YES];
+//    [nv isHiddenCustomTabBarByBoolean:YES];
     
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     [super viewWillAppear:animated];
@@ -122,7 +122,7 @@
 {
     AppDelegate *app = [AppDelegate delegate];
     rootViewController * nv = (rootViewController *)app.window.rootViewController;
-    [nv isHiddenCustomTabBarByBoolean:NO];
+//    [nv isHiddenCustomTabBarByBoolean:NO];
     [super viewWillDisappear:animated];
     self.navigationController.navigationBar.hidden = YES;
 }
